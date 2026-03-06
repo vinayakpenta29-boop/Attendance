@@ -1,0 +1,36 @@
+<resources>
+
+    <!-- App Name -->
+    <string name="app_name">Attendance</string>
+
+    <!-- Tabs -->
+    <string name="tab_daily_attendance">Daily Attendance</string>
+    <string name="tab_view_attendance">View Attendance</string>
+
+    <!-- Daily Attendance Screen -->
+    <string name="select_date">Select Date</string>
+    <string name="attendance">Attendance</string>
+    <string name="add_attendance">Add Attendance</string>
+
+    <!-- Spinner Options -->
+    <string name="present">Present</string>
+    <string name="half_day">Half Day</string>
+    <string name="absent">Absent</string>
+
+    <!-- Messages -->
+    <string name="attendance_added">Attendance Added Successfully</string>
+
+    <!-- Table -->
+    <string name="attendance_table">Attendance Table</string>
+
+    <!-- Summary -->
+    <string name="summary">Summary</string>
+    <string name="half_days">Half Days</string>
+    <string name="absent_days">Absent Days</string>
+
+    <!-- Calculation -->
+    <string name="total_absent_days">Total Absent Days</string>
+    <string name="total_half_days">Total Half Days</string>
+    <string name="total_leaves">Total Leaves</string>
+
+</resources>
