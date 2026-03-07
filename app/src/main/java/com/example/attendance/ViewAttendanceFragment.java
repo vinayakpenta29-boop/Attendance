@@ -77,7 +77,7 @@ public class ViewAttendanceFragment extends Fragment {
                 "\nAbsent:\n" + absentDates
         );
 
-        double halfValue = halfCount * 0.5;
+        double halfValue = halfCount;
         double totalLeaves = absentCount + halfValue;
 
         calculationBox.setText(
