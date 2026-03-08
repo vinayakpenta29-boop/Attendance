@@ -16,6 +16,9 @@ public class ViewAttendanceFragment extends Fragment {
     TextView summaryBox;
     TextView calculationBox;
 
+    int absentCount = 0;
+    int halfCount = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,14 +37,15 @@ public class ViewAttendanceFragment extends Fragment {
     private void loadAttendance() {
 
         SharedPreferences pref = getActivity().getSharedPreferences("attendance", 0);
-
         Map<String, ?> all = pref.getAll();
 
-        int absentCount = 0;
-        int halfCount = 0;
+        absentCount = 0;
+        halfCount = 0;
 
         StringBuilder absentDates = new StringBuilder();
         StringBuilder halfDates = new StringBuilder();
+
+        tableLayout.removeAllViews();
 
         for (Map.Entry<String, ?> entry : all.entrySet()) {
 
@@ -53,17 +57,21 @@ public class ViewAttendanceFragment extends Fragment {
             String letter = "";
 
             if (status.equals("Present")) {
+
                 letter = "P";
-            }
-            else if (status.equals("Half Day")) {
+
+            } else if (status.equals("Half Day")) {
+
                 letter = "H";
                 halfCount++;
                 halfDates.append(date).append("\n");
-            }
-            else {
+
+            } else {
+
                 letter = "A";
                 absentCount++;
                 absentDates.append(date).append("\n");
+
             }
 
             row.setText(date + " : " + letter);
@@ -85,5 +93,16 @@ public class ViewAttendanceFragment extends Fragment {
                 "\nHalf Days Value = " + halfValue +
                 "\nTotal Leaves = " + totalLeaves
         );
+
+        /* SAVE VALUES FOR SALARY TAB */
+
+        SharedPreferences.Editor editor =
+                getActivity().getSharedPreferences("attendance_summary", 0).edit();
+
+        editor.putInt("absentCount", absentCount);
+        editor.putInt("halfCount", halfCount);
+        editor.putFloat("totalLeaves", (float) totalLeaves);
+
+        editor.apply();
     }
 }
