@@ -2,10 +2,15 @@ package com.example.attendance;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 
 import android.view.*;
 import android.widget.*;
+
+import com.example.attendance.utils.SalaryCalculator;
+
+import java.util.Calendar;
 
 public class SalaryFragment extends Fragment {
 
@@ -19,6 +24,8 @@ public class SalaryFragment extends Fragment {
 
     boolean pfEnabled = false;
     boolean schemeEnabled = false;
+
+    int dabbaUnit = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,7 @@ public class SalaryFragment extends Fragment {
         EditText medicineBox = dialogView.findViewById(R.id.medicine);
         EditText pfAmountBox = dialogView.findViewById(R.id.pfAmount);
         EditText schemeAmountBox = dialogView.findViewById(R.id.schemeAmount);
+        EditText dabbaBox = dialogView.findViewById(R.id.dabba);
 
         RadioGroup pfGroup = dialogView.findViewById(R.id.pfGroup);
         RadioGroup schemeGroup = dialogView.findViewById(R.id.schemeGroup);
@@ -80,6 +88,7 @@ public class SalaryFragment extends Fragment {
             } else {
                 pfAmountBox.setVisibility(View.GONE);
                 pfEnabled = false;
+                pfAmount = 0;
             }
         });
 
@@ -91,6 +100,7 @@ public class SalaryFragment extends Fragment {
             } else {
                 schemeAmountBox.setVisibility(View.GONE);
                 schemeEnabled = false;
+                schemeAmount = 0;
             }
         });
 
@@ -100,24 +110,53 @@ public class SalaryFragment extends Fragment {
 
         saveBtn.setOnClickListener(v -> {
 
-            monthlySalary = Double.parseDouble(monthlySalaryBox.getText().toString());
-            tax = Double.parseDouble(taxBox.getText().toString());
-            medicine = Double.parseDouble(medicineBox.getText().toString());
+            monthlySalary = parseDouble(monthlySalaryBox);
+            tax = parseDouble(taxBox);
+            medicine = parseDouble(medicineBox);
+            dabbaUnit = (int) parseDouble(dabbaBox);
 
             if (pfEnabled)
-                pfAmount = Double.parseDouble(pfAmountBox.getText().toString());
+                pfAmount = parseDouble(pfAmountBox);
 
             if (schemeEnabled)
-                schemeAmount = Double.parseDouble(schemeAmountBox.getText().toString());
+                schemeAmount = parseDouble(schemeAmountBox);
 
-            double totalDeduction = tax + medicine + pfAmount + schemeAmount;
+            /* Attendance Leave Logic (example placeholder) */
+            double leaveDays = getLeaveDaysFromAttendance();
 
-            double finalSalary = monthlySalary - totalDeduction;
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1;
+
+            SalaryCalculator.Result result =
+                    SalaryCalculator.calculate(
+                            monthlySalary,
+                            tax,
+                            medicine,
+                            year,
+                            month,
+                            leaveDays,
+                            dabbaUnit,
+                            pfEnabled,
+                            pfAmount,
+                            schemeEnabled,
+                            schemeAmount
+                    );
 
             salaryResult.setText(
-                    "Monthly Salary : ₹" + monthlySalary +
-                    "\nTotal Deduction : ₹" + totalDeduction +
-                    "\nFinal Salary : ₹" + finalSalary
+
+                    "Base Salary : ₹" + result.baseSalary +
+                    "\nPer Day Salary : ₹" + round(result.perDaySalary) +
+                    "\nLeave Days : " + result.leaveDays +
+                    "\nLeave Deduction : ₹" + round(result.leaveDeduction) +
+                    "\nBonus : ₹" + round(result.leaveBonus) +
+                    "\nTax : ₹" + result.tax +
+                    "\nMedical : ₹" + result.medical +
+                    "\nPF : ₹" + result.pf +
+                    "\nDabba : ₹" + round(result.dabbaDeduction) +
+                    "\nTotal Deduction : ₹" + round(result.totalDeductions) +
+                    "\n\nNet Salary : ₹" + round(result.netSalary)
+
             );
 
             dialog.dismiss();
@@ -125,5 +164,31 @@ public class SalaryFragment extends Fragment {
         });
 
         dialog.show();
+    }
+
+    private double parseDouble(EditText box) {
+
+        try {
+            return Double.parseDouble(box.getText().toString());
+        } catch (Exception e) {
+            return 0;
+        }
+
+    }
+
+    private double round(double value) {
+
+        return Math.round(value * 100.0) / 100.0;
+
+    }
+
+    /* Replace this with real Attendance data later */
+    private double getLeaveDaysFromAttendance() {
+
+        int present = 20;
+        int halfDay = 2;
+        int absent = 3;
+
+        return absent + (halfDay * 0.5);
     }
 }
