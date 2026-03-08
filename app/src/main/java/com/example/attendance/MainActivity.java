@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new DailyAttendanceFragment(), "Daily Attendance");
         adapter.addFragment(new ViewAttendanceFragment(), "View Attendance");
+        adapter.addFragment(new SalaryFragment(), "Salary");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
