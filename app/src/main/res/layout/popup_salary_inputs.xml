@@ -1,0 +1,92 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/monthlySalary"
+        android:hint="Monthly Salary"
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/tax"
+        android:hint="Tax"
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/medicine"
+        android:hint="Medicine Deduction"
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="PF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <RadioGroup
+        android:id="@+id/pfGroup"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/pfYes"
+            android:text="Yes"/>
+
+        <RadioButton
+            android:id="@+id/pfNo"
+            android:text="No"/>
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/pfAmount"
+        android:hint="PF Amount"
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="Scheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <RadioGroup
+        android:id="@+id/schemeGroup"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/schemeYes"
+            android:text="Yes"/>
+
+        <RadioButton
+            android:id="@+id/schemeNo"
+            android:text="No"/>
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/schemeAmount"
+        android:hint="Scheme Amount"
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/saveInputs"
+        android:text="Save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
+
+</ScrollView>
