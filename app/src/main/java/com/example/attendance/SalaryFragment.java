@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.*;
 import android.widget.*;
 
-import com.example.attendance.utils.SalaryCalculator;
+import com.example.attendance.SalaryCalculator;
 
 import java.util.Calendar;
 
