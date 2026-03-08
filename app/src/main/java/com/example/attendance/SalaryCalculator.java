@@ -1,4 +1,4 @@
-package com.example.attendance
+package com.example.attendance;
 
 import java.util.Calendar;
 
