@@ -2,91 +2,112 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<LinearLayout
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <EditText
-        android:id="@+id/monthlySalary"
-        android:hint="Monthly Salary"
-        android:inputType="numberDecimal"
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/tax"
-        android:hint="Tax"
-        android:inputType="numberDecimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/monthlySalary"
+            android:hint="Monthly Salary"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
-    <EditText
-        android:id="@+id/medicine"
-        android:hint="Medicine Deduction"
-        android:inputType="numberDecimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/tax"
+            android:hint="Tax"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
-    <TextView
-        android:text="PF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/medicine"
+            android:hint="Medicine Deduction"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"/>
 
-    <RadioGroup
-        android:id="@+id/pfGroup"
-        android:orientation="horizontal">
+        <TextView
+            android:text="PF"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <RadioButton
-            android:id="@+id/pfYes"
-            android:text="Yes"/>
+        <RadioGroup
+            android:id="@+id/pfGroup"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/pfNo"
-            android:text="No"/>
+            <RadioButton
+                android:id="@+id/pfYes"
+                android:text="Yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/pfNo"
+                android:text="No"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"/>
 
-    <EditText
-        android:id="@+id/pfAmount"
-        android:hint="PF Amount"
-        android:inputType="numberDecimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        </RadioGroup>
 
-    <TextView
-        android:text="Scheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/pfAmount"
+            android:hint="PF Amount"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"/>
 
-    <RadioGroup
-        android:id="@+id/schemeGroup"
-        android:orientation="horizontal">
+        <TextView
+            android:text="Scheme"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <RadioButton
-            android:id="@+id/schemeYes"
-            android:text="Yes"/>
+        <RadioGroup
+            android:id="@+id/schemeGroup"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/schemeNo"
-            android:text="No"/>
+            <RadioButton
+                android:id="@+id/schemeYes"
+                android:text="Yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/schemeNo"
+                android:text="No"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"/>
 
-    <EditText
-        android:id="@+id/schemeAmount"
-        android:hint="Scheme Amount"
-        android:inputType="numberDecimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        </RadioGroup>
 
-    <Button
-        android:id="@+id/saveInputs"
-        android:text="Save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/schemeAmount"
+            android:hint="Scheme Amount"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/saveInputs"
+            android:text="Save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </ScrollView>
