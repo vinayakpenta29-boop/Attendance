@@ -1,6 +1,7 @@
 package com.example.attendance;
 
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -51,7 +52,6 @@ public class SalaryFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.salaryInputs) {
-
             showSalaryInputPopup();
         }
 
@@ -68,7 +68,7 @@ public class SalaryFragment extends Fragment {
         EditText medicineBox = dialogView.findViewById(R.id.medicine);
         EditText pfAmountBox = dialogView.findViewById(R.id.pfAmount);
         EditText schemeAmountBox = dialogView.findViewById(R.id.schemeAmount);
-        
+
         RadioGroup pfGroup = dialogView.findViewById(R.id.pfGroup);
         RadioGroup schemeGroup = dialogView.findViewById(R.id.schemeGroup);
 
@@ -110,14 +110,14 @@ public class SalaryFragment extends Fragment {
             monthlySalary = parseDouble(monthlySalaryBox);
             tax = parseDouble(taxBox);
             medicine = parseDouble(medicineBox);
-            
+
             if (pfEnabled)
                 pfAmount = parseDouble(pfAmountBox);
 
             if (schemeEnabled)
                 schemeAmount = parseDouble(schemeAmountBox);
 
-            /* Attendance Leave Logic (example placeholder) */
+            /* GET REAL ATTENDANCE DATA */
             double leaveDays = getLeaveDaysFromAttendance();
 
             Calendar calendar = Calendar.getInstance();
@@ -176,13 +176,15 @@ public class SalaryFragment extends Fragment {
 
     }
 
-    /* Replace this with real Attendance data later */
+    /* GET REAL ATTENDANCE FROM SHARED PREFERENCES */
     private double getLeaveDaysFromAttendance() {
 
-        int present = 20;
-        int halfDay = 2;
-        int absent = 3;
+        SharedPreferences pref =
+                getActivity().getSharedPreferences("attendance_summary", 0);
 
-        return absent + (halfDay * 0.5);
+        int absent = pref.getInt("absentCount", 0);
+        int half = pref.getInt("halfCount", 0);
+
+        return absent + (half * 0.5);
     }
 }
