@@ -1,8 +1,9 @@
 package com.example.attendance;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
@@ -19,16 +20,17 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
         Log.e("APP_CRASH", error);
 
-        Toast.makeText(context,
-                "App Crashed\n\n" + error,
-                Toast.LENGTH_LONG).show();
+        new Thread(() -> {
+            Looper.prepare();
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("App Crashed");
+            builder.setMessage(error);
+            builder.setCancelable(false);
+            builder.setPositiveButton("Close", (d, w) -> System.exit(1));
+            builder.show();
 
-        System.exit(1);
+            Looper.loop();
+        }).start();
     }
 }
