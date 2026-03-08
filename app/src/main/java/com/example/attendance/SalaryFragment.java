@@ -25,8 +25,6 @@ public class SalaryFragment extends Fragment {
     boolean pfEnabled = false;
     boolean schemeEnabled = false;
 
-    int dabbaUnit = 0;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +68,7 @@ public class SalaryFragment extends Fragment {
         EditText medicineBox = dialogView.findViewById(R.id.medicine);
         EditText pfAmountBox = dialogView.findViewById(R.id.pfAmount);
         EditText schemeAmountBox = dialogView.findViewById(R.id.schemeAmount);
-        EditText dabbaBox = dialogView.findViewById(R.id.dabba);
-
+        
         RadioGroup pfGroup = dialogView.findViewById(R.id.pfGroup);
         RadioGroup schemeGroup = dialogView.findViewById(R.id.schemeGroup);
 
@@ -113,8 +110,7 @@ public class SalaryFragment extends Fragment {
             monthlySalary = parseDouble(monthlySalaryBox);
             tax = parseDouble(taxBox);
             medicine = parseDouble(medicineBox);
-            dabbaUnit = (int) parseDouble(dabbaBox);
-
+            
             if (pfEnabled)
                 pfAmount = parseDouble(pfAmountBox);
 
@@ -136,7 +132,6 @@ public class SalaryFragment extends Fragment {
                             year,
                             month,
                             leaveDays,
-                            dabbaUnit,
                             pfEnabled,
                             pfAmount,
                             schemeEnabled,
@@ -153,7 +148,6 @@ public class SalaryFragment extends Fragment {
                     "\nTax : ₹" + result.tax +
                     "\nMedical : ₹" + result.medical +
                     "\nPF : ₹" + result.pf +
-                    "\nDabba : ₹" + round(result.dabbaDeduction) +
                     "\nTotal Deduction : ₹" + round(result.totalDeductions) +
                     "\n\nNet Salary : ₹" + round(result.netSalary)
 
