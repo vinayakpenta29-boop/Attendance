@@ -51,7 +51,8 @@ public class SalaryFragment extends Fragment {
 
         pfEnabled = pref.getBoolean("pfEnabled", false);
         schemeEnabled = pref.getBoolean("schemeEnabled", false);
-
+        
+        calculateSalary();
         return view;
     }
 
@@ -162,43 +163,7 @@ public class SalaryFragment extends Fragment {
             editor.putBoolean("schemeEnabled",schemeEnabled);
 
             editor.apply();
-
-            /* GET REAL ATTENDANCE DATA */
-            double leaveDays = getLeaveDaysFromAttendance();
-
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH) + 1;
-
-            SalaryCalculator.Result result =
-                    SalaryCalculator.calculate(
-                            monthlySalary,
-                            tax,
-                            medicine,
-                            year,
-                            month,
-                            leaveDays,
-                            pfEnabled,
-                            pfAmount,
-                            schemeEnabled,
-                            schemeAmount
-                    );
-
-            salaryResult.setText(
-
-                    "Base Salary : ₹" + result.baseSalary +
-                    "\nPer Day Salary : ₹" + round(result.perDaySalary) +
-                    "\nLeave Days : " + result.leaveDays +
-                    "\nLeave Deduction : ₹" + round(result.leaveDeduction) +
-                    "\nBonus : ₹" + round(result.leaveBonus) +
-                    "\nTax : ₹" + result.tax +
-                    "\nMedical : ₹" + result.medical +
-                    "\nPF : ₹" + result.pf +
-                    "\nTotal Deduction : ₹" + round(result.totalDeductions) +
-                    "\n\nNet Salary : ₹" + round(result.netSalary)
-
-            );
-
+            calculateSalary();
             dialog.dismiss();
 
         });
@@ -220,6 +185,45 @@ public class SalaryFragment extends Fragment {
 
         return Math.round(value * 100.0) / 100.0;
 
+    }
+
+    private void calculateSalary() {
+
+        /* GET REAL ATTENDANCE DATA */
+        double leaveDays = getLeaveDaysFromAttendance();
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+
+        SalaryCalculator.Result result =
+                SalaryCalculator.calculate(
+                        monthlySalary,
+                        tax,
+                        medicine,
+                        year,
+                        month,
+                        leaveDays,
+                        pfEnabled,
+                        pfAmount,
+                        schemeEnabled,
+                        schemeAmount
+                );
+
+        salaryResult.setText(
+
+                "Base Salary : ₹" + result.baseSalary +
+                "\nPer Day Salary : ₹" + round(result.perDaySalary) +
+                "\nLeave Days : " + result.leaveDays +
+                "\nLeave Deduction : ₹" + round(result.leaveDeduction) +
+                "\nBonus : ₹" + round(result.leaveBonus) +
+                "\nTax : ₹" + result.tax +
+                "\nMedical : ₹" + result.medical +
+                "\nPF : ₹" + result.pf +
+                "\nTotal Deduction : ₹" + round(result.totalDeductions) +
+                "\n\nNet Salary : ₹" + round(result.netSalary)
+
+        );
     }
 
     /* GET REAL ATTENDANCE FROM SHARED PREFERENCES */
