@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.*;
 import android.widget.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class ViewAttendanceFragment extends Fragment {
 
@@ -18,6 +20,9 @@ public class ViewAttendanceFragment extends Fragment {
 
     int absentCount = 0;
     int halfCount = 0;
+
+    SimpleDateFormat keyFormat =
+            new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +54,7 @@ public class ViewAttendanceFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
 
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
+        int month = calendar.get(Calendar.MONTH);
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -58,7 +63,7 @@ public class ViewAttendanceFragment extends Fragment {
 
         int dayCounter = 1;
 
-        /* HEADER ROW */
+        /* HEADER */
 
         TableRow headerRow = new TableRow(getContext());
 
@@ -70,14 +75,13 @@ public class ViewAttendanceFragment extends Fragment {
             tv.setText(d);
             tv.setPadding(20,20,20,20);
             tv.setGravity(Gravity.CENTER);
-            tv.setTextSize(16);
 
             headerRow.addView(tv);
         }
 
         tableLayout.addView(headerRow);
 
-        /* CALENDAR GRID */
+        /* CALENDAR */
 
         while(dayCounter <= daysInMonth){
 
@@ -96,7 +100,10 @@ public class ViewAttendanceFragment extends Fragment {
                 }
                 else if(dayCounter <= daysInMonth){
 
-                    String dateKey = year + "-" + month + "-" + dayCounter;
+                    Calendar tempCal = Calendar.getInstance();
+                    tempCal.set(year, month, dayCounter);
+
+                    String dateKey = keyFormat.format(tempCal.getTime());
 
                     String status = pref.getString(dateKey,"");
 
@@ -146,8 +153,6 @@ public class ViewAttendanceFragment extends Fragment {
                 "\nHalf Days Value = " + halfValue +
                 "\nTotal Leaves = " + totalLeaves
         );
-
-        /* SAVE VALUES FOR SALARY TAB */
 
         SharedPreferences.Editor editor =
                 getActivity().getSharedPreferences("attendance_summary", 0).edit();
