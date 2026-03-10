@@ -75,13 +75,14 @@ public class ViewAttendanceFragment extends Fragment {
             tv.setText(d);
             tv.setPadding(20,20,20,20);
             tv.setGravity(Gravity.CENTER);
+            tv.setTextSize(16);
 
             headerRow.addView(tv);
         }
 
         tableLayout.addView(headerRow);
 
-        /* CALENDAR */
+        /* CALENDAR GRID */
 
         while(dayCounter <= daysInMonth){
 
@@ -89,16 +90,28 @@ public class ViewAttendanceFragment extends Fragment {
 
             for(int i=0;i<7;i++){
 
-                TextView cell = new TextView(getContext());
-                cell.setPadding(20,40,20,40);
+                LinearLayout cell = new LinearLayout(getContext());
+                cell.setOrientation(LinearLayout.VERTICAL);
                 cell.setGravity(Gravity.CENTER);
+                cell.setPadding(20,20,20,20);
+
+                TextView dayNumber = new TextView(getContext());
+                dayNumber.setTextSize(14);
+                dayNumber.setGravity(Gravity.CENTER);
+
+                TextView statusText = new TextView(getContext());
+                statusText.setTextSize(18);
+                statusText.setGravity(Gravity.CENTER);
 
                 if(dayCounter == 1 && i < firstDayOfWeek){
 
-                    cell.setText("");
+                    dayNumber.setText("");
+                    statusText.setText("");
 
                 }
                 else if(dayCounter <= daysInMonth){
+
+                    dayNumber.setText(String.valueOf(dayCounter));
 
                     Calendar tempCal = Calendar.getInstance();
                     tempCal.set(year, month, dayCounter);
@@ -129,10 +142,13 @@ public class ViewAttendanceFragment extends Fragment {
 
                     }
 
-                    cell.setText(letter);
+                    statusText.setText(letter);
 
                     dayCounter++;
                 }
+
+                cell.addView(dayNumber);
+                cell.addView(statusText);
 
                 row.addView(cell);
             }
@@ -142,7 +158,7 @@ public class ViewAttendanceFragment extends Fragment {
 
         summaryBox.setText(
                 "Half Days:\n" + halfDates +
-                "\nAbsent:\n" + absentDates
+                        "\nAbsent:\n" + absentDates
         );
 
         double halfValue = halfCount * 0.5;
@@ -150,8 +166,8 @@ public class ViewAttendanceFragment extends Fragment {
 
         calculationBox.setText(
                 "Absent Days = " + absentCount +
-                "\nHalf Days Value = " + halfValue +
-                "\nTotal Leaves = " + totalLeaves
+                        "\nHalf Days Value = " + halfValue +
+                        "\nTotal Leaves = " + totalLeaves
         );
 
         SharedPreferences.Editor editor =
