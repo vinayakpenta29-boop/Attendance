@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.*;
 import android.widget.*;
 
-import java.util.*;
+import java.util.Calendar;
 
 public class ViewAttendanceFragment extends Fragment {
 
@@ -49,7 +49,7 @@ public class ViewAttendanceFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
 
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -96,38 +96,30 @@ public class ViewAttendanceFragment extends Fragment {
                 }
                 else if(dayCounter <= daysInMonth){
 
-                    String status = "";
+                    String dateKey = year + "-" + month + "-" + dayCounter;
 
-                    Map<String, ?> all = pref.getAll();
-
-                    for (Map.Entry<String, ?> entry : all.entrySet()) {
-
-                        String savedDate = entry.getKey();
-                        String savedStatus = entry.getValue().toString();
-
-                        if (savedDate.contains("-" + dayCounter) ||
-                            savedDate.contains("/" + dayCounter) ||
-                            savedDate.endsWith(String.valueOf(dayCounter))) {
-
-                            status = savedStatus;
-                            break;
-                        }
-                    }
+                    String status = pref.getString(dateKey,"");
 
                     String letter = "";
 
                     if(status.equals("Present")){
+
                         letter = "P";
+
                     }
                     else if(status.equals("Half Day")){
+
                         letter = "H";
                         halfCount++;
                         halfDates.append(dateKey).append("\n");
+
                     }
                     else if(status.equals("Absent")){
+
                         letter = "A";
                         absentCount++;
                         absentDates.append(dateKey).append("\n");
+
                     }
 
                     cell.setText(letter);
@@ -143,7 +135,7 @@ public class ViewAttendanceFragment extends Fragment {
 
         summaryBox.setText(
                 "Half Days:\n" + halfDates +
-                        "\nAbsent:\n" + absentDates
+                "\nAbsent:\n" + absentDates
         );
 
         double halfValue = halfCount * 0.5;
@@ -151,8 +143,8 @@ public class ViewAttendanceFragment extends Fragment {
 
         calculationBox.setText(
                 "Absent Days = " + absentCount +
-                        "\nHalf Days Value = " + halfValue +
-                        "\nTotal Leaves = " + totalLeaves
+                "\nHalf Days Value = " + halfValue +
+                "\nTotal Leaves = " + totalLeaves
         );
 
         /* SAVE VALUES FOR SALARY TAB */
