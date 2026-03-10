@@ -23,6 +23,9 @@ public class DailyAttendanceFragment extends Fragment {
 
     Calendar calendar;
 
+    SimpleDateFormat displayFormat;
+    SimpleDateFormat storageFormat;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,8 +38,10 @@ public class DailyAttendanceFragment extends Fragment {
 
         calendar = Calendar.getInstance();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        dateBox.setText(sdf.format(calendar.getTime()));
+        displayFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        storageFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        dateBox.setText(displayFormat.format(calendar.getTime()));
 
         dateBox.setOnClickListener(v -> {
 
@@ -44,7 +49,7 @@ public class DailyAttendanceFragment extends Fragment {
                     (view1, year, month, dayOfMonth) -> {
 
                         calendar.set(year, month, dayOfMonth);
-                        dateBox.setText(sdf.format(calendar.getTime()));
+                        dateBox.setText(displayFormat.format(calendar.getTime()));
 
                     },
                     calendar.get(Calendar.YEAR),
@@ -56,9 +61,11 @@ public class DailyAttendanceFragment extends Fragment {
 
         String[] options = {"Present", "Half Day", "Absent"};
 
-        ArrayAdapter adapter = new ArrayAdapter(getContext(),
+        ArrayAdapter adapter = new ArrayAdapter(
+                getContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                options);
+                options
+        );
 
         spinner.setAdapter(adapter);
 
@@ -69,13 +76,15 @@ public class DailyAttendanceFragment extends Fragment {
 
     private void saveAttendance() {
 
-        String date = dateBox.getText().toString();
         String status = spinner.getSelectedItem().toString();
+
+        /* Store date in ISO format for calendar matching */
+        String storageDate = storageFormat.format(calendar.getTime());
 
         SharedPreferences pref = getActivity().getSharedPreferences("attendance", 0);
         SharedPreferences.Editor editor = pref.edit();
 
-        editor.putString(date, status);
+        editor.putString(storageDate, status);
         editor.apply();
 
         Toast.makeText(getContext(), "Attendance Added", Toast.LENGTH_SHORT).show();
