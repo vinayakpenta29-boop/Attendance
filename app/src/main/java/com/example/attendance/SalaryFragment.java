@@ -40,6 +40,18 @@ public class SalaryFragment extends Fragment {
 
         salaryResult = view.findViewById(R.id.salaryResult);
 
+        SharedPreferences pref =
+        getActivity().getSharedPreferences("salary_inputs", 0);
+
+        monthlySalary = pref.getFloat("monthlySalary", 0);
+        tax = pref.getFloat("tax", 0);
+        medicine = pref.getFloat("medicine", 0);
+        pfAmount = pref.getFloat("pfAmount", 0);
+        schemeAmount = pref.getFloat("schemeAmount", 0);
+
+        pfEnabled = pref.getBoolean("pfEnabled", false);
+        schemeEnabled = pref.getBoolean("schemeEnabled", false);
+
         return view;
     }
 
@@ -73,6 +85,24 @@ public class SalaryFragment extends Fragment {
         RadioGroup schemeGroup = dialogView.findViewById(R.id.schemeGroup);
 
         Button saveBtn = dialogView.findViewById(R.id.saveInputs);
+
+        /* Load saved values into fields */
+
+        monthlySalaryBox.setText(monthlySalary == 0 ? "" : String.valueOf(monthlySalary));
+        taxBox.setText(tax == 0 ? "" : String.valueOf(tax));
+        medicineBox.setText(medicine == 0 ? "" : String.valueOf(medicine));
+
+        if(pfEnabled){
+            pfGroup.check(R.id.pfYes);
+            pfAmountBox.setVisibility(View.VISIBLE);
+            pfAmountBox.setText(String.valueOf(pfAmount));
+        }
+
+        if(schemeEnabled){
+            schemeGroup.check(R.id.schemeYes);
+            schemeAmountBox.setVisibility(View.VISIBLE);
+            schemeAmountBox.setText(String.valueOf(schemeAmount));
+        }
 
         pfAmountBox.setVisibility(View.GONE);
         schemeAmountBox.setVisibility(View.GONE);
@@ -116,6 +146,22 @@ public class SalaryFragment extends Fragment {
 
             if (schemeEnabled)
                 schemeAmount = parseDouble(schemeAmountBox);
+
+            /* SAVE INPUTS */
+
+            SharedPreferences.Editor editor =
+                    getActivity().getSharedPreferences("salary_inputs",0).edit();
+
+            editor.putFloat("monthlySalary",(float) monthlySalary);
+            editor.putFloat("tax",(float) tax);
+            editor.putFloat("medicine",(float) medicine);
+            editor.putFloat("pfAmount",(float) pfAmount);
+            editor.putFloat("schemeAmount",(float) schemeAmount);
+
+            editor.putBoolean("pfEnabled",pfEnabled);
+            editor.putBoolean("schemeEnabled",schemeEnabled);
+
+            editor.apply();
 
             /* GET REAL ATTENDANCE DATA */
             double leaveDays = getLeaveDaysFromAttendance();
