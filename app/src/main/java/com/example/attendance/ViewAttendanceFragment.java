@@ -12,7 +12,7 @@ import java.util.*;
 
 public class ViewAttendanceFragment extends Fragment {
 
-    LinearLayout tableLayout;
+    TableLayout tableLayout;
     TextView summaryBox;
     TextView calculationBox;
 
@@ -37,7 +37,6 @@ public class ViewAttendanceFragment extends Fragment {
     private void loadAttendance() {
 
         SharedPreferences pref = getActivity().getSharedPreferences("attendance", 0);
-        Map<String, ?> all = pref.getAll();
 
         absentCount = 0;
         halfCount = 0;
@@ -47,42 +46,90 @@ public class ViewAttendanceFragment extends Fragment {
 
         tableLayout.removeAllViews();
 
-        for (Map.Entry<String, ?> entry : all.entrySet()) {
+        Calendar calendar = Calendar.getInstance();
 
-            String date = entry.getKey();
-            String status = entry.getValue().toString();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
 
-            TextView row = new TextView(getContext());
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-            String letter = "";
+        int firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-            if (status.equals("Present")) {
+        int dayCounter = 1;
 
-                letter = "P";
+        /* HEADER ROW */
 
-            } else if (status.equals("Half Day")) {
+        TableRow headerRow = new TableRow(getContext());
 
-                letter = "H";
-                halfCount++;
-                halfDates.append(date).append("\n");
+        String[] days = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
 
-            } else {
+        for(String d : days){
 
-                letter = "A";
-                absentCount++;
-                absentDates.append(date).append("\n");
+            TextView tv = new TextView(getContext());
+            tv.setText(d);
+            tv.setPadding(20,20,20,20);
+            tv.setGravity(Gravity.CENTER);
+            tv.setTextSize(16);
 
+            headerRow.addView(tv);
+        }
+
+        tableLayout.addView(headerRow);
+
+        /* CALENDAR GRID */
+
+        while(dayCounter <= daysInMonth){
+
+            TableRow row = new TableRow(getContext());
+
+            for(int i=0;i<7;i++){
+
+                TextView cell = new TextView(getContext());
+                cell.setPadding(20,40,20,40);
+                cell.setGravity(Gravity.CENTER);
+
+                if(dayCounter == 1 && i < firstDayOfWeek){
+
+                    cell.setText("");
+
+                }
+                else if(dayCounter <= daysInMonth){
+
+                    String dateKey = year + "-" + (month+1) + "-" + dayCounter;
+
+                    String status = pref.getString(dateKey,"");
+
+                    String letter = "";
+
+                    if(status.equals("Present")){
+                        letter = "P";
+                    }
+                    else if(status.equals("Half Day")){
+                        letter = "H";
+                        halfCount++;
+                        halfDates.append(dateKey).append("\n");
+                    }
+                    else if(status.equals("Absent")){
+                        letter = "A";
+                        absentCount++;
+                        absentDates.append(dateKey).append("\n");
+                    }
+
+                    cell.setText(letter);
+
+                    dayCounter++;
+                }
+
+                row.addView(cell);
             }
-
-            row.setText(date + " : " + letter);
-            row.setPadding(10,10,10,10);
 
             tableLayout.addView(row);
         }
 
         summaryBox.setText(
                 "Half Days:\n" + halfDates +
-                "\nAbsent:\n" + absentDates
+                        "\nAbsent:\n" + absentDates
         );
 
         double halfValue = halfCount * 0.5;
@@ -90,8 +137,8 @@ public class ViewAttendanceFragment extends Fragment {
 
         calculationBox.setText(
                 "Absent Days = " + absentCount +
-                "\nHalf Days Value = " + halfValue +
-                "\nTotal Leaves = " + totalLeaves
+                        "\nHalf Days Value = " + halfValue +
+                        "\nTotal Leaves = " + totalLeaves
         );
 
         /* SAVE VALUES FOR SALARY TAB */
