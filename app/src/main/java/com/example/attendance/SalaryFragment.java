@@ -105,9 +105,6 @@ public class SalaryFragment extends Fragment {
             schemeAmountBox.setText(String.valueOf(schemeAmount));
         }
 
-        pfAmountBox.setVisibility(View.GONE);
-        schemeAmountBox.setVisibility(View.GONE);
-
         pfGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
             if (checkedId == R.id.pfYes) {
