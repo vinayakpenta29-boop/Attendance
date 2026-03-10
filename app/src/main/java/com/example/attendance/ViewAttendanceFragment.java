@@ -96,9 +96,23 @@ public class ViewAttendanceFragment extends Fragment {
                 }
                 else if(dayCounter <= daysInMonth){
 
-                    String dateKey = year + "-" + (month+1) + "-" + dayCounter;
+                    String status = "";
 
-                    String status = pref.getString(dateKey,"");
+                    Map<String, ?> all = pref.getAll();
+
+                    for (Map.Entry<String, ?> entry : all.entrySet()) {
+
+                        String savedDate = entry.getKey();
+                        String savedStatus = entry.getValue().toString();
+
+                        if (savedDate.contains("-" + dayCounter) ||
+                            savedDate.contains("/" + dayCounter) ||
+                            savedDate.endsWith(String.valueOf(dayCounter))) {
+
+                            status = savedStatus;
+                            break;
+                        }
+                    }
 
                     String letter = "";
 
