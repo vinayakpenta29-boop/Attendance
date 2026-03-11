@@ -48,6 +48,7 @@ public class ViewAttendanceFragment extends Fragment {
 
         StringBuilder absentDates = new StringBuilder();
         StringBuilder halfDates = new StringBuilder();
+        StringBuilder dabbaDates = new StringBuilder();
 
         tableLayout.removeAllViews();
 
@@ -148,12 +149,15 @@ public class ViewAttendanceFragment extends Fragment {
 
                     if(dabba.equals("Dabba")){
                         dabbaLetter = "D";
+                        dabbaDates.append(dateKey).append("\n");
                     }
                     else if(dabba.equals("Ghari")){
                         dabbaLetter = "G";
+                        dabbaDates.append(dateKey).append("\n");
                     }
                     else if(dabba.equals("Late")){
-                    dabbaLetter = "L";
+                        dabbaLetter = "L";
+                        dabbaDates.append(dateKey).append("\n");
                     }
 
                     statusText.setText(letter + "/" + dabbaLetter);
@@ -171,8 +175,10 @@ public class ViewAttendanceFragment extends Fragment {
         }
 
         summaryBox.setText(
-                "Half Days:\n" + halfDates +
-                        "\nAbsent:\n" + absentDates
+                "Half Days           Absents           Dabbas\n\n"
+                + halfDates + "        "
+                + absentDates + "        "
+                + dabbaDates
         );
 
         double halfValue = halfCount * 0.5;
