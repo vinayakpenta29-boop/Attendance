@@ -156,7 +156,7 @@ public class ViewAttendanceFragment extends Fragment {
                     dabbaLetter = "L";
                     }
 
-                    statusText.setText(letter + " / " + dabbaLetter);
+                    statusText.setText(letter + "/" + dabbaLetter);
 
                     dayCounter++;
                 }
