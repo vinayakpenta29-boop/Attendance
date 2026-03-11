@@ -19,6 +19,7 @@ public class DailyAttendanceFragment extends Fragment {
 
     EditText dateBox;
     Spinner spinner;
+    Spinner dabbaSpinner;
     Button addButton;
 
     Calendar calendar;
@@ -34,6 +35,7 @@ public class DailyAttendanceFragment extends Fragment {
 
         dateBox = view.findViewById(R.id.dateBox);
         spinner = view.findViewById(R.id.spinner);
+        dabbaSpinner = view.findViewById(R.id.dabbaSpinner);
         addButton = view.findViewById(R.id.addAttendance);
 
         calendar = Calendar.getInstance();
@@ -59,6 +61,8 @@ public class DailyAttendanceFragment extends Fragment {
             picker.show();
         });
 
+        /* ATTENDANCE STATUS SPINNER */
+
         String[] options = {"Present", "Half Day", "Absent"};
 
         ArrayAdapter adapter = new ArrayAdapter(
@@ -69,6 +73,20 @@ public class DailyAttendanceFragment extends Fragment {
 
         spinner.setAdapter(adapter);
 
+
+        /* DABBA STATUS SPINNER */
+
+        String[] dabbaOptions = {"Dabba", "Ghari", "Late"};
+
+        ArrayAdapter dabbaAdapter = new ArrayAdapter(
+                getContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                dabbaOptions
+        );
+
+        dabbaSpinner.setAdapter(dabbaAdapter);
+
+
         addButton.setOnClickListener(v -> saveAttendance());
 
         return view;
@@ -77,14 +95,16 @@ public class DailyAttendanceFragment extends Fragment {
     private void saveAttendance() {
 
         String status = spinner.getSelectedItem().toString();
+        String dabbaStatus = dabbaSpinner.getSelectedItem().toString();
 
-        /* Store date in ISO format for calendar matching */
         String storageDate = storageFormat.format(calendar.getTime());
 
         SharedPreferences pref = getActivity().getSharedPreferences("attendance", 0);
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putString(storageDate, status);
+        editor.putString(storageDate + "_dabba", dabbaStatus);
+
         editor.apply();
 
         Toast.makeText(getContext(), "Attendance Added", Toast.LENGTH_SHORT).show();
