@@ -76,7 +76,7 @@ public class DailyAttendanceFragment extends Fragment {
 
         /* DABBA STATUS SPINNER */
 
-        String[] dabbaOptions = {"Dabba", "Ghari", "Late"};
+        String[] dabbaOptions = {"Select Dabba", "Dabba", "Ghari", "Late"};
 
         ArrayAdapter dabbaAdapter = new ArrayAdapter(
                 getContext(),
@@ -85,6 +85,7 @@ public class DailyAttendanceFragment extends Fragment {
         );
 
         dabbaSpinner.setAdapter(dabbaAdapter);
+        dabbaSpinner.setSelection(0);
 
 
         addButton.setOnClickListener(v -> saveAttendance());
@@ -103,9 +104,14 @@ public class DailyAttendanceFragment extends Fragment {
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putString(storageDate, status);
-        editor.putString(storageDate + "_dabba", dabbaStatus);
+        if(!dabbaStatus.equals("Select Dabba")){
+            editor.putString(storageDate + "_dabba", dabbaStatus);
+        }
 
         editor.apply();
+
+        spinner.setSelection(0);
+        dabbaSpinner.setSelection(0);
 
         Toast.makeText(getContext(), "Attendance Added", Toast.LENGTH_SHORT).show();
     }
