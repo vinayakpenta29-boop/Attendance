@@ -119,8 +119,12 @@ public class ViewAttendanceFragment extends Fragment {
                     String dateKey = keyFormat.format(tempCal.getTime());
 
                     String status = pref.getString(dateKey,"");
-
+                    
+                    String dabba = pref.getString(dateKey + "_dabba","");
+                    
                     String letter = "";
+
+                    String dabbaLetter = "-";
 
                     if(status.equals("Present")){
 
@@ -142,7 +146,17 @@ public class ViewAttendanceFragment extends Fragment {
 
                     }
 
-                    statusText.setText(letter);
+                    if(dabba.equals("Dabba")){
+                        dabbaLetter = "D";
+                    }
+                    else if(dabba.equals("Ghari")){
+                        dabbaLetter = "G";
+                    }
+                    else if(dabba.equals("Late")){
+                    dabbaLetter = "L";
+                    }
+
+                    statusText.setText(letter + " / " + dabbaLetter);
 
                     dayCounter++;
                 }
