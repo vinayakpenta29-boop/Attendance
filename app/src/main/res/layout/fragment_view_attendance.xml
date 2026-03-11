@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Calendar Attendance Table -->
         <TableLayout
             android:id="@+id/tableLayout"
             android:layout_width="match_parent"
@@ -15,16 +16,21 @@
             android:stretchColumns="*"
             android:shrinkColumns="*" />
 
-        <TextView
-            android:id="@+id/summaryBox"
-            android:textSize="16sp"
-            android:paddingTop="20dp"
+        <!-- Attendance History Table (Half Day / Absent / Dabba) -->
+        <TableLayout
+            android:id="@+id/summaryTable"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:stretchColumns="*"
+            android:background="#DDDDDD"
+            android:padding="5dp"/>
 
+        <!-- Leave Calculation Box -->
         <TextView
             android:id="@+id/calculationBox"
             android:textSize="18sp"
+            android:textStyle="bold"
             android:paddingTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
