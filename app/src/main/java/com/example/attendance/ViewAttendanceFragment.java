@@ -15,7 +15,7 @@ import java.util.Locale;
 public class ViewAttendanceFragment extends Fragment {
 
     TableLayout tableLayout;
-    TextView summaryBox;
+    TableLayout summaryTable;
     TextView calculationBox;
 
     int absentCount = 0;
@@ -31,7 +31,7 @@ public class ViewAttendanceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_view_attendance, container, false);
 
         tableLayout = view.findViewById(R.id.tableLayout);
-        summaryBox = view.findViewById(R.id.summaryBox);
+        summaryTable = view.findViewById(R.id.summaryTable);
         calculationBox = view.findViewById(R.id.calculationBox);
 
         loadAttendance();
@@ -46,9 +46,9 @@ public class ViewAttendanceFragment extends Fragment {
         absentCount = 0;
         halfCount = 0;
 
-        StringBuilder absentDates = new StringBuilder();
-        StringBuilder halfDates = new StringBuilder();
-        StringBuilder dabbaDates = new StringBuilder();
+        ArrayList<String> halfDates = new ArrayList<>();
+        ArrayList<String> absentDates = new ArrayList<>();
+        ArrayList<String> dabbaDates = new ArrayList<>();
 
         tableLayout.removeAllViews();
 
@@ -136,28 +136,28 @@ public class ViewAttendanceFragment extends Fragment {
 
                         letter = "H";
                         halfCount++;
-                        halfDates.append(dateKey).append("\n");
+                        halfDates.add(dateKey);
 
                     }
                     else if(status.equals("Absent")){
 
                         letter = "A";
                         absentCount++;
-                        absentDates.append(dateKey).append("\n");
+                        absentDates.add(dateKey);
 
                     }
 
                     if(dabba.equals("Dabba")){
                         dabbaLetter = "D";
-                        dabbaDates.append(dateKey).append("\n");
+                        dabbaDates.add(dateKey);
                     }
                     else if(dabba.equals("Ghari")){
                         dabbaLetter = "G";
-                        dabbaDates.append(dateKey).append("\n");
+                        dabbaDates.add(dateKey);
                     }
                     else if(dabba.equals("Late")){
                         dabbaLetter = "L";
-                        dabbaDates.append(dateKey).append("\n");
+                        dabbaDates.add(dateKey);
                     }
 
                     statusText.setText(letter + "/" + dabbaLetter);
@@ -174,12 +174,64 @@ public class ViewAttendanceFragment extends Fragment {
             tableLayout.addView(row);
         }
 
-        summaryBox.setText(
-                "Half Days           Absents           Dabbas\n\n"
-                + halfDates + "        "
-                + absentDates + "        "
-                + dabbaDates
-        );
+        summaryTable.removeAllViews();
+
+        /* HEADER ROW */
+
+        TableRow header = new TableRow(getContext());
+
+        TextView h1 = new TextView(getContext());
+        TextView h2 = new TextView(getContext());
+        TextView h3 = new TextView(getContext());
+
+        h1.setText("H-Days");
+        h2.setText("Absents");
+        h3.setText("Dabbas");
+
+        h1.setPadding(20,20,20,20);
+        h2.setPadding(20,20,20,20);
+        h3.setPadding(20,20,20,20);
+
+        header.addView(h1);
+        header.addView(h2);
+        header.addView(h3);
+
+        summaryTable.addView(header);
+
+        /* MAX ROW COUNT */
+
+        int max = Math.max(halfDates.size(),
+                  Math.max(absentDates.size(), dabbaDates.size()));
+
+        /* DATA ROWS */
+
+        for(int i=0;i<max;i++){
+
+            TableRow row = new TableRow(getContext());
+
+            TextView c1 = new TextView(getContext());
+            TextView c2 = new TextView(getContext());
+            TextView c3 = new TextView(getContext());
+
+            c1.setPadding(20,20,20,20);
+            c2.setPadding(20,20,20,20);
+            c3.setPadding(20,20,20,20);
+
+            if(i < halfDates.size())
+                c1.setText(halfDates.get(i));
+
+            if(i < absentDates.size())
+                c2.setText(absentDates.get(i));
+
+            if(i < dabbaDates.size())
+                c3.setText(dabbaDates.get(i));
+
+            row.addView(c1);
+            row.addView(c2);
+            row.addView(c3);
+
+            summaryTable.addView(row);
+        }
 
         double halfValue = halfCount * 0.5;
         double totalLeaves = absentCount + halfValue;
