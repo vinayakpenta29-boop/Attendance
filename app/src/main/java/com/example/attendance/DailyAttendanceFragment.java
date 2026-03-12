@@ -73,6 +73,34 @@ public class DailyAttendanceFragment extends Fragment {
 
         spinner.setAdapter(adapter);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String status = spinner.getSelectedItem().toString();
+
+                if(status.equals("Half Day") || status.equals("Absent")){
+
+                    dabbaSpinner.setEnabled(false);
+                    dabbaSpinner.setSelection(4); // Select "Absent" automatically
+                    dabbaSpinner.setAlpha(0.4f);
+
+                }
+                else{
+
+                    dabbaSpinner.setEnabled(true);
+                    dabbaSpinner.setSelection(0); // Reset to Select Dabba
+                    dabbaSpinner.setAlpha(1f);
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+
+        });
+
 
         /* DABBA STATUS SPINNER */
 
@@ -104,8 +132,14 @@ public class DailyAttendanceFragment extends Fragment {
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putString(storageDate, status);
-        if(!dabbaStatus.equals("Select Dabba")){
-            editor.putString(storageDate + "_dabba", dabbaStatus);
+        
+        if(status.equals("Half Day") || status.equals("Absent")){
+              editor.putString(storageDate + "_dabba", "Absent");
+
+        }
+        else if(!dabbaStatus.equals("Select Dabba")){
+              editor.putString(storageDate + "_dabba", dabbaStatus);
+
         }
 
         editor.apply();
