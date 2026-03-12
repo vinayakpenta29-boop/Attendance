@@ -237,4 +237,12 @@ public class SalaryFragment extends Fragment {
 
         return absent + (half * 0.5);
     }
+
+    private int getDabbaUnitsFromAttendance() {
+
+        SharedPreferences pref =
+                getActivity().getSharedPreferences("attendance_summary", 0);
+
+        return pref.getInt("dabbaCount", 0);
+    }
 }
