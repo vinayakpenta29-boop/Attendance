@@ -26,6 +26,7 @@ public class ViewAttendanceFragment extends Fragment {
     int dabbaD = 0;
     int dabbaG = 0;
     int dabbaL = 0;
+    int dabbaA = 0;
 
     SimpleDateFormat keyFormat =
             new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -170,6 +171,12 @@ public class ViewAttendanceFragment extends Fragment {
                         dabbaDates.add(dateKey);
                         dabbaCount++;
                         dabbaL++;
+                    }
+                    else if(dabba.equals("Absent")){
+                        dabbaLetter = "A";
+                        dabbaDates.add(dateKey);
+                        dabbaCount++;
+                        dabbaA++;
                     }
 
                     statusText.setText(letter + "/" + dabbaLetter);
