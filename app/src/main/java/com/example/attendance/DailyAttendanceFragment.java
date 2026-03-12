@@ -76,7 +76,7 @@ public class DailyAttendanceFragment extends Fragment {
 
         /* DABBA STATUS SPINNER */
 
-        String[] dabbaOptions = {"Select Dabba", "Dabba", "Ghari", "Late"};
+        String[] dabbaOptions = {"Select Dabba", "Dabba", "Ghari", "Late", "Absent"};
 
         ArrayAdapter dabbaAdapter = new ArrayAdapter(
                 getContext(),
