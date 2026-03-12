@@ -11,6 +11,7 @@ import android.widget.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.ArrayList;
 
 public class ViewAttendanceFragment extends Fragment {
 
