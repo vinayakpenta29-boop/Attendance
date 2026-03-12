@@ -273,6 +273,7 @@ public class ViewAttendanceFragment extends Fragment {
         editor.putInt("absentCount", absentCount);
         editor.putInt("halfCount", halfCount);
         editor.putFloat("totalLeaves", (float) totalLeaves);
+        editor.putInt("dabbaCount", dabbaCount);
 
         editor.apply();
     }
