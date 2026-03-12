@@ -32,16 +32,6 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: ./gradlew assembleRelease
 
-      # (Optional) still build debug if you want
-      - name: Build Debug APK using Gradle Wrapper
-        run: ./gradlew assembleDebug
-
-      - name: Upload debug APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
-
       - name: Upload release APK artifact
         uses: actions/upload-artifact@v4
         with:
