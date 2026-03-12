@@ -16,6 +16,7 @@ public class SalaryCalculator {
         public double tax;
         public double medical;
         public double pf;
+        public double dabbaDeduction;
         public double totalDeductions;
         public double netSalary;
     }
@@ -28,6 +29,7 @@ public class SalaryCalculator {
             int year,
             int month,
             double leaveDays,
+            int dabbaUnit,
             boolean pfEnabled,
             double pfAmount,
             boolean schemeEnabled,
@@ -52,6 +54,9 @@ public class SalaryCalculator {
 
         double salaryWithBonus = grossSalary + leaveBonus;
 
+        double dabbaPerDay = 900.0 / monthDays;
+        double dabbaDeduction = dabbaUnit * dabbaPerDay;
+
     
         double pf = pfEnabled ? pfAmount : 0;
         double scheme = schemeEnabled ? schemeAmount : 0;
@@ -60,7 +65,8 @@ public class SalaryCalculator {
                 leaveDeduction +
                 tax +
                 medical +
-                pf;
+                pf +
+                dabbaDeduction;
 
         double netSalary =
                 salaryWithBonus
@@ -77,6 +83,7 @@ public class SalaryCalculator {
         r.tax = tax;
         r.medical = medical;
         r.pf = pf;
+        r.dabbaDeduction = dabbaDeduction;
         r.totalDeductions = totalDeductions;
         r.netSalary = netSalary;
 
