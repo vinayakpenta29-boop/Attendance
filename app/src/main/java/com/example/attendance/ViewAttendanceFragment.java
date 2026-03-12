@@ -31,6 +31,9 @@ public class ViewAttendanceFragment extends Fragment {
     SimpleDateFormat keyFormat =
             new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
+    SimpleDateFormat displayFormat =
+            new SimpleDateFormat("dd MMM", Locale.getDefault());
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -125,6 +128,7 @@ public class ViewAttendanceFragment extends Fragment {
                     tempCal.set(year, month, dayCounter);
 
                     String dateKey = keyFormat.format(tempCal.getTime());
+                    String displayDate = displayFormat.format(tempCal.getTime());
 
                     String status = pref.getString(dateKey,"");
                     
@@ -143,38 +147,38 @@ public class ViewAttendanceFragment extends Fragment {
 
                         letter = "H";
                         halfCount++;
-                        halfDates.add(dateKey);
+                        halfDates.add(displayDate);
 
                     }
                     else if(status.equals("Absent")){
 
                         letter = "A";
                         absentCount++;
-                        absentDates.add(dateKey);
+                        absentDates.add(displayDate);
 
                     }
 
                     if(dabba.equals("Dabba")){
                         dabbaLetter = "D";
-                        dabbaDates.add(dateKey);
+                        dabbaDates.add(displayDate);
                         dabbaCount++;
                         dabbaD++;
                     }
                     else if(dabba.equals("Ghari")){
                         dabbaLetter = "G";
-                        dabbaDates.add(dateKey);
+                        dabbaDates.add(displayDate);
                         dabbaCount++;
                         dabbaG++;
                     }
                     else if(dabba.equals("Late")){
                         dabbaLetter = "L";
-                        dabbaDates.add(dateKey);
+                        dabbaDates.add(displayDate);
                         dabbaCount++;
                         dabbaL++;
                     }
                     else if(dabba.equals("Absent")){
                         dabbaLetter = "A";
-                        dabbaDates.add(dateKey);
+                        dabbaDates.add(displayDate);
                         dabbaCount++;
                         dabbaA++;
                     }
@@ -267,6 +271,7 @@ public class ViewAttendanceFragment extends Fragment {
                 "           | G = " + dabbaG + "\n" +
 
                 "                               | L = " + dabbaL + "\n" +
+                "                               | A = " + dabbaA + "\n" +
 
                 "-----------------------------|-------------\n" +
 
