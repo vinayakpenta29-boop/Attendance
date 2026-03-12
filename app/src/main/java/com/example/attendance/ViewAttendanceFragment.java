@@ -23,6 +23,10 @@ public class ViewAttendanceFragment extends Fragment {
     int halfCount = 0;
     int dabbaCount = 0;
 
+    int dabbaD = 0;
+    int dabbaG = 0;
+    int dabbaL = 0;
+
     SimpleDateFormat keyFormat =
             new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
@@ -153,16 +157,19 @@ public class ViewAttendanceFragment extends Fragment {
                         dabbaLetter = "D";
                         dabbaDates.add(dateKey);
                         dabbaCount++;
+                        dabbaD++;
                     }
                     else if(dabba.equals("Ghari")){
                         dabbaLetter = "G";
                         dabbaDates.add(dateKey);
                         dabbaCount++;
+                        dabbaG++;
                     }
                     else if(dabba.equals("Late")){
                         dabbaLetter = "L";
                         dabbaDates.add(dateKey);
                         dabbaCount++;
+                        dabbaL++;
                     }
 
                     statusText.setText(letter + "/" + dabbaLetter);
@@ -242,10 +249,22 @@ public class ViewAttendanceFragment extends Fragment {
         double totalLeaves = absentCount + halfValue;
 
         calculationBox.setText(
-                "Absents : " + absentCount +
-                        "\nH-Days : " + halfValue +
-                        "\nTotal Leaves : " + totalLeaves +
-                        "\nTotal Dabba : " + dabbaCount
+
+                "Leaves                   | Dabba Stats\n" +
+                "-----------------------------|-------------\n" +
+
+                "Absent : " + absentCount +
+                "              | D = " + dabbaD + "\n" +
+
+                "H-Days : " + halfValue +
+                "           | G = " + dabbaG + "\n" +
+
+                "                               | L = " + dabbaL + "\n" +
+
+                "-----------------------------|-------------\n" +
+
+                "Total Leaves : " + totalLeaves +
+                " | Total Dabba : " + dabbaCount
         );
 
         SharedPreferences.Editor editor =
