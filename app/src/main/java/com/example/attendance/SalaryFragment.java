@@ -188,6 +188,7 @@ public class SalaryFragment extends Fragment {
 
         /* GET REAL ATTENDANCE DATA */
         double leaveDays = getLeaveDaysFromAttendance();
+        int dabbaUnits = getDabbaUnitsFromAttendance();
 
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -201,6 +202,7 @@ public class SalaryFragment extends Fragment {
                         year,
                         month,
                         leaveDays,
+                        dabbaUnits,
                         pfEnabled,
                         pfAmount,
                         schemeEnabled,
@@ -217,6 +219,7 @@ public class SalaryFragment extends Fragment {
                 "\nTax : ₹" + result.tax +
                 "\nMedical : ₹" + result.medical +
                 "\nPF : ₹" + result.pf +
+                "\nDabba Deduction : ₹" + round(result.dabbaDeduction) +
                 "\nTotal Deduction : ₹" + round(result.totalDeductions) +
                 "\n\nNet Salary : ₹" + round(result.netSalary)
 
