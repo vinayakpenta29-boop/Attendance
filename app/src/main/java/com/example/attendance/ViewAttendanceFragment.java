@@ -21,6 +21,7 @@ public class ViewAttendanceFragment extends Fragment {
 
     int absentCount = 0;
     int halfCount = 0;
+    int dabbaCount = 0;
 
     SimpleDateFormat keyFormat =
             new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -151,14 +152,17 @@ public class ViewAttendanceFragment extends Fragment {
                     if(dabba.equals("Dabba")){
                         dabbaLetter = "D";
                         dabbaDates.add(dateKey);
+                        dabbaCount++;
                     }
                     else if(dabba.equals("Ghari")){
                         dabbaLetter = "G";
                         dabbaDates.add(dateKey);
+                        dabbaCount++;
                     }
                     else if(dabba.equals("Late")){
                         dabbaLetter = "L";
                         dabbaDates.add(dateKey);
+                        dabbaCount++;
                     }
 
                     statusText.setText(letter + "/" + dabbaLetter);
@@ -238,9 +242,10 @@ public class ViewAttendanceFragment extends Fragment {
         double totalLeaves = absentCount + halfValue;
 
         calculationBox.setText(
-                "Absent Days = " + absentCount +
-                        "\nHalf Days Value = " + halfValue +
-                        "\nTotal Leaves = " + totalLeaves
+                "Absents : " + absentCount +
+                        "\nH-Days : " + halfValue +
+                        "\nTotal Leaves : " + totalLeaves +
+                        "\nTotal Dabba : " + dabbaCount
         );
 
         SharedPreferences.Editor editor =
