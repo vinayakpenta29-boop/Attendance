@@ -87,6 +87,8 @@ public class ViewAttendanceFragment extends Fragment {
             tv.setPadding(20,20,20,20);
             tv.setGravity(Gravity.CENTER);
             tv.setTextSize(16);
+            tv.setTypeface(null, android.graphics.Typeface.BOLD);
+            tv.setBackgroundColor(0xFFE9EEF5);
 
             headerRow.addView(tv);
         }
@@ -104,11 +106,13 @@ public class ViewAttendanceFragment extends Fragment {
                 LinearLayout cell = new LinearLayout(getContext());
                 cell.setOrientation(LinearLayout.VERTICAL);
                 cell.setGravity(Gravity.CENTER);
-                cell.setPadding(20,20,20,20);
+                cell.setPadding(16,16,16,16);
+                cell.setBackgroundResource(android.R.drawable.calendar_cell_bg);
 
                 TextView dayNumber = new TextView(getContext());
-                dayNumber.setTextSize(14);
+                dayNumber.setTextSize(13);
                 dayNumber.setGravity(Gravity.CENTER);
+                dayNumber.setTextColor(0xFF555555);
 
                 TextView statusText = new TextView(getContext());
                 statusText.setTextSize(18);
@@ -184,6 +188,16 @@ public class ViewAttendanceFragment extends Fragment {
                     }
 
                     statusText.setText(letter + "/" + dabbaLetter);
+                    statusText.setTypeface(null, android.graphics.Typeface.BOLD);
+
+                    if(letter.equals("P"))
+                        statusText.setTextColor(0xFF2E7D32);   // Green
+
+                    else if(letter.equals("H"))
+                        statusText.setTextColor(0xFFF57C00);   // Orange
+
+                    else if(letter.equals("A"))
+                        statusText.setTextColor(0xFFC62828);   // Red
 
                     dayCounter++;
                 }
@@ -236,10 +250,14 @@ public class ViewAttendanceFragment extends Fragment {
             TextView c2 = new TextView(getContext());
             TextView c3 = new TextView(getContext());
 
-            c1.setPadding(20,20,20,20);
-            c2.setPadding(20,20,20,20);
-            c3.setPadding(20,20,20,20);
+            c1.setPadding(16,16,16,16);
+            c2.setPadding(16,16,16,16);
+            c3.setPadding(16,16,16,16);
 
+            c1.setGravity(Gravity.CENTER);
+            c2.setGravity(Gravity.CENTER);
+            c3.setGravity(Gravity.CENTER);
+            
             if(i < halfDates.size())
                 c1.setText(halfDates.get(i));
 
