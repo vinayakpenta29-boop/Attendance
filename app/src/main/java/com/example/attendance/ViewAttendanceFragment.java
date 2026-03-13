@@ -366,6 +366,22 @@ public class ViewAttendanceFragment extends Fragment {
                 cell.setTextSize(14);
                 cell.setBackgroundResource(R.drawable.history_cell_bg);
 
+                /* ===== SPECIAL COLOR ROWS ===== */
+
+                // Total Leaves Row (index 2)
+                if(i == 2){
+                    cell.setBackgroundColor(0xFFFFEBEE);     // Light Red
+                    cell.setTextColor(0xFFB71C1C);           // Dark Red
+                    cell.setTypeface(null, android.graphics.Typeface.BOLD);
+                }
+
+                // Total Dabba Row (index 7)
+                if(i == 7){
+                    cell.setBackgroundColor(0xFFE3F2FD);     // Light Blue
+                    cell.setTextColor(0xFF0D47A1);           // Dark Blue
+                    cell.setTypeface(null, android.graphics.Typeface.BOLD);
+                }
+
                 TableRow.LayoutParams params =
                         new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,1f);
                 params.setMargins(6,6,6,6);
