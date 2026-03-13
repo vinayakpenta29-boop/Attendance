@@ -17,7 +17,7 @@ public class ViewAttendanceFragment extends Fragment {
 
     TableLayout tableLayout;
     TableLayout summaryTable;
-    TextView calculationBox;
+    TableLayout payrollTable;
 
     int absentCount = 0;
     int halfCount = 0;
@@ -42,7 +42,7 @@ public class ViewAttendanceFragment extends Fragment {
 
         tableLayout = view.findViewById(R.id.tableLayout);
         summaryTable = view.findViewById(R.id.summaryTable);
-        calculationBox = view.findViewById(R.id.calculationBox);
+        payrollTable = view.findViewById(R.id.payrollTable);
 
         loadAttendance();
 
@@ -308,25 +308,75 @@ public class ViewAttendanceFragment extends Fragment {
         double halfValue = halfCount * 0.5;
         double totalLeaves = absentCount + halfValue;
 
-        calculationBox.setText(
+        payrollTable.removeAllViews();
 
-                "Leaves                   | Dabba Stats\n" +
-                "-----------------------------|-------------\n" +
+        /* HEADER */
 
-                "Absent : " + absentCount +
-                "              | D = " + dabbaD + "\n" +
+        TableRow header = new TableRow(getContext());
+        header.setBackgroundColor(0xFF009688);
 
-                "H-Days : " + halfValue +
-                "           | G = " + dabbaG + "\n" +
+        String[] titles = {"Category","Value"};
 
-                "                               | L = " + dabbaL + "\n" +
-                "                               | A = " + dabbaA + "\n" +
+        for(String t : titles){
 
-                "-----------------------------|-------------\n" +
+            TextView tv = new TextView(getContext());
+            tv.setText(t);
+            tv.setPadding(20,20,20,20);
+            tv.setTextColor(0xFFFFFFFF);
+            tv.setTypeface(null, android.graphics.Typeface.BOLD);
+            tv.setGravity(Gravity.CENTER);
 
-                "Total Leaves : " + totalLeaves +
-                " | Total Dabba : " + dabbaCount
-        );
+            header.addView(tv);
+        }
+
+        payrollTable.addView(header);
+
+
+        /* DATA ROWS */
+
+        String[][] data = {
+
+                {"Absent Days", String.valueOf(absentCount)},
+                {"Half Days", String.valueOf(halfValue)},
+                {"Total Leaves", String.valueOf(totalLeaves)},
+
+                {"Dabba (D)", String.valueOf(dabbaD)},
+                {"Ghari (G)", String.valueOf(dabbaG)},
+                {"Late (L)", String.valueOf(dabbaL)},
+                {"Absent (A)", String.valueOf(dabbaA)},
+
+                {"Total Dabba", String.valueOf(dabbaCount)}
+        };
+
+        for(int i=0;i<data.length;i++){
+
+            TableRow row = new TableRow(getContext());
+
+            if(i % 2 == 0)
+                row.setBackgroundColor(0xFFFFFFFF);
+            else
+                row.setBackgroundColor(0xFFF7F9FC);
+
+            for(int j=0;j<2;j++){
+
+                TextView cell = new TextView(getContext());
+
+                cell.setText(data[i][j]);
+                cell.setPadding(18,18,18,18);
+                cell.setGravity(Gravity.CENTER);
+                cell.setTextSize(14);
+                cell.setBackgroundResource(R.drawable.history_cell_bg);
+
+                TableRow.LayoutParams params =
+                        new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,1f);
+                params.setMargins(6,6,6,6);
+                cell.setLayoutParams(params);
+
+                row.addView(cell);
+            }
+
+             payrollTable.addView(row);
+        }
 
         SharedPreferences.Editor editor =
                 getActivity().getSharedPreferences("attendance_summary", 0).edit();
