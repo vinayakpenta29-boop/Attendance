@@ -218,59 +218,85 @@ public class ViewAttendanceFragment extends Fragment {
 
         summaryTable.removeAllViews();
 
-        /* HEADER ROW */
+        /* ===== HEADER ROW ===== */
 
         TableRow header = new TableRow(getContext());
+        header.setBackgroundColor(0xFF3F51B5);
 
         TextView h1 = new TextView(getContext());
         TextView h2 = new TextView(getContext());
         TextView h3 = new TextView(getContext());
 
-        h1.setText("H-Days");
-        h2.setText("Absents");
-        h3.setText("Dabbas");
+        h1.setText("Half Days");
+        h2.setText("Absent");
+        h3.setText("Dabba");
 
-        h1.setPadding(20,20,20,20);
-        h2.setPadding(20,20,20,20);
-        h3.setPadding(20,20,20,20);
+        TextView[] headers = {h1,h2,h3};
 
-        header.addView(h1);
-        header.addView(h2);
-        header.addView(h3);
+        for(TextView h : headers){
+
+            h.setPadding(20,20,20,20);
+            h.setGravity(Gravity.CENTER);
+            h.setTextSize(15);
+            h.setTypeface(null, android.graphics.Typeface.BOLD);
+            h.setTextColor(0xFFFFFFFF);
+
+            header.addView(h);
+        }
 
         summaryTable.addView(header);
 
-        /* MAX ROW COUNT */
+
+        /* ===== MAX ROW COUNT ===== */
 
         int max = Math.max(halfDates.size(),
-                  Math.max(absentDates.size(), dabbaDates.size()));
+                Math.max(absentDates.size(), dabbaDates.size()));
 
-        /* DATA ROWS */
+
+        /* ===== DATA ROWS ===== */
 
         for(int i=0;i<max;i++){
 
             TableRow row = new TableRow(getContext());
 
+            if(i % 2 == 0)
+                row.setBackgroundColor(0xFFF7F9FC);
+            else
+                row.setBackgroundColor(0xFFFFFFFF);
+
             TextView c1 = new TextView(getContext());
             TextView c2 = new TextView(getContext());
             TextView c3 = new TextView(getContext());
 
-            c1.setPadding(16,16,16,16);
-            c2.setPadding(16,16,16,16);
-            c3.setPadding(16,16,16,16);
+            TextView[] cells = {c1,c2,c3};
 
-            c1.setGravity(Gravity.CENTER);
-            c2.setGravity(Gravity.CENTER);
-            c3.setGravity(Gravity.CENTER);
-            
-            if(i < halfDates.size())
+            for(TextView c : cells){
+
+                c.setPadding(18,18,18,18);
+                c.setGravity(Gravity.CENTER);
+                c.setTextSize(14);
+                c.setBackgroundResource(R.drawable.history_cell_bg);
+
+                TableRow.LayoutParams params =
+                        new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,1f);
+                params.setMargins(6,6,6,6);
+                c.setLayoutParams(params);
+            }
+
+            if(i < halfDates.size()){
                 c1.setText(halfDates.get(i));
+                c1.setTextColor(0xFFF57C00); // Orange
+            }
 
-            if(i < absentDates.size())
+            if(i < absentDates.size()){
                 c2.setText(absentDates.get(i));
+                c2.setTextColor(0xFFC62828); // Red
+            }
 
-            if(i < dabbaDates.size())
+            if(i < dabbaDates.size()){
                 c3.setText(dabbaDates.get(i));
+                c3.setTextColor(0xFF1565C0); // Blue
+            }
 
             row.addView(c1);
             row.addView(c2);
