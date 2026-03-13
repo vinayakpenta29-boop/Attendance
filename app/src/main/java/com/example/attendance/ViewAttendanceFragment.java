@@ -312,9 +312,8 @@ public class ViewAttendanceFragment extends Fragment {
 
         /* HEADER */
 
-        TableRow header = new TableRow(getContext());
-        header.setBackgroundColor(0xFF009688);
-
+        TableRow payrollHeader = new TableRow(getContext());
+        payrollHeader.setBackgroundColor(0xFF009688);
         String[] titles = {"Category","Value"};
 
         for(String t : titles){
@@ -326,10 +325,10 @@ public class ViewAttendanceFragment extends Fragment {
             tv.setTypeface(null, android.graphics.Typeface.BOLD);
             tv.setGravity(Gravity.CENTER);
 
-            header.addView(tv);
+            payrollHeader.addView(tv);
         }
 
-        payrollTable.addView(header);
+        payrollTable.addView(payrollHeader);
 
 
         /* DATA ROWS */
