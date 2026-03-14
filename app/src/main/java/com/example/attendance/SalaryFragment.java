@@ -211,17 +211,26 @@ public class SalaryFragment extends Fragment {
 
         salaryResult.setText(
 
-                "Base Salary : ₹" + result.baseSalary +
-                "\nPer Day Salary : ₹" + round(result.perDaySalary) +
-                "\nLeave Days : " + result.leaveDays +
-                "\nLeave Deduction : ₹" + round(result.leaveDeduction) +
-                "\nBonus : ₹" + round(result.leaveBonus) +
-                "\nTax : ₹" + result.tax +
-                "\nMedical : ₹" + result.medical +
-                "\nPF : ₹" + result.pf +
-                "\nDabba Deduction : ₹" + round(result.dabbaDeduction) +
-                "\nTotal Deduction : ₹" + round(result.totalDeductions) +
-                "\n\nNet Salary : ₹" + round(result.netSalary)
+                "Base Salary        : ₹" + result.baseSalary +
+
+                "\nPer Day Salary     : ₹" + round(result.perDaySalary) +
+
+                "\n\nAttendance"
+
+                + "\nLeave Days         : " + result.leaveDays +
+                "\nLeave Deduction    : ₹" + round(result.leaveDeduction) +
+                "\nBonus              : ₹" + round(result.leaveBonus) +
+
+                "\n\nDeductions"
+
+                + "\nTax                : ₹" + result.tax +
+                "\nMedical            : ₹" + result.medical +
+                "\nPF                 : ₹" + result.pf +
+                "\nDabba Deduction    : ₹" + round(result.dabbaDeduction) +
+
+                "\n\nTotal Deduction    : ₹" + round(result.totalDeductions) +
+
+                "\n\nNet Salary         : ₹" + round(result.netSalary)
 
         );
     }
