@@ -120,9 +120,15 @@ public class ViewAttendanceFragment extends Fragment {
                 dayNumber.setTextColor(0xFF555555);
 
                 TextView statusText = new TextView(getContext());
-                statusText.setTextSize(18);
+                statusText.setTextSize(16);
                 statusText.setGravity(Gravity.CENTER);
+                statusText.setTypeface(null, android.graphics.Typeface.BOLD);
 
+                TextView dabbaText = new TextView(getContext());
+                dabbaText.setTextSize(16);
+                dabbaText.setGravity(Gravity.CENTER);
+                dabbaText.setTypeface(null, android.graphics.Typeface.BOLD);
+                
                 if(dayCounter == 1 && i < firstDayOfWeek){
 
                     dayNumber.setText("");
@@ -192,8 +198,8 @@ public class ViewAttendanceFragment extends Fragment {
                         dabbaA++;
                     }
 
-                    statusText.setText(letter + "/" + dabbaLetter);
-                    statusText.setTypeface(null, android.graphics.Typeface.BOLD);
+                    statusText.setText(letter);
+                    dabbaText.setText(dabbaLetter);
 
                     if(letter.equals("P"))
                         statusText.setTextColor(0xFF2E7D32);   // Green
@@ -209,6 +215,8 @@ public class ViewAttendanceFragment extends Fragment {
 
                 cell.addView(dayNumber);
                 cell.addView(statusText);
+                cell.addView(divider);
+                cell.addView(dabbaText);
 
                 row.addView(cell);
             }
