@@ -370,14 +370,14 @@ public class ViewAttendanceFragment extends Fragment {
 
                 // Total Leaves Row (index 2)
                 if(i == 2){
-                    cell.setBackgroundColor(0xFFFFEBEE);     // Light Red
+                    cell.setBackgroundResource(R.drawable.total_leaves_bg);
                     cell.setTextColor(0xFFB71C1C);           // Dark Red
                     cell.setTypeface(null, android.graphics.Typeface.BOLD);
                 }
 
                 // Total Dabba Row (index 7)
                 if(i == 7){
-                    cell.setBackgroundColor(0xFFE3F2FD);     // Light Blue
+                    cell.setBackgroundResource(R.drawable.total_dabba_bg);
                     cell.setTextColor(0xFF0D47A1);           // Dark Blue
                     cell.setTypeface(null, android.graphics.Typeface.BOLD);
                 }
