@@ -86,7 +86,6 @@ public class ViewAttendanceFragment extends Fragment {
             tv.setText(d);
             tv.setPadding(20,20,20,20);
             tv.setGravity(Gravity.CENTER);
-            tv.setTextColor(0xFF000000);
             tv.setTextSize(16);
             tv.setTypeface(null, android.graphics.Typeface.BOLD);
             tv.setBackgroundColor(0xFFE9EEF5);
