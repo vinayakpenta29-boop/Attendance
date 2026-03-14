@@ -216,14 +216,20 @@ public class ViewAttendanceFragment extends Fragment {
                     statusText.setText(letter);
                     dabbaText.setText(dabbaLetter);
 
-                    if(letter.equals("P"))
-                        statusText.setTextColor(0xFF2E7D32);   // Green
+                    if(letter.equals("P")){
+                        statusText.setTextColor(0xFF2E7D32); 
+                        cell.setBackgroundResource(R.drawable.present_bg);
+                    }
 
-                    else if(letter.equals("H"))
+                    else if(letter.equals("H")){
                         statusText.setTextColor(0xFFF57C00);   // Orange
+                        cell.setBackgroundResource(R.drawable.half_day_bg);
+                    }
 
-                    else if(letter.equals("A"))
+                    else if(letter.equals("A")){
                         statusText.setTextColor(0xFFC62828);   // Red
+                        cell.setBackgroundResource(R.drawable.absent_cell_bg);
+                    }
 
                     dayCounter++;
                 }
