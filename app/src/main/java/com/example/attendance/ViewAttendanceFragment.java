@@ -128,6 +128,19 @@ public class ViewAttendanceFragment extends Fragment {
                 dabbaText.setTextSize(16);
                 dabbaText.setGravity(Gravity.CENTER);
                 dabbaText.setTypeface(null, android.graphics.Typeface.BOLD);
+
+                View divider = new View(getContext());
+
+                LinearLayout.LayoutParams dividerParams =
+                        new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                2
+                        );
+
+                dividerParams.setMargins(4,4,4,4);
+
+                divider.setLayoutParams(dividerParams);
+                divider.setBackgroundColor(0xFFDDDDDD);
                 
                 if(dayCounter == 1 && i < firstDayOfWeek){
 
