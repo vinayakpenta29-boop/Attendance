@@ -53,9 +53,40 @@
             <TextView
                 android:id="@+id/salaryResult"
                 android:textSize="16sp"
-                android:textColor="#263238"
-                android:lineSpacingExtra="6dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:fontFamily="monospace"
+                android:lineSpacingExtra="8dp"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/netSalaryBox"
+            android:orientation="vertical"
+            android:background="#2E7D32"
+            android:padding="18dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Net Salary"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/netSalaryText"
+                android:text="₹0"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:paddingTop="6dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
