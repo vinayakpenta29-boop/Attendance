@@ -16,6 +16,7 @@ import java.util.Calendar;
 public class SalaryFragment extends Fragment {
 
     TextView salaryResult;
+    TextView netSalaryText;
 
     double monthlySalary = 0;
     double tax = 0;
@@ -39,6 +40,7 @@ public class SalaryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_salary, container, false);
 
         salaryResult = view.findViewById(R.id.salaryResult);
+        netSalaryText = view.findViewById(R.id.netSalaryText);
 
         SharedPreferences pref =
         getActivity().getSharedPreferences("salary_inputs", 0);
