@@ -15,7 +15,7 @@ import java.util.Calendar;
 
 public class SalaryFragment extends Fragment {
 
-    TextView salaryResult;
+    LinearLayout salaryContainer;
     TextView netSalaryText;
 
     double monthlySalary = 0;
@@ -39,7 +39,7 @@ public class SalaryFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_salary, container, false);
 
-        salaryResult = view.findViewById(R.id.salaryResult);
+        salaryContainer = view.findViewById(R.id.salaryContainer);
         netSalaryText = view.findViewById(R.id.netSalaryText);
 
         SharedPreferences pref =
@@ -211,63 +211,112 @@ public class SalaryFragment extends Fragment {
                         schemeAmount
                 );
 
-        salaryResult.setText(
+        salaryContainer.removeAllViews();
 
-                String.format(
+        /* helper function */
+        addRow("Base Monthly Salary", "₹" + result.baseSalary);
+        addDivider();
 
-                "Base Monthly Salary      : ₹%.2f\n" +
-                "────────────────────────\n" +
+        addRow("Per Day Salary", "₹" + round(result.perDaySalary));
+        addDivider();
 
-                "Per Day Salary           : ₹%.2f\n" +
-                "────────────────────────\n\n" +
+        /* ATTENDANCE */
+        addHeader("ATTENDANCE");
 
-                "ATTENDANCE\n" +
-                "────────────────────────\n" +
+        addRow("Leave Days", String.valueOf(result.leaveDays));
+        addDivider();
 
-                "Leave Days               : %.1f\n" +
-                "────────────────────────\n" +
+        addRow("Leave Deduction", "₹" + round(result.leaveDeduction));
+        addDivider();
 
-                "Leave Deduction          : ₹%.2f\n" +
-                "────────────────────────\n" +
+        addRow("Bonus", "₹" + round(result.leaveBonus));
+        addDivider();
 
-                "Bonus                    : ₹%.2f\n" +
-                "────────────────────────\n\n" +
+        /* DEDUCTIONS */
+        addHeader("DEDUCTIONS");
 
-                "DEDUCTIONS\n" +
-                "────────────────────────\n" +
+        addRow("Tax", "₹" + result.tax);
+        addDivider();
 
-                "Tax                      : ₹%.2f\n" +
-                "────────────────────────\n" +
+        addRow("Medical", "₹" + result.medical);
+        addDivider();
 
-                "Medical                  : ₹%.2f\n" +
-                "────────────────────────\n" +
+        addRow("PF", "₹" + result.pf);
+        addDivider();
 
-                "PF                       : ₹%.2f\n" +
-                "────────────────────────\n" +
+        addRow("Dabba Deduction", "₹" + round(result.dabbaDeduction));
+        addDivider();
 
-                "Dabba Deduction          : ₹%.2f\n" +
-                "────────────────────────\n\n" +
+        addRow("Total Deduction", "₹" + round(result.totalDeductions));
 
-                "Total Deduction          : ₹%.2f",
-
-                result.baseSalary,
-                round(result.perDaySalary),
-
-                result.leaveDays,
-                round(result.leaveDeduction),
-                round(result.leaveBonus),
-
-                result.tax,
-                result.medical,
-                result.pf,
-                round(result.dabbaDeduction),
-
-                round(result.totalDeductions)
-
-        ));
-
+        /* NET SALARY BOX */
         netSalaryText.setText("₹" + round(result.netSalary));
     }
+
+    private void addRow(String label, String value){
+
+    LinearLayout row = new LinearLayout(getContext());
+    row.setOrientation(LinearLayout.HORIZONTAL);
+    row.setPadding(8,12,8,12);
+
+    TextView left = new TextView(getContext());
+    left.setText(label);
+    left.setTextSize(15);
+    left.setTypeface(null, android.graphics.Typeface.BOLD);
+    left.setTextColor(0xFF000000);
+
+    LinearLayout.LayoutParams lp1 =
+            new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT,1f);
+    left.setLayoutParams(lp1);
+
+    TextView right = new TextView(getContext());
+    right.setText(value);
+    right.setTextSize(15);
+    right.setTypeface(null, android.graphics.Typeface.BOLD);
+    right.setTextColor(0xFF000000);
+    right.setGravity(Gravity.END);
+
+    LinearLayout.LayoutParams lp2 =
+            new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT,1f);
+    right.setLayoutParams(lp2);
+
+    row.addView(left);
+    row.addView(right);
+
+    salaryContainer.addView(row);
+}
+
+    private void addDivider(){
+
+    View divider = new View(getContext());
+
+    LinearLayout.LayoutParams params =
+            new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    2
+            );
+
+    params.setMargins(0,4,0,4);
+
+    divider.setLayoutParams(params);
+    divider.setBackgroundColor(0xFFDDDDDD);
+
+    salaryContainer.addView(divider);
+}
+
+    private void addHeader(String text){
+
+    TextView header = new TextView(getContext());
+    header.setText(text);
+    header.setTextSize(14);
+    header.setTypeface(null, android.graphics.Typeface.BOLD);
+    header.setTextColor(0xFF3F51B5);
+    header.setPadding(0,16,0,8);
+
+    salaryContainer.addView(header);
+
+    addDivider();
+}
 
     /* GET REAL ATTENDANCE FROM SHARED PREFERENCES */
     private double getLeaveDaysFromAttendance() {
