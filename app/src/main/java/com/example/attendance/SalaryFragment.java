@@ -310,7 +310,7 @@ public class SalaryFragment extends Fragment {
     header.setText(text);
     header.setTextSize(14);
     header.setTypeface(null, android.graphics.Typeface.BOLD);
-    header.setTextColor(0xFF3F51B5);
+    header.setTextColor(0xFF990F4B);
     header.setPadding(0,16,0,8);
 
     salaryContainer.addView(header);
