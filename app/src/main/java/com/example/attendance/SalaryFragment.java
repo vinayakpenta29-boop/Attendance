@@ -213,28 +213,60 @@ public class SalaryFragment extends Fragment {
 
         salaryResult.setText(
 
-                "Base Salary        : ₹" + result.baseSalary +
+                String.format(
 
-                "\nPer Day Salary     : ₹" + round(result.perDaySalary) +
+                "Base Monthly Salary      : ₹%.2f\n" +
+                "────────────────────────\n" +
 
-                "\n\nAttendance"
+                "Per Day Salary           : ₹%.2f\n" +
+                "────────────────────────\n\n" +
 
-                + "\nLeave Days         : " + result.leaveDays +
-                "\nLeave Deduction    : ₹" + round(result.leaveDeduction) +
-                "\nBonus              : ₹" + round(result.leaveBonus) +
+                "ATTENDANCE\n" +
+                "────────────────────────\n" +
 
-                "\n\nDeductions"
+                "Leave Days               : %.1f\n" +
+                "────────────────────────\n" +
 
-                + "\nTax                : ₹" + result.tax +
-                "\nMedical            : ₹" + result.medical +
-                "\nPF                 : ₹" + result.pf +
-                "\nDabba Deduction    : ₹" + round(result.dabbaDeduction) +
+                "Leave Deduction          : ₹%.2f\n" +
+                "────────────────────────\n" +
 
-                "\n\nTotal Deduction    : ₹" + round(result.totalDeductions) +
+                "Bonus                    : ₹%.2f\n" +
+                "────────────────────────\n\n" +
 
-                "\n\nNet Salary         : ₹" + round(result.netSalary)
+                "DEDUCTIONS\n" +
+                "────────────────────────\n" +
 
-        );
+                "Tax                      : ₹%.2f\n" +
+                "────────────────────────\n" +
+
+                "Medical                  : ₹%.2f\n" +
+                "────────────────────────\n" +
+
+                "PF                       : ₹%.2f\n" +
+                "────────────────────────\n" +
+
+                "Dabba Deduction          : ₹%.2f\n" +
+                "────────────────────────\n\n" +
+
+                "Total Deduction          : ₹%.2f",
+
+                result.baseSalary,
+                round(result.perDaySalary),
+
+                result.leaveDays,
+                round(result.leaveDeduction),
+                round(result.leaveBonus),
+
+                result.tax,
+                result.medical,
+                result.pf,
+                round(result.dabbaDeduction),
+
+                round(result.totalDeductions)
+
+        ));
+
+        netSalaryText.setText("₹" + round(result.netSalary));
     }
 
     /* GET REAL ATTENDANCE FROM SHARED PREFERENCES */
