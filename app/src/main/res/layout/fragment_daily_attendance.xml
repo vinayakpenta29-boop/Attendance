@@ -1,43 +1,135 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="20dp"
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F4F6FA">
 
-    <EditText
-        android:id="@+id/dateBox"
-        android:hint="Select Date"
-        android:focusable="false"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <!-- TWO SPINNERS SIDE BY SIDE -->
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_height="wrap_content">
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <!-- TITLE -->
+
+        <TextView
+            android:text="Daily Attendance"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#1A237E"
+            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <Spinner
-            android:id="@+id/dabbaSpinner"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_marginStart="10dp"
-            android:layout_height="wrap_content"/>
+        <!-- CARD -->
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@drawable/salary_card_bg"
+            android:padding="20dp"
+            android:elevation="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- DATE -->
+
+            <TextView
+                android:text="Select Date"
+                android:textStyle="bold"
+                android:textColor="#37474F"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dateBox"
+                android:hint="Select Date"
+                android:focusable="false"
+                android:background="@drawable/input_bg"
+                android:padding="14dp"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!-- SPINNER ROW -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- ATTENDANCE -->
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Attendance"
+                        android:textStyle="bold"
+                        android:textColor="#37474F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:background="@drawable/input_bg"
+                        android:padding="10dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <!-- DABBA -->
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Dabba"
+                        android:textStyle="bold"
+                        android:textColor="#37474F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <Spinner
+                        android:id="@+id/dabbaSpinner"
+                        android:background="@drawable/input_bg"
+                        android:padding="10dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- BUTTON -->
+
+            <Button
+                android:id="@+id/addAttendance"
+                android:text="SAVE ATTENDANCE"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_primary"
+                android:layout_marginTop="20dp"
+                android:padding="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/addAttendance"
-        android:text="Add Attendance"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
+</ScrollView>
