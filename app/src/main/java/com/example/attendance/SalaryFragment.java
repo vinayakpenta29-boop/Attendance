@@ -68,9 +68,14 @@ public class SalaryFragment extends Fragment {
 
         if (item.getItemId() == R.id.salaryInputs) {
             showSalaryInputPopup();
+            return true;
+        }
+        if (item.getItemId() == R.id.clearData) {
+            showPasswordDialog();
+            return true;
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private void showSalaryInputPopup() {
@@ -337,4 +342,68 @@ public class SalaryFragment extends Fragment {
 
         return pref.getInt("dabbaCount", 0);
     }
+
+    private void showPasswordDialog() {
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+    builder.setTitle("Enter Password");
+
+    final EditText input = new EditText(getContext());
+    input.setHint("Password");
+    input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER |
+            android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+    input.setPadding(40, 20, 40, 20);
+
+    builder.setView(input);
+
+    builder.setPositiveButton("Clear", (dialog, which) -> {
+
+        String entered = input.getText().toString();
+
+        if (entered.equals("1234")) {
+
+            clearAllData();
+
+            Toast.makeText(getContext(), "All Data Cleared", Toast.LENGTH_SHORT).show();
+
+            calculateSalary(); // 🔥 refresh UI
+
+        } else {
+
+            Toast.makeText(getContext(), "Wrong Password", Toast.LENGTH_SHORT).show();
+        }
+    });
+
+    builder.setNegativeButton("Cancel", null);
+
+    builder.show();
+}
+
+private void clearAllData() {
+
+    // Attendance data
+    SharedPreferences attendance =
+            getActivity().getSharedPreferences("attendance", 0);
+    attendance.edit().clear().apply();
+
+    // Summary data
+    SharedPreferences summary =
+            getActivity().getSharedPreferences("attendance_summary", 0);
+    summary.edit().clear().apply();
+
+    // Salary inputs (⚠ FIX NAME)
+    SharedPreferences salary =
+            getActivity().getSharedPreferences("salary_inputs", 0);
+    salary.edit().clear().apply();
+
+    // Reset UI values
+    monthlySalary = 0;
+    tax = 0;
+    medicine = 0;
+    pfAmount = 0;
+    schemeAmount = 0;
+
+    pfEnabled = false;
+    schemeEnabled = false;
+}
 }
