@@ -15,6 +15,10 @@ import java.util.ArrayList;
 
 public class ViewAttendanceFragment extends Fragment {
 
+    ImageView prevMonth, nextMonth;
+    TextView monthText;
+    Calendar currentCalendar;
+    
     TableLayout tableLayout;
     TableLayout summaryTable;
     TableLayout payrollTable;
@@ -40,11 +44,17 @@ public class ViewAttendanceFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_view_attendance, container, false);
 
+        prevMonth = view.findViewById(R.id.prevMonth);
+        nextMonth = view.findViewById(R.id.nextMonth);
+        monthText = view.findViewById(R.id.monthText);
+
+        currentCalendar = Calendar.getInstance();
+        
         tableLayout = view.findViewById(R.id.tableLayout);
         summaryTable = view.findViewById(R.id.summaryTable);
         payrollTable = view.findViewById(R.id.payrollTable);
 
-        loadAttendance();
+        updateMonth();
 
         return view;
     }
@@ -62,7 +72,7 @@ public class ViewAttendanceFragment extends Fragment {
 
         tableLayout.removeAllViews();
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = (Calendar) currentCalendar.clone();
 
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
