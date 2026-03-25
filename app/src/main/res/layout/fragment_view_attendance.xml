@@ -3,6 +3,46 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="#F4F6F9">
 
+<!-- ===== Month Header ===== -->
+<LinearLayout
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/salary_card_bg"
+    android:padding="16dp"
+    android:layout_marginBottom="16dp"
+    android:elevation="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/prevMonth"
+        android:src="@android:drawable/ic_media_previous"
+        android:background="@drawable/month_btn_bg"
+        android:padding="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"/>
+
+    <TextView
+        android:id="@+id/monthText"
+        android:text="March 2026"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#333"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/nextMonth"
+        android:src="@android:drawable/ic_media_next"
+        android:background="@drawable/month_btn_bg"
+        android:padding="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"/>
+
+</LinearLayout>
+
 <LinearLayout
     android:orientation="vertical"
     android:padding="16dp"
