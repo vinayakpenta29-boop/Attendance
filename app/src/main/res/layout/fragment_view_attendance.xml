@@ -16,7 +16,7 @@ android:background="#F4F6F9">
 
     <ImageView
         android:id="@+id/prevMonth"
-        android:src="@android:drawable/ic_media_previous"
+        android:src="@drawable/ic_arrow_back"
         android:background="@drawable/month_btn_bg"
         android:padding="10dp"
         android:layout_width="40dp"
@@ -35,7 +35,7 @@ android:background="#F4F6F9">
 
     <ImageView
         android:id="@+id/nextMonth"
-        android:src="@android:drawable/ic_media_next"
+        android:src="@drawable/ic_arrow_forward"
         android:background="@drawable/month_btn_bg"
         android:padding="10dp"
         android:layout_width="40dp"
