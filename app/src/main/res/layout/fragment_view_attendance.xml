@@ -12,8 +12,7 @@ android:background="#F4F6F9">
     <!-- ===== Calendar Attendance Card ===== -->
     <LinearLayout
         android:orientation="vertical"
-        android:background="#FFFFFF"
-        android:elevation="4dp"
+        android:background="@drawable/salary_card_bg"
         android:padding="14dp"
         android:layout_marginBottom="18dp"
         android:layout_width="match_parent"
@@ -41,8 +40,7 @@ android:background="#F4F6F9">
     <!-- ===== Attendance History Card ===== -->
     <LinearLayout
         android:orientation="vertical"
-        android:background="#FFFFFF"
-        android:elevation="4dp"
+        android:background="@drawable/salary_card_bg"
         android:padding="14dp"
         android:layout_marginBottom="18dp"
         android:layout_width="match_parent"
@@ -71,8 +69,7 @@ android:background="#F4F6F9">
     <!-- ===== Payroll Summary Card ===== -->
     <LinearLayout
         android:orientation="vertical"
-        android:background="#FFFFFF"
-        android:elevation="4dp"
+        android:background="@drawable/salary_card_bg"
         android:padding="14dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
