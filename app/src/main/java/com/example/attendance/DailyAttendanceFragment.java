@@ -144,6 +144,9 @@ public class DailyAttendanceFragment extends Fragment {
 
         editor.apply();
 
+        getActivity().getSupportFragmentManager()
+                .setFragmentResult("refresh", new Bundle());
+
         spinner.setSelection(0);
         dabbaSpinner.setSelection(0);
 
