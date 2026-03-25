@@ -98,6 +98,11 @@ public class ViewAttendanceFragment extends Fragment {
 
         absentCount = 0;
         halfCount = 0;
+        dabbaCount = 0;
+        dabbaD = 0;
+        dabbaG = 0;
+        dabbaL = 0;
+        dabbaA = 0;
 
         ArrayList<String> halfDates = new ArrayList<>();
         ArrayList<String> absentDates = new ArrayList<>();
