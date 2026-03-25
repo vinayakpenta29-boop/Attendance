@@ -1,8 +1,24 @@
-<style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    <item name="android:textColorPrimary">#000000</item>
-    <item name="android:textColorSecondary">#000000</item>
-</style>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
 
-<style name="ToolbarPopupTheme" parent="ThemeOverlay.AppCompat.Light">
-    <item name="android:textColorPrimary">#000000</item>
-</style>
+    <!-- MAIN APP THEME -->
+    <style name="Theme.Attendance" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+    </style>
+
+    <!-- TOOLBAR TEXT COLOR (3 DOTS BLACK) -->
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorSecondary">#000000</item>
+    </style>
+
+    <!-- MENU POPUP COLOR -->
+    <style name="ToolbarPopupTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">#000000</item>
+    </style>
+
+</resources>
