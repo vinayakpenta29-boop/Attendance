@@ -69,6 +69,15 @@ public class ViewAttendanceFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (currentCalendar != null) {
+            updateMonth(); // 🔥 reload everything
+        }
+    }
+
     private void updateMonth() {
 
         SimpleDateFormat monthFormat =
