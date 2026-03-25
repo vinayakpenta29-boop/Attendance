@@ -8,8 +8,9 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabIndicatorColor="#990F4B"
         app:tabTextColor="#666666"
-        app:tabSelectedTextColor="#000000"/>
+        app:tabSelectedTextColor="#990F4B"/>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
