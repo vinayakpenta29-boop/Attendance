@@ -49,6 +49,10 @@ public class ViewAttendanceFragment extends Fragment {
         monthText = view.findViewById(R.id.monthText);
 
         currentCalendar = Calendar.getInstance();
+
+        getParentFragmentManager().setFragmentResultListener(
+                "refresh", this, (key, bundle) -> updateMonth()
+        );
         
         tableLayout = view.findViewById(R.id.tableLayout);
         summaryTable = view.findViewById(R.id.summaryTable);
