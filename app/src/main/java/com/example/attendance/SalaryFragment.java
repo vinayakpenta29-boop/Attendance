@@ -221,7 +221,7 @@ public class SalaryFragment extends Fragment {
         addDivider();
 
         /* ATTENDANCE */
-        addHeader("ATTENDANCE");
+        
 
         addRow("Leave Days", String.valueOf(result.leaveDays));
         addDivider();
@@ -233,7 +233,7 @@ public class SalaryFragment extends Fragment {
         addDivider();
 
         /* DEDUCTIONS */
-        addHeader("DEDUCTIONS");
+        
 
         addRow("Tax", "₹" + result.tax);
         addDivider();
@@ -261,7 +261,7 @@ public class SalaryFragment extends Fragment {
 
     TextView left = new TextView(getContext());
     left.setText(label);
-    left.setTextSize(15);
+    left.setTextSize(16);
     left.setTypeface(null, android.graphics.Typeface.BOLD);
     left.setTextColor(0xFF000000);
 
@@ -271,7 +271,7 @@ public class SalaryFragment extends Fragment {
 
     TextView right = new TextView(getContext());
     right.setText(value);
-    right.setTextSize(15);
+    right.setTextSize(16);
     right.setTypeface(null, android.graphics.Typeface.BOLD);
     right.setTextColor(0xFF000000);
     right.setGravity(Gravity.END);
