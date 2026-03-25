@@ -56,7 +56,27 @@ public class ViewAttendanceFragment extends Fragment {
 
         updateMonth();
 
+        prevMonth.setOnClickListener(v -> {
+        currentCalendar.add(Calendar.MONTH, -1);
+            updateMonth();
+        });
+
+        nextMonth.setOnClickListener(v -> {
+        currentCalendar.add(Calendar.MONTH, 1);
+            updateMonth();
+        });
+
         return view;
+    }
+
+    private void updateMonth() {
+
+        SimpleDateFormat monthFormat =
+                new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+
+        monthText.setText(monthFormat.format(currentCalendar.getTime()));
+
+        loadAttendance();
     }
 
     private void loadAttendance() {
