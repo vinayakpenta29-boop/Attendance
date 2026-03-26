@@ -30,6 +30,7 @@ public class SalaryCalculator {
             int month,
             double leaveDays,
             int dabbaUnit,
+            double dabbaMonthlyAmount,
             boolean pfEnabled,
             double pfAmount,
             boolean schemeEnabled,
@@ -54,7 +55,7 @@ public class SalaryCalculator {
 
         double salaryWithBonus = grossSalary + leaveBonus;
 
-        double dabbaPerDay = 900.0 / monthDays;
+        double dabbaPerDay = dabbaMonthlyAmount / monthDays;
         double dabbaDeduction = dabbaUnit * dabbaPerDay;
 
     
