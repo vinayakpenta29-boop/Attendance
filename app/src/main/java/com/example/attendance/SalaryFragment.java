@@ -210,13 +210,13 @@ public class SalaryFragment extends Fragment {
         SalaryCalculator.Result result =
                 SalaryCalculator.calculate(
                         monthlySalary,
-                        dabbaAmount,
                         tax,
                         medicine,
                         year,
                         month,
                         leaveDays,
                         dabbaUnits,
+                        dabbaAmount,
                         pfEnabled,
                         pfAmount,
                         schemeEnabled,
