@@ -62,7 +62,7 @@ public class SalaryCalculator {
 
         double salaryWithBonus = grossSalary + leaveBonus;
 
-        double salaryWithBonus = grossSalary + leaveBonus + fifthMondayBonus;
+        double salaryWith5thMondayBonus = grossSalary + leaveBonus + fifthMondayBonus;
 
         double dabbaPerDay = 900.0 / monthDays;
         double dabbaDeduction = dabbaUnit * dabbaPerDay;
