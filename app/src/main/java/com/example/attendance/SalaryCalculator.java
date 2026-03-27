@@ -110,7 +110,7 @@ public class SalaryCalculator {
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
-    private static boolean hasFifthMonday(int year, int month) {
+    public static boolean hasFifthMonday(int year, int month) {
 
     Calendar calendar = Calendar.getInstance();
     calendar.set(year, month - 1, 1);
