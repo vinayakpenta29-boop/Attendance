@@ -19,7 +19,6 @@ public class SalaryFragment extends Fragment {
     TextView netSalaryText;
 
     double monthlySalary = 0;
-    double dabbaAmount = 0;   // ✅ NEW
     double tax = 0;
     double medicine = 0;
     double pfAmount = 0;
@@ -47,7 +46,6 @@ public class SalaryFragment extends Fragment {
         getActivity().getSharedPreferences("salary_inputs", 0);
 
         monthlySalary = pref.getFloat("monthlySalary", 0);
-        dabbaAmount = pref.getFloat("dabbaAmount", 0);
         tax = pref.getFloat("tax", 0);
         medicine = pref.getFloat("medicine", 0);
         pfAmount = pref.getFloat("pfAmount", 0);
@@ -86,7 +84,6 @@ public class SalaryFragment extends Fragment {
                 .inflate(R.layout.popup_salary_inputs, null);
 
         EditText monthlySalaryBox = dialogView.findViewById(R.id.monthlySalary);
-        EditText dabbaAmountBox = dialogView.findViewById(R.id.dabbaAmount);
         EditText taxBox = dialogView.findViewById(R.id.tax);
         EditText medicineBox = dialogView.findViewById(R.id.medicine);
         EditText pfAmountBox = dialogView.findViewById(R.id.pfAmount);
@@ -100,7 +97,6 @@ public class SalaryFragment extends Fragment {
         /* Load saved values into fields */
 
         monthlySalaryBox.setText(monthlySalary == 0 ? "" : String.valueOf(monthlySalary));
-        dabbaAmountBox.setText(dabbaAmount == 0 ? "" : String.valueOf(dabbaAmount));
         taxBox.setText(tax == 0 ? "" : String.valueOf(tax));
         medicineBox.setText(medicine == 0 ? "" : String.valueOf(medicine));
 
@@ -147,7 +143,6 @@ public class SalaryFragment extends Fragment {
         saveBtn.setOnClickListener(v -> {
 
             monthlySalary = parseDouble(monthlySalaryBox);
-            dabbaAmount = parseDouble(dabbaAmountBox);
             tax = parseDouble(taxBox);
             medicine = parseDouble(medicineBox);
 
@@ -163,7 +158,6 @@ public class SalaryFragment extends Fragment {
                     getActivity().getSharedPreferences("salary_inputs",0).edit();
 
             editor.putFloat("monthlySalary",(float) monthlySalary);
-            editor.putFloat("dabbaAmount",(float) dabbaAmount);
             editor.putFloat("tax",(float) tax);
             editor.putFloat("medicine",(float) medicine);
             editor.putFloat("pfAmount",(float) pfAmount);
@@ -216,7 +210,6 @@ public class SalaryFragment extends Fragment {
                         month,
                         leaveDays,
                         dabbaUnits,
-                        dabbaAmount,
                         pfEnabled,
                         pfAmount,
                         schemeEnabled,
@@ -405,7 +398,6 @@ private void clearAllData() {
 
     // Reset UI values
     monthlySalary = 0;
-    dabbaAmount = 0;
     tax = 0;
     medicine = 0;
     pfAmount = 0;
