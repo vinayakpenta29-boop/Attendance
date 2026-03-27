@@ -237,16 +237,8 @@ public class SalaryFragment extends Fragment {
         addRow("Bonus", "₹" + round(result.leaveBonus));
         addDivider();
 
+        addRow("5th Monday Bonus", "₹" + round(result.perDaySalary));
         addDivider();
-        addRow("5th Monday Bonus", "₹" + round(
-                 SalaryCalculator.calculate(
-                        monthlySalary, tax, medicine,
-                        year, month,
-                        leaveDays, dabbaUnits,
-                        pfEnabled, pfAmount,
-                        schemeEnabled, schemeAmount
-                ).perDaySalary   // quick display
-        ));
 
         /* DEDUCTIONS */
         
