@@ -231,10 +231,18 @@ public class SalaryFragment extends Fragment {
         addRow("Leave Days", String.valueOf(result.leaveDays));
         addDivider();
 
-        addRow("Leave Deduction", "₹" + round(result.leaveDeduction));
-        addDivider();
+        /* LEAVE DISPLAY LOGIC */
 
-        addRow("Bonus", "₹" + round(result.leaveBonus));
+        if(result.leaveDays == 4){
+            addRow("Leave Adjustment", "No Leave Adjustment");
+        }
+        else if(result.leaveDays < 4){
+            addRow("Bonus", "₹" + round(result.leaveBonus));
+        }
+        else{
+            addRow("Leave Deduction", "₹" + round(result.leaveDeduction));
+        }
+
         addDivider();
 
         addRow("5th Monday Bonus", "₹" + round(result.perDaySalary));
