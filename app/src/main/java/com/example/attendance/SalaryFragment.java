@@ -245,8 +245,13 @@ public class SalaryFragment extends Fragment {
 
         addDivider();
 
-        addRow("5th Monday Bonus", "₹" + round(result.perDaySalary));
-        addDivider();
+        double fifthMondayBonus =
+                (hasFifthMonday(year, month)) ? result.perDaySalary : 0;
+
+        if(fifthMondayBonus > 0){
+            addRow("5th Monday Bonus", "₹" + round(fifthMondayBonus));
+            addDivider();
+        }
 
         /* DEDUCTIONS */
         
