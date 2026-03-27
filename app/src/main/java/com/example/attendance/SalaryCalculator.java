@@ -80,6 +80,7 @@ public class SalaryCalculator {
 
         double netSalary =
                 salaryWithBonus
+                + fifthMondayBonus
                 - totalDeductions
                 + scheme;
 
