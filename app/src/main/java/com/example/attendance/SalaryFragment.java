@@ -246,7 +246,7 @@ public class SalaryFragment extends Fragment {
         addDivider();
 
         double fifthMondayBonus =
-                (hasFifthMonday(year, month)) ? result.perDaySalary : 0;
+                (SalaryCalculator.hasFifthMonday(year, month)) ? result.perDaySalary : 0;
 
         if(fifthMondayBonus > 0){
             addRow("5th Monday Bonus", "₹" + round(fifthMondayBonus));
