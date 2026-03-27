@@ -43,16 +43,26 @@ public class SalaryCalculator {
 
         double perDaySalary = grossSalary / monthDays;
 
+        double fifthMondayBonus = hasFifthMonday(year, month) ? perDaySalary : 0;
+
         double leaveDeduction = 0;
         double leaveBonus = 0;
 
-        if (leaveDays > 4) {
-            leaveDeduction = (leaveDays - 4) * perDaySalary;
-        } else if (leaveDays < 4) {
+        if (leaveDays == 4) {
+            // No change
+            leaveDeduction = 0;
+            leaveBonus = 0;
+        }
+        else if (leaveDays < 4) {
             leaveBonus = (4 - leaveDays) * perDaySalary;
+        }
+        else {
+            leaveDeduction = (leaveDays - 4) * perDaySalary;
         }
 
         double salaryWithBonus = grossSalary + leaveBonus;
+
+        double salaryWithBonus = grossSalary + leaveBonus + fifthMondayBonus;
 
         double dabbaPerDay = 900.0 / monthDays;
         double dabbaDeduction = dabbaUnit * dabbaPerDay;
@@ -98,4 +108,24 @@ public class SalaryCalculator {
 
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
+
+    private static boolean hasFifthMonday(int year, int month) {
+
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(year, month - 1, 1);
+
+    int mondayCount = 0;
+    int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+    for (int day = 1; day <= daysInMonth; day++) {
+
+        calendar.set(year, month - 1, day);
+
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+            mondayCount++;
+        }
+    }
+
+    return mondayCount >= 5;
+}
 }
