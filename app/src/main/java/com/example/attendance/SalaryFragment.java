@@ -31,6 +31,11 @@ public class SalaryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        getParentFragmentManager().setFragmentResultListener(
+                "month_changed",
+                this,
+                (key, bundle) -> calculateSalary()
+        );
     }
 
     @Override
