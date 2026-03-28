@@ -88,6 +88,13 @@ public class ViewAttendanceFragment extends Fragment {
                 new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
 
         monthText.setText(monthFormat.format(currentCalendar.getTime()));
+        SharedPreferences.Editor editor =
+                getActivity().getSharedPreferences("selected_month", 0).edit();
+
+        editor.putInt("year", currentCalendar.get(Calendar.YEAR));
+        editor.putInt("month", currentCalendar.get(Calendar.MONTH) + 1);
+
+        editor.apply();
 
         loadAttendance();
     }
