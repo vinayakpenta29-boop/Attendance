@@ -97,6 +97,10 @@ public class ViewAttendanceFragment extends Fragment {
         editor.apply();
 
         loadAttendance();
+
+        // 🔥 NOTIFY SALARY TAB TO REFRESH
+        Bundle bundle = new Bundle();
+        getParentFragmentManager().setFragmentResult("month_changed", bundle);
     }
 
     private void loadAttendance() {
