@@ -197,9 +197,12 @@ public class SalaryFragment extends Fragment {
         double leaveDays = getLeaveDaysFromAttendance();
         int dabbaUnits = getDabbaUnitsFromAttendance();
 
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
+        // 🔥 GET SELECTED MONTH FROM VIEW ATTENDANCE
+        SharedPreferences pref =
+                getActivity().getSharedPreferences("selected_month", 0);
+
+        int year = pref.getInt("year", Calendar.getInstance().get(Calendar.YEAR));
+        int month = pref.getInt("month", Calendar.getInstance().get(Calendar.MONTH) + 1);
 
         SalaryCalculator.Result result =
                 SalaryCalculator.calculate(
