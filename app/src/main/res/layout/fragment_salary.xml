@@ -36,7 +36,8 @@
                 android:text="Salary Breakdown"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#37474F"
+                android:textColor="#990F4B"
+                android:gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
