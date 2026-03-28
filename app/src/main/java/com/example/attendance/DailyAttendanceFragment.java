@@ -58,6 +58,8 @@ public class DailyAttendanceFragment extends Fragment {
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH));
 
+            picker.getDatePicker().setMaxDate(System.currentTimeMillis());
+
             picker.show();
         });
 
