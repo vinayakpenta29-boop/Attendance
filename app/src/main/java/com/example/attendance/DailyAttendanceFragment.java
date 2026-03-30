@@ -136,12 +136,19 @@ public class DailyAttendanceFragment extends Fragment {
         editor.putString(storageDate, status);
         
         if(status.equals("Half Day") || status.equals("Absent")){
-              editor.putString(storageDate + "_dabba", "Absent");
+
+            editor.putString(storageDate + "_dabba", "Absent");
 
         }
-        else if(!dabbaStatus.equals("Select Dabba")){
-              editor.putString(storageDate + "_dabba", dabbaStatus);
+        else {
 
+            if(dabbaStatus.equals("Select Dabba")){
+                // 🔥 REMOVE OLD VALUE
+                editor.remove(storageDate + "_dabba");
+            }
+            else{
+                editor.putString(storageDate + "_dabba", dabbaStatus);
+            }
         }
 
         editor.apply();
