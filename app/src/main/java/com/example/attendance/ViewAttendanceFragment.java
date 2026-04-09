@@ -182,6 +182,7 @@ public class ViewAttendanceFragment extends Fragment {
                 dayNumber.setGravity(Gravity.CENTER);
                 if(i == 0){
                     dayNumber.setTextColor(0xFFC62828); // 🔴 Sunday = Red
+                    dayNumber.setTypeface(null, android.graphics.Typeface.BOLD);
                 }else{
                     dayNumber.setTextColor(0xFF555555); // Normal
                 }
