@@ -176,7 +176,11 @@ public class ViewAttendanceFragment extends Fragment {
                 TextView dayNumber = new TextView(getContext());
                 dayNumber.setTextSize(13);
                 dayNumber.setGravity(Gravity.CENTER);
-                dayNumber.setTextColor(0xFF555555);
+                if(i == 0){
+                    dayNumber.setTextColor(0xFFC62828); // 🔴 Sunday = Red
+                }else{
+                    dayNumber.setTextColor(0xFF555555); // Normal
+                }
 
                 TextView statusText = new TextView(getContext());
                 statusText.setTextSize(16);
