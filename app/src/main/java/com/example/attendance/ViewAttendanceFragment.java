@@ -166,7 +166,11 @@ public class ViewAttendanceFragment extends Fragment {
                 cell.setOrientation(LinearLayout.VERTICAL);
                 cell.setGravity(Gravity.CENTER);
                 cell.setPadding(16,16,16,16);
+                if(i == 0){
+                cell.setBackgroundResource(R.drawable.sunday_cell_bg);
+                } else {
                 cell.setBackgroundResource(R.drawable.calendar_cell_bg);
+                }
 
                 TableRow.LayoutParams params =
                         new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,1f);
