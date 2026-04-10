@@ -202,6 +202,7 @@ public class ViewAttendanceFragment extends Fragment {
                 if(i == 0){
                     dayNumber.setTextColor(0xFFC62828); // 🔴 Sunday = Red
                     dayNumber.setTypeface(null, android.graphics.Typeface.BOLD);
+                    dayNumber.setBackgroundResource(R.drawable.holiday_date_bg);
                 }else{
                     dayNumber.setTextColor(0xFF555555); // Normal
                 }
