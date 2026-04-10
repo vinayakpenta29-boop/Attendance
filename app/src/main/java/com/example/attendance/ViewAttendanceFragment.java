@@ -253,6 +253,11 @@ public class ViewAttendanceFragment extends Fragment {
                             getActivity().getSharedPreferences("holidays", 0);
 
                     String holidayName = holidayPref.getString(dateKey, null);
+
+                    // ✅ APPLY HOLIDAY BACKGROUND FIRST
+                    if(holidayName != null){
+                        cell.setBackgroundResource(R.drawable.sunday_cell_bg);
+                    }
                     
                     String letter = "";
 
@@ -331,6 +336,19 @@ public class ViewAttendanceFragment extends Fragment {
                     }
 
                     dayCounter++;
+                }
+
+                // ✅ CLICK LISTENER FOR HOLIDAY
+                if(holidayName != null){
+
+                    cell.setOnClickListener(v -> {
+                        new android.app.AlertDialog.Builder(getContext())
+                                .setTitle("Holiday")
+                                .setMessage(holidayName)
+                                .setPositiveButton("OK", null)
+                                .show();
+                    });
+
                 }
 
                 cell.addView(dayNumber);
