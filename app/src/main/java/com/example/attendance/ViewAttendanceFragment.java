@@ -256,21 +256,6 @@ public class ViewAttendanceFragment extends Fragment {
 
                     String holidayName = holidayPref.getString(dateKey, null);
 
-                    // ✅ APPLY HOLIDAY BACKGROUND FIRST
-                    if(holidayName != null){
-                        cell.setBackgroundResource(R.drawable.sunday_cell_bg);
-                        
-                        cell.setOnClickListener(v -> {
-                            new android.app.AlertDialog.Builder(getContext())
-                                    .setTitle("Holiday")
-                                    .setMessage(holidayName)
-                                    .setPositiveButton("OK", null)
-                                    .show();
-                        });
-
-                    }
-            
-                    
                     String letter = "";
 
                     String dabbaLetter = "-";
@@ -323,22 +308,10 @@ public class ViewAttendanceFragment extends Fragment {
                     statusText.setText(letter);
                     dabbaText.setText(dabbaLetter);
 
-                    if(holidayName == null){
-
-                        if(letter.equals("P")){
-                            statusText.setTextColor(0xFF2E7D32);
-                            cell.setBackgroundResource(R.drawable.present_bg);
+                    if(letter.equals("P")){
+                        statusText.setTextColor(0xFF2E7D32);
+                        cell.setBackgroundResource(R.drawable.present_bg);
                         }
-                        else if(letter.equals("H")){
-                            statusText.setTextColor(0xFFF57C00);
-                            cell.setBackgroundResource(R.drawable.half_day_bg);
-                        }
-                        else if(letter.equals("A")){
-                            statusText.setTextColor(0xFFC62828);
-                            cell.setBackgroundResource(R.drawable.absent_cell_bg);
-                        }
-
-                    }
 
                     else if(letter.equals("H")){
                         statusText.setTextColor(0xFFF57C00);   // Orange
@@ -348,6 +321,17 @@ public class ViewAttendanceFragment extends Fragment {
                     else if(letter.equals("A")){
                         statusText.setTextColor(0xFFC62828);   // Red
                         cell.setBackgroundResource(R.drawable.absent_cell_bg);
+                    }
+
+                    else if(holidayName != null){
+                        cell.setBackgroundResource(R.drawable.sunday_cell_bg);
+                            cell.setOnClickListener(v -> {
+                                new android.app.AlertDialog.Builder(getContext())
+                                        .setTitle("Holiday")
+                                        .setMessage(holidayName)
+                                        .setPositiveButton("OK", null)
+                                        .show();
+                            });
                     }
 
                     dayCounter++;
