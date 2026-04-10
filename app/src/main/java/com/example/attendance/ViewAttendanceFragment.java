@@ -41,6 +41,7 @@ public class ViewAttendanceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
 
         View view = inflater.inflate(R.layout.fragment_view_attendance, container, false);
 
@@ -80,6 +81,23 @@ public class ViewAttendanceFragment extends Fragment {
         if (currentCalendar != null) {
             updateMonth(); // 🔥 reload everything
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_view_attendance, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == R.id.menu_holidays){
+            showHolidayDialog();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateMonth() {
@@ -230,6 +248,11 @@ public class ViewAttendanceFragment extends Fragment {
                     String status = pref.getString(dateKey,"");
                     
                     String dabba = pref.getString(dateKey + "_dabba","");
+
+                    SharedPreferences holidayPref =
+                            getActivity().getSharedPreferences("holidays", 0);
+
+                    String holidayName = holidayPref.getString(dateKey, null);
                     
                     String letter = "";
 
@@ -283,9 +306,18 @@ public class ViewAttendanceFragment extends Fragment {
                     statusText.setText(letter);
                     dabbaText.setText(dabbaLetter);
 
-                    if(letter.equals("P")){
-                        statusText.setTextColor(0xFF2E7D32); 
-                        cell.setBackgroundResource(R.drawable.present_bg);
+                    if(holidayName == null){
+
+                        if(letter.equals("P")){
+                            cell.setBackgroundResource(R.drawable.present_bg);
+                        }
+                        else if(letter.equals("H")){
+                            cell.setBackgroundResource(R.drawable.half_day_bg);
+                        }
+                        else if(letter.equals("A")){
+                            cell.setBackgroundResource(R.drawable.absent_cell_bg);
+                        }
+
                     }
 
                     else if(letter.equals("H")){
@@ -498,5 +530,48 @@ public class ViewAttendanceFragment extends Fragment {
         editor.putInt("dabbaCount", dabbaCount);
 
         editor.apply();
+    }
+
+    private void showHolidayDialog(){
+
+        Calendar cal = Calendar.getInstance();
+
+        DatePickerDialog picker = new DatePickerDialog(getContext(),
+                (view, year, month, day) -> {
+
+                    Calendar selected = Calendar.getInstance();
+                    selected.set(year, month, day);
+
+                    String dateKey = keyFormat.format(selected.getTime());
+
+                    EditText input = new EditText(getContext());
+                    input.setHint("Enter Holiday Name");
+
+                    new android.app.AlertDialog.Builder(getContext())
+                            .setTitle("Holiday Name")
+                            .setView(input)
+                            .setPositiveButton("Save", (d, w) -> {
+
+                                String name = input.getText().toString();
+
+                                SharedPreferences pref =
+                                        getActivity().getSharedPreferences("holidays", 0);
+
+                                pref.edit()
+                                        .putString(dateKey, name)
+                                        .apply();
+
+                                updateMonth(); // refresh UI
+
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .show();
+
+                },
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH));
+
+        picker.show();
     }
 }
