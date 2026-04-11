@@ -344,6 +344,59 @@ public class ViewAttendanceFragment extends Fragment {
                         });
                     }
 
+                    // ✅ LONG PRESS → Edit/Delete Holiday
+                    if(holidayName != null){
+                        cell.setOnLongClickListener(v -> {
+
+                            String[] options = {"Edit Holiday", "Delete Holiday"};
+
+                            new android.app.AlertDialog.Builder(getContext())
+                                    .setTitle("Manage Holiday")
+                                    .setItems(options, (dialog, which) -> {
+
+                                        if(which == 0){
+                                            // ✏️ EDIT
+                                            EditText input = new EditText(getContext());
+                                            input.setText(holidayName);
+
+                                            new android.app.AlertDialog.Builder(getContext())
+                                                    .setTitle("Edit Holiday Name")
+                                                    .setView(input)
+                                                    .setPositiveButton("Update", (d, w) -> {
+
+                                                        String newName = input.getText().toString();
+
+                                                        SharedPreferences pref =
+                                                                getActivity().getSharedPreferences("holidays", 0);
+
+                                                        pref.edit()
+                                                                .putString(dateKey, newName)
+                                                                .apply();
+
+                                                        updateMonth(); // refresh UI
+                                                    })
+                                                    .setNegativeButton("Cancel", null)
+                                                    .show();
+
+                                        } else if(which == 1){
+                                            // ❌ DELETE
+                                            SharedPreferences pref =
+                                                    getActivity().getSharedPreferences("holidays", 0);
+
+                                            pref.edit()
+                                                    .remove(dateKey)
+                                                    .apply();
+
+                                            updateMonth(); // refresh UI
+                                        }
+
+                                    })
+                                    .show();
+
+                            return true;
+                        });
+                    }
+
                     dayCounter++;
                 }
 
