@@ -331,13 +331,17 @@ public class ViewAttendanceFragment extends Fragment {
 
                     else if(holidayName != null){
                         cell.setBackgroundResource(R.drawable.sunday_cell_bg);
-                            cell.setOnClickListener(v -> {
-                                new android.app.AlertDialog.Builder(getContext())
-                                        .setTitle("Holiday")
-                                        .setMessage(holidayName)
-                                        .setPositiveButton("OK", null)
-                                        .show();
-                            });
+                    }
+
+                    // ✅ ALWAYS allow holiday click (even if attendance exists)
+                    if(holidayName != null){
+                        cell.setOnClickListener(v -> {
+                            new android.app.AlertDialog.Builder(getContext())
+                                    .setTitle("Holiday")
+                                    .setMessage(holidayName)
+                                    .setPositiveButton("OK", null)
+                                    .show();
+                        });
                     }
 
                     dayCounter++;
