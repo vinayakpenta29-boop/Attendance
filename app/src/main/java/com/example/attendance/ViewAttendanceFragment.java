@@ -255,6 +255,12 @@ public class ViewAttendanceFragment extends Fragment {
                             getActivity().getSharedPreferences("holidays", 0);
 
                     String holidayName = holidayPref.getString(dateKey, null);
+                    // ✅ Make holiday date number RED
+                    if(holidayName != null){
+                        dayNumber.setTextColor(0xFFC62828); // same as Sunday
+                        dayNumber.setTypeface(null, android.graphics.Typeface.BOLD);
+                        dayNumber.setBackgroundResource(R.drawable.holiday_date_bg);
+                    }
 
                     String letter = "";
 
