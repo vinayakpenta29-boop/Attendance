@@ -366,7 +366,7 @@ public class ViewAttendanceFragment extends Fragment {
 
                                                         String newName = input.getText().toString();
 
-                                                        SharedPreferences pref =
+                                                        SharedPreferences holidayPref =
                                                                 getActivity().getSharedPreferences("holidays", 0);
 
                                                         pref.edit()
