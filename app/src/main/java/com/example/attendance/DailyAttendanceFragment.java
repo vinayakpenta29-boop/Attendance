@@ -6,9 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 
 import java.text.SimpleDateFormat;
@@ -26,6 +24,12 @@ public class DailyAttendanceFragment extends Fragment {
 
     SimpleDateFormat displayFormat;
     SimpleDateFormat storageFormat;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true); // ✅ Enable menu
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,14 +89,14 @@ public class DailyAttendanceFragment extends Fragment {
                 if(status.equals("Half Day") || status.equals("Absent")){
 
                     dabbaSpinner.setEnabled(false);
-                    dabbaSpinner.setSelection(4); // Select "Absent" automatically
+                    dabbaSpinner.setSelection(4);
                     dabbaSpinner.setAlpha(0.4f);
 
                 }
                 else{
 
                     dabbaSpinner.setEnabled(true);
-                    dabbaSpinner.setSelection(0); // Reset to Select Dabba
+                    dabbaSpinner.setSelection(0);
                     dabbaSpinner.setAlpha(1f);
 
                 }
@@ -102,7 +106,6 @@ public class DailyAttendanceFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {}
 
         });
-
 
         /* DABBA STATUS SPINNER */
 
@@ -117,11 +120,108 @@ public class DailyAttendanceFragment extends Fragment {
         dabbaSpinner.setAdapter(dabbaAdapter);
         dabbaSpinner.setSelection(0);
 
-
         addButton.setOnClickListener(v -> saveAttendance());
 
         return view;
     }
+
+    /* ================= MENU ================= */
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_daily_attendance, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == R.id.menu_sales){
+            showSalesDialog(); // ✅ Open Sales Dialog
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /* ================= SALES FEATURE ================= */
+
+    private void showSalesDialog() {
+
+        Calendar today = Calendar.getInstance();
+        final Calendar selectedDate = Calendar.getInstance(); // default today
+
+        LinearLayout layout = new LinearLayout(getContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(40, 20, 40, 20);
+
+        TextView dateText = new TextView(getContext());
+        dateText.setText("Date: " + displayFormat.format(today.getTime()));
+        dateText.setTextSize(16);
+
+        Button pickDate = new Button(getContext());
+        pickDate.setText("Select Date");
+
+        EditText amountBox = new EditText(getContext());
+        amountBox.setHint("Enter Sales Amount");
+        amountBox.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+
+        layout.addView(dateText);
+        layout.addView(pickDate);
+        layout.addView(amountBox);
+
+        // 📅 Date Picker
+        pickDate.setOnClickListener(v -> {
+
+            DatePickerDialog picker = new DatePickerDialog(getContext(),
+                    (view, year, month, day) -> {
+
+                        selectedDate.set(year, month, day);
+                        dateText.setText("Date: " + displayFormat.format(selectedDate.getTime()));
+
+                    },
+                    today.get(Calendar.YEAR),
+                    today.get(Calendar.MONTH),
+                    today.get(Calendar.DAY_OF_MONTH));
+
+            picker.show();
+        });
+
+        new android.app.AlertDialog.Builder(getContext())
+                .setTitle("Add Sales")
+                .setView(layout)
+                .setPositiveButton("OK", (dialog, which) -> {
+
+                    String input = amountBox.getText().toString();
+
+                    if(input.isEmpty()){
+                        Toast.makeText(getContext(), "Enter amount", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    int newAmount = Integer.parseInt(input);
+
+                    String key = storageFormat.format(selectedDate.getTime());
+
+                    SharedPreferences pref =
+                            getActivity().getSharedPreferences("sales_data", 0);
+
+                    int oldAmount = pref.getInt(key, 0);
+
+                    int total = oldAmount + newAmount; // ➕ ADD
+
+                    pref.edit().putInt(key, total).apply();
+
+                    Toast.makeText(getContext(),
+                            "Saved Total: ₹" + total,
+                            Toast.LENGTH_SHORT).show();
+
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    /* ================= SAVE ATTENDANCE ================= */
 
     private void saveAttendance() {
 
@@ -134,7 +234,7 @@ public class DailyAttendanceFragment extends Fragment {
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putString(storageDate, status);
-        
+
         if(status.equals("Half Day") || status.equals("Absent")){
 
             editor.putString(storageDate + "_dabba", "Absent");
@@ -143,7 +243,6 @@ public class DailyAttendanceFragment extends Fragment {
         else {
 
             if(dabbaStatus.equals("Select Dabba")){
-                // 🔥 REMOVE OLD VALUE
                 editor.remove(storageDate + "_dabba");
             }
             else{
