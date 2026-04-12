@@ -125,6 +125,8 @@ public class ViewAttendanceFragment extends Fragment {
     private void loadAttendance() {
 
         SharedPreferences pref = getActivity().getSharedPreferences("attendance", 0);
+        SharedPreferences holidayPref =
+            getActivity().getSharedPreferences("holidays", 0);
 
         absentCount = 0;
         halfCount = 0;
@@ -251,10 +253,8 @@ public class ViewAttendanceFragment extends Fragment {
                     
                     String dabba = pref.getString(dateKey + "_dabba","");
 
-                    SharedPreferences holidayPref =
-                            getActivity().getSharedPreferences("holidays", 0);
-
                     String holidayName = holidayPref.getString(dateKey, null);
+                    
                     // ✅ Make holiday date number RED
                     if(holidayName != null){
                         dayNumber.setTextColor(0xFFC62828); // same as Sunday
@@ -366,10 +366,7 @@ public class ViewAttendanceFragment extends Fragment {
 
                                                         String newName = input.getText().toString();
 
-                                                        SharedPreferences holidayPref =
-                                                                getActivity().getSharedPreferences("holidays", 0);
-
-                                                        pref.edit()
+                                                        holidayPref.edit()
                                                                 .putString(dateKey, newName)
                                                                 .apply();
 
@@ -379,11 +376,8 @@ public class ViewAttendanceFragment extends Fragment {
                                                     .show();
 
                                         } else if(which == 1){
-                                            // ❌ DELETE
-                                            SharedPreferences pref =
-                                                    getActivity().getSharedPreferences("holidays", 0);
-
-                                            pref.edit()
+                            
+                                            holidayPref.edit()
                                                     .remove(dateKey)
                                                     .apply();
 
