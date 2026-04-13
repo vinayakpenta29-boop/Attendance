@@ -795,7 +795,7 @@ public class ViewAttendanceFragment extends Fragment {
     TextView title = new TextView(getContext());
     title.setText("Monthly Sales Report");
     title.setTextColor(0xFF990F4B); // your red shade
-    title.setTextSize(20);
+    title.setTextSize(18);
     title.setTypeface(null, android.graphics.Typeface.BOLD);
     title.setPadding(30,30,30,10);
     title.setGravity(Gravity.CENTER);
