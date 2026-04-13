@@ -97,6 +97,10 @@ public class ViewAttendanceFragment extends Fragment {
             showHolidayDialog();
             return true;
         }
+        else if(item.getItemId() == R.id.menu_view_sales){
+            showSalesViewDialog(); // ✅ NEW
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -634,5 +638,64 @@ public class ViewAttendanceFragment extends Fragment {
                 cal.get(Calendar.DAY_OF_MONTH));
 
         picker.show();
+    }
+
+    private void showSalesViewDialog(){
+
+        SharedPreferences pref =
+                getActivity().getSharedPreferences("sales_data", 0);
+
+        Calendar cal = (Calendar) currentCalendar.clone();
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+
+        int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        LinearLayout layout = new LinearLayout(getContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(30,20,30,20);
+
+        ScrollView scrollView = new ScrollView(getContext());
+        scrollView.addView(layout);
+
+        boolean hasData = false;
+
+        for(int day = 1; day <= daysInMonth; day++){
+
+            Calendar temp = Calendar.getInstance();
+            temp.set(year, month, day);
+
+            String key = keyFormat.format(temp.getTime());
+
+            int amount = pref.getInt(key, 0);
+
+            if(amount > 0){
+
+                hasData = true;
+
+                TextView tv = new TextView(getContext());
+                tv.setText(displayFormat.format(temp.getTime()) + "  →  ₹" + amount);
+                tv.setTextSize(16);
+                tv.setPadding(10,10,10,10);
+
+                layout.addView(tv);
+            }
+        }
+
+        if(!hasData){
+            TextView tv = new TextView(getContext());
+            tv.setText("No Sales Found for this month");
+            tv.setPadding(20,20,20,20);
+            layout.addView(tv);
+        }
+
+        new android.app.AlertDialog.Builder(getContext())
+                .setTitle("Monthly Sales")
+                .setView(scrollView)
+                .setPositiveButton("OK", null)
+                .show();
     }
 }
