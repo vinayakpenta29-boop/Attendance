@@ -642,60 +642,153 @@ public class ViewAttendanceFragment extends Fragment {
 
     private void showSalesViewDialog(){
 
-        SharedPreferences pref =
-                getActivity().getSharedPreferences("sales_data", 0);
+    SharedPreferences pref =
+            getActivity().getSharedPreferences("sales_data", 0);
 
-        Calendar cal = (Calendar) currentCalendar.clone();
+    Calendar cal = (Calendar) currentCalendar.clone();
 
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
+    int year = cal.get(Calendar.YEAR);
+    int month = cal.get(Calendar.MONTH);
 
-        cal.set(Calendar.DAY_OF_MONTH, 1);
+    cal.set(Calendar.DAY_OF_MONTH, 1);
 
-        int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+    int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(30,20,30,20);
+    // ✅ ROOT LAYOUT
+    LinearLayout root = new LinearLayout(getContext());
+    root.setOrientation(LinearLayout.VERTICAL);
+    root.setPadding(20,20,20,20);
 
-        ScrollView scrollView = new ScrollView(getContext());
-        scrollView.addView(layout);
+    ScrollView scrollView = new ScrollView(getContext());
+    scrollView.addView(root);
 
-        boolean hasData = false;
+    // ✅ TABLE
+    TableLayout table = new TableLayout(getContext());
 
-        for(int day = 1; day <= daysInMonth; day++){
+    /* ===== HEADER ROW ===== */
+    TableRow header = new TableRow(getContext());
+    header.setBackgroundColor(0xFF3F51B5);
 
-            Calendar temp = Calendar.getInstance();
-            temp.set(year, month, day);
+    String[] titles = {"Date", "Amount"};
 
-            String key = keyFormat.format(temp.getTime());
+    for(String t : titles){
+        TextView tv = new TextView(getContext());
+        tv.setText(t);
+        tv.setPadding(20,20,20,20);
+        tv.setTextColor(0xFFFFFFFF);
+        tv.setTypeface(null, android.graphics.Typeface.BOLD);
+        tv.setGravity(Gravity.CENTER);
 
-            int amount = pref.getInt(key, 0);
-
-            if(amount > 0){
-
-                hasData = true;
-
-                TextView tv = new TextView(getContext());
-                tv.setText(displayFormat.format(temp.getTime()) + "  →  ₹" + amount);
-                tv.setTextSize(16);
-                tv.setPadding(10,10,10,10);
-
-                layout.addView(tv);
-            }
-        }
-
-        if(!hasData){
-            TextView tv = new TextView(getContext());
-            tv.setText("No Sales Found for this month");
-            tv.setPadding(20,20,20,20);
-            layout.addView(tv);
-        }
-
-        new android.app.AlertDialog.Builder(getContext())
-                .setTitle("Monthly Sales")
-                .setView(scrollView)
-                .setPositiveButton("OK", null)
-                .show();
+        header.addView(tv);
     }
+
+    table.addView(header);
+
+    int totalSales = 0;
+    boolean hasData = false;
+
+    /* ===== DATA ROWS ===== */
+    for(int day = 1; day <= daysInMonth; day++){
+
+        Calendar temp = Calendar.getInstance();
+        temp.set(year, month, day);
+
+        String key = keyFormat.format(temp.getTime());
+
+        int amount = pref.getInt(key, 0);
+
+        if(amount > 0){
+
+            hasData = true;
+            totalSales += amount;
+
+            TableRow row = new TableRow(getContext());
+
+            if(day % 2 == 0)
+                row.setBackgroundColor(0xFFF7F9FC);
+            else
+                row.setBackgroundColor(0xFFFFFFFF);
+
+            TextView dateCell = new TextView(getContext());
+            TextView amountCell = new TextView(getContext());
+
+            dateCell.setText(displayFormat.format(temp.getTime()));
+            amountCell.setText("₹ " + amount);
+
+            TextView[] cells = {dateCell, amountCell};
+
+            for(TextView c : cells){
+                c.setPadding(18,18,18,18);
+                c.setGravity(Gravity.CENTER);
+                c.setTextSize(14);
+                c.setBackgroundResource(R.drawable.history_cell_bg);
+
+                TableRow.LayoutParams params =
+                        new TableRow.LayoutParams(0,
+                                TableRow.LayoutParams.WRAP_CONTENT,1f);
+                params.setMargins(6,6,6,6);
+                c.setLayoutParams(params);
+            }
+
+            row.addView(dateCell);
+            row.addView(amountCell);
+
+            table.addView(row);
+        }
+    }
+
+    /* ===== NO DATA ===== */
+    if(!hasData){
+        TextView tv = new TextView(getContext());
+        tv.setText("No Sales Found for this month");
+        tv.setPadding(20,20,20,20);
+        root.addView(tv);
+    }
+    else{
+
+        root.addView(table);
+
+        /* ===== TOTAL ROW ===== */
+        TableRow totalRow = new TableRow(getContext());
+
+        TextView t1 = new TextView(getContext());
+        TextView t2 = new TextView(getContext());
+
+        t1.setText("Total Sales");
+        t2.setText("₹ " + totalSales);
+
+        t1.setTypeface(null, android.graphics.Typeface.BOLD);
+        t2.setTypeface(null, android.graphics.Typeface.BOLD);
+
+        t1.setTextColor(0xFF1B5E20); // Dark Green
+        t2.setTextColor(0xFF1B5E20);
+
+        TextView[] totalCells = {t1, t2};
+
+        for(TextView c : totalCells){
+            c.setPadding(20,20,20,20);
+            c.setGravity(Gravity.CENTER);
+            c.setTextSize(16);
+            c.setBackgroundResource(R.drawable.total_dabba_bg);
+
+            TableRow.LayoutParams params =
+                    new TableRow.LayoutParams(0,
+                            TableRow.LayoutParams.WRAP_CONTENT,1f);
+            params.setMargins(6,6,6,6);
+            c.setLayoutParams(params);
+        }
+
+        totalRow.addView(t1);
+        totalRow.addView(t2);
+
+        table.addView(totalRow);
+    }
+
+    /* ===== DIALOG ===== */
+    new android.app.AlertDialog.Builder(getContext())
+            .setTitle("Monthly Sales Report")
+            .setView(scrollView)
+            .setPositiveButton("OK", null)
+            .show();
+}
 }
