@@ -664,6 +664,7 @@ public class ViewAttendanceFragment extends Fragment {
 
     // ✅ TABLE
     TableLayout table = new TableLayout(getContext());
+    table.setStretchAllColumns(true);
 
     /* ===== HEADER ROW ===== */
     TableRow header = new TableRow(getContext());
@@ -678,6 +679,12 @@ public class ViewAttendanceFragment extends Fragment {
         tv.setTextColor(0xFFFFFFFF);
         tv.setTypeface(null, android.graphics.Typeface.BOLD);
         tv.setGravity(Gravity.CENTER);
+
+        TableRow.LayoutParams params =
+                new TableRow.LayoutParams(0,
+                        TableRow.LayoutParams.WRAP_CONTENT, 1f);
+        params.setMargins(6,6,6,6);
+        tv.setLayoutParams(params);
 
         header.addView(tv);
     }
@@ -713,7 +720,7 @@ public class ViewAttendanceFragment extends Fragment {
             TextView amountCell = new TextView(getContext());
 
             dateCell.setText(displayFormat.format(temp.getTime()));
-            amountCell.setText("₹ " + amount);
+            amountCell.setText(formatRupees(amount));
 
             TextView[] cells = {dateCell, amountCell};
 
@@ -755,7 +762,7 @@ public class ViewAttendanceFragment extends Fragment {
         TextView t2 = new TextView(getContext());
 
         t1.setText("Total Sales");
-        t2.setText("₹ " + totalSales);
+        t2.setText(formatRupees(totalSales));
 
         t1.setTypeface(null, android.graphics.Typeface.BOLD);
         t2.setTypeface(null, android.graphics.Typeface.BOLD);
@@ -785,10 +792,24 @@ public class ViewAttendanceFragment extends Fragment {
     }
 
     /* ===== DIALOG ===== */
+    TextView title = new TextView(getContext());
+    title.setText("Monthly Sales Report");
+    title.setTextColor(0xFF990F4B); // your red shade
+    title.setTextSize(20);
+    title.setTypeface(null, android.graphics.Typeface.BOLD);
+    title.setPadding(30,30,30,10);
+    title.setGravity(Gravity.CENTER);
+    
     new android.app.AlertDialog.Builder(getContext())
-            .setTitle("Monthly Sales Report")
+            .setCustomTitle(title)
             .setView(scrollView)
             .setPositiveButton("OK", null)
             .show();
 }
+
+    private String formatRupees(int amount){
+    java.text.NumberFormat formatter =
+            java.text.NumberFormat.getInstance(new Locale("en", "IN"));
+    return "₹ " + formatter.format(amount);
+    }
 }
