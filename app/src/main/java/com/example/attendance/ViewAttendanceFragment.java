@@ -878,37 +878,32 @@ public class ViewAttendanceFragment extends Fragment {
         /* ===== SCHEME STATUS ===== */
         TableRow statusRow = new TableRow(getContext());
 
-        TextView s1 = new TextView(getContext());
-        TextView s2 = new TextView(getContext());
+        TextView statusText = new TextView(getContext());
 
         if(isEligible){
-            s1.setText("Scheme Status");
-            s2.setText("You are in Scheme");
-            s2.setTextColor(0xFF2E7D32); // Green
+            statusText.setText("You are in Scheme");
+            statusText.setTextColor(0xFF2E7D32); // Green
         } else {
-            s1.setText("Scheme Status");
-            s2.setText("You are Not in Scheme");
-            s2.setTextColor(0xFFC62828); // Red
+            statusText.setText("You are Not in Scheme");
+            statusText.setTextColor(0xFFC62828); // Red
         }
 
-        TextView[] statusCells = {s1, s2};
-
-        for(TextView c : statusCells){
-            c.setPadding(20,20,20,20);
-            c.setGravity(Gravity.CENTER);
-            c.setTextSize(16);
-            c.setTypeface(null, android.graphics.Typeface.BOLD);
-            c.setBackgroundResource(R.drawable.total_dabba_bg);
+        statusText.setPadding(20,20,20,20);
+        statusText.setGravity(Gravity.CENTER);
+        statusText.setTextSize(16);
+        statusText.setTypeface(null, android.graphics.Typeface.BOLD);
+        statusText.setBackgroundResource(R.drawable.total_dabba_bg);
 
             TableRow.LayoutParams params =
-                    new TableRow.LayoutParams(0,
-                            TableRow.LayoutParams.WRAP_CONTENT,1f);
+                    new TableRow.LayoutParams(
+                            TableRow.LayoutParams.MATCH_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT
+                    );
             params.setMargins(6,6,6,6);
-            c.setLayoutParams(params);
+            statusText.setLayoutParams(params);
         }
 
-        statusRow.addView(s1);
-        statusRow.addView(s2);
+        statusRow.addView(statusText);
 
         table.addView(statusRow);
 
