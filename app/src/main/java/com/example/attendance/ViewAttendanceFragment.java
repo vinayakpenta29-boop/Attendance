@@ -911,8 +911,6 @@ public class ViewAttendanceFragment extends Fragment {
 
         table.addView(statusRow);
 
-        double schemeAmount = 0;
-
         if(isEligible){
 
             schemeAmount = commission / 2;
