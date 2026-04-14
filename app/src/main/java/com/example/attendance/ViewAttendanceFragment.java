@@ -208,7 +208,7 @@ public class ViewAttendanceFragment extends Fragment {
                 if(i == 0){
                     dayNumber.setTextColor(0xFFC62828); // 🔴 Sunday = Red
                     dayNumber.setTypeface(null, android.graphics.Typeface.BOLD);
-                    dayNumber.setBackgroundResource(R.drawable.holiday_date_bg);
+                    
                 }else{
                     dayNumber.setTextColor(0xFF555555); // Normal
                 }
@@ -754,7 +754,7 @@ public class ViewAttendanceFragment extends Fragment {
     SharedPreferences holidayPref =
             getActivity().getSharedPreferences("holidays", 0);
 
-    int leaveCount = 0;
+    double leaveCount = 0;
     boolean tookLeaveOnHoliday = false;
 
     for(int day = 1; day <= daysInMonth; day++){
@@ -775,13 +775,14 @@ public class ViewAttendanceFragment extends Fragment {
             leaveCount += 0.5;
         }
 
-        // ❌ Leave on Holiday
-        if(holidayName != null && !status.equals("")){
+        if(holidayName != null &&
+                (status.equals("Absent") || status.equals("Half Day"))){
             tookLeaveOnHoliday = true;
         }
 
-        // ❌ Sunday leave
-        if(temp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY && !status.equals("")){
+        // ✅ Sunday leave ONLY if Absent or Half Day
+        if(temp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY &&
+                (status.equals("Absent") || status.equals("Half Day"))){
             tookLeaveOnHoliday = true;
         }
     }
