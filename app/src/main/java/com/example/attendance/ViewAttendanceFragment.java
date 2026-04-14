@@ -901,7 +901,7 @@ public class ViewAttendanceFragment extends Fragment {
                     );
             params.setMargins(6,6,6,6);
             statusText.setLayoutParams(params);
-        }
+        
 
         statusRow.addView(statusText);
 
