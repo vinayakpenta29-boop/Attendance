@@ -693,6 +693,9 @@ public class ViewAttendanceFragment extends Fragment {
 
     int totalSales = 0;
     boolean hasData = false;
+    double commission = 0;
+    boolean isEligible = false;
+    double schemeAmount = 0;
 
     /* ===== DATA ROWS ===== */
     for(int day = 1; day <= daysInMonth; day++){
@@ -831,10 +834,11 @@ public class ViewAttendanceFragment extends Fragment {
 
         // ✅ COMMISSION CALCULATION
         double afterFivePercent = totalSales * 0.95;
-        double commission = afterFivePercent * 0.01;
+        commission = afterFivePercent * 0.01;
 
-        boolean isEligible = (leaveCount <= 3) && !tookLeaveOnHoliday;
+        isEligible = (leaveCount <= 3) && !tookLeaveOnHoliday;
 
+        
         /* ===== COMMISSION ROW ===== */
         TableRow commissionRow = new TableRow(getContext());
 
@@ -869,71 +873,30 @@ public class ViewAttendanceFragment extends Fragment {
         commissionRow.addView(c2);
 
         table.addView(commissionRow);
-    }
 
-    /* ===== SCHEME STATUS ===== */
-    TableRow statusRow = new TableRow(getContext());
+        /* ===== SCHEME STATUS ===== */
+        TableRow statusRow = new TableRow(getContext());
 
-    TextView s1 = new TextView(getContext());
-    TextView s2 = new TextView(getContext());
+        TextView s1 = new TextView(getContext());
+        TextView s2 = new TextView(getContext());
 
-    if(isEligible){
-        s1.setText("Scheme Status");
-        s2.setText("You are in Scheme");
-        s2.setTextColor(0xFF2E7D32); // Green
-    } else {
-        s1.setText("Scheme Status");
-        s2.setText("You are Not in Scheme");
-        s2.setTextColor(0xFFC62828); // Red
-    }
+        if(isEligible){
+            s1.setText("Scheme Status");
+            s2.setText("You are in Scheme");
+            s2.setTextColor(0xFF2E7D32); // Green
+        } else {
+            s1.setText("Scheme Status");
+            s2.setText("You are Not in Scheme");
+            s2.setTextColor(0xFFC62828); // Red
+        }
 
-    TextView[] statusCells = {s1, s2};
+        TextView[] statusCells = {s1, s2};
 
-    for(TextView c : statusCells){
-        c.setPadding(20,20,20,20);
-        c.setGravity(Gravity.CENTER);
-        c.setTextSize(16);
-        c.setTypeface(null, android.graphics.Typeface.BOLD);
-        c.setBackgroundResource(R.drawable.total_dabba_bg);
-
-        TableRow.LayoutParams params =
-                new TableRow.LayoutParams(0,
-                        TableRow.LayoutParams.WRAP_CONTENT,1f);
-        params.setMargins(6,6,6,6);
-        c.setLayoutParams(params);
-    }
-
-    statusRow.addView(s1);
-    statusRow.addView(s2);
-
-    table.addView(statusRow);
-
-    double schemeAmount = 0;
-
-    if(isEligible){
-
-        schemeAmount = commission / 2;
-
-        TableRow schemeRow = new TableRow(getContext());
-
-        TextView sc1 = new TextView(getContext());
-        TextView sc2 = new TextView(getContext());
-
-        sc1.setText("Scheme");
-        sc2.setText(formatRupees((int) schemeAmount));
-
-        sc1.setTypeface(null, android.graphics.Typeface.BOLD);
-        sc2.setTypeface(null, android.graphics.Typeface.BOLD);
-
-        sc1.setTextColor(0xFF0D47A1); // Blue
-        sc2.setTextColor(0xFF0D47A1);
-
-        TextView[] schemeCells = {sc1, sc2};
-
-        for(TextView c : schemeCells){
+        for(TextView c : statusCells){
             c.setPadding(20,20,20,20);
             c.setGravity(Gravity.CENTER);
             c.setTextSize(16);
+            c.setTypeface(null, android.graphics.Typeface.BOLD);
             c.setBackgroundResource(R.drawable.total_dabba_bg);
 
             TableRow.LayoutParams params =
@@ -943,48 +906,90 @@ public class ViewAttendanceFragment extends Fragment {
             c.setLayoutParams(params);
         }
 
-        schemeRow.addView(sc1);
-        schemeRow.addView(sc2);
+        statusRow.addView(s1);
+        statusRow.addView(s2);
 
-        table.addView(schemeRow);
+        table.addView(statusRow);
+
+        double schemeAmount = 0;
+
+        if(isEligible){
+
+            schemeAmount = commission / 2;
+
+            TableRow schemeRow = new TableRow(getContext());
+
+            TextView sc1 = new TextView(getContext());
+            TextView sc2 = new TextView(getContext());
+
+            sc1.setText("Scheme");
+            sc2.setText(formatRupees((int) schemeAmount));
+
+            sc1.setTypeface(null, android.graphics.Typeface.BOLD);
+            sc2.setTypeface(null, android.graphics.Typeface.BOLD);
+
+            sc1.setTextColor(0xFF0D47A1); // Blue
+            sc2.setTextColor(0xFF0D47A1);
+
+            TextView[] schemeCells = {sc1, sc2};
+
+            for(TextView c : schemeCells){
+                c.setPadding(20,20,20,20);
+                c.setGravity(Gravity.CENTER);
+                c.setTextSize(16);
+                c.setBackgroundResource(R.drawable.total_dabba_bg);
+
+                TableRow.LayoutParams params =
+                        new TableRow.LayoutParams(0,
+                                TableRow.LayoutParams.WRAP_CONTENT,1f);
+                params.setMargins(6,6,6,6);
+                c.setLayoutParams(params);
+            }
+
+            schemeRow.addView(sc1);
+            schemeRow.addView(sc2);
+
+            table.addView(schemeRow);
+        }
+
+        /* ===== FINAL TOTAL ===== */
+        TableRow finalRow = new TableRow(getContext());
+
+        TextView f1 = new TextView(getContext());
+        TextView f2 = new TextView(getContext());
+
+        double finalAmount = commission + schemeAmount;
+
+        f1.setText("Final Amount");
+        f2.setText(formatRupees((int) finalAmount));
+
+        f1.setTypeface(null, android.graphics.Typeface.BOLD);
+        f2.setTypeface(null, android.graphics.Typeface.BOLD);
+
+        f1.setTextColor(0xFF004D40); // Dark Teal
+        f2.setTextColor(0xFF004D40);
+
+        TextView[] finalCells = {f1, f2};
+
+        for(TextView c : finalCells){
+            c.setPadding(20,20,20,20);
+            c.setGravity(Gravity.CENTER);
+            c.setTextSize(16);
+            c.setBackgroundResource(R.drawable.total_leaves_bg);
+
+            TableRow.LayoutParams params =
+                    new TableRow.LayoutParams(0,
+                            TableRow.LayoutParams.WRAP_CONTENT,1f);
+            params.setMargins(6,6,6,6);
+            c.setLayoutParams(params);
+        }
+
+        finalRow.addView(f1);
+        finalRow.addView(f2);
+
+        table.addView(finalRow);
+
     }
-
-    /* ===== FINAL TOTAL ===== */
-    TableRow finalRow = new TableRow(getContext());
-
-    TextView f1 = new TextView(getContext());
-    TextView f2 = new TextView(getContext());
-
-    double finalAmount = commission + schemeAmount;
-
-    f1.setText("Final Amount");
-    f2.setText(formatRupees((int) finalAmount));
-
-    f1.setTypeface(null, android.graphics.Typeface.BOLD);
-    f2.setTypeface(null, android.graphics.Typeface.BOLD);
-
-    f1.setTextColor(0xFF004D40); // Dark Teal
-    f2.setTextColor(0xFF004D40);
-
-    TextView[] finalCells = {f1, f2};
-
-    for(TextView c : finalCells){
-        c.setPadding(20,20,20,20);
-        c.setGravity(Gravity.CENTER);
-        c.setTextSize(16);
-        c.setBackgroundResource(R.drawable.total_leaves_bg);
-
-        TableRow.LayoutParams params =
-                new TableRow.LayoutParams(0,
-                        TableRow.LayoutParams.WRAP_CONTENT,1f);
-        params.setMargins(6,6,6,6);
-        c.setLayoutParams(params);
-    }
-
-    finalRow.addView(f1);
-    finalRow.addView(f2);
-
-    table.addView(finalRow);
 
     /* ===== DIALOG ===== */
     TextView title = new TextView(getContext());
