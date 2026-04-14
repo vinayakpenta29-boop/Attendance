@@ -789,13 +789,52 @@ public class ViewAttendanceFragment extends Fragment {
         totalRow.addView(t2);
 
         table.addView(totalRow);
+
+        // ✅ COMMISSION CALCULATION
+        double afterFivePercent = totalSales * 0.95;
+        double commission = afterFivePercent * 0.01;
+
+        /* ===== COMMISSION ROW ===== */
+        TableRow commissionRow = new TableRow(getContext());
+
+        TextView c1 = new TextView(getContext());
+        TextView c2 = new TextView(getContext());
+
+        c1.setText("Commission");
+        c2.setText(formatRupees((int) commission));
+
+        c1.setTypeface(null, android.graphics.Typeface.BOLD);
+        c2.setTypeface(null, android.graphics.Typeface.BOLD);
+
+        c1.setTextColor(0xFF6A1B9A); // Purple (premium look)
+        c2.setTextColor(0xFF6A1B9A);
+
+        TextView[] commissionCells = {c1, c2};
+
+        for(TextView c : commissionCells){
+            c.setPadding(20,20,20,20);
+            c.setGravity(Gravity.CENTER);
+            c.setTextSize(16);
+            c.setBackgroundResource(R.drawable.total_dabba_bg);
+
+            TableRow.LayoutParams params =
+                    new TableRow.LayoutParams(0,
+                            TableRow.LayoutParams.WRAP_CONTENT,1f);
+            params.setMargins(6,6,6,6);
+            c.setLayoutParams(params);
+        }
+
+        commissionRow.addView(c1);
+        commissionRow.addView(c2);
+
+        table.addView(commissionRow);
     }
 
     /* ===== DIALOG ===== */
     TextView title = new TextView(getContext());
     title.setText("Monthly Sales Report");
     title.setTextColor(0xFF990F4B); // your red shade
-    title.setTextSize(18);
+    title.setTextSize(16);
     title.setTypeface(null, android.graphics.Typeface.BOLD);
     title.setPadding(30,30,30,10);
     title.setGravity(Gravity.CENTER);
