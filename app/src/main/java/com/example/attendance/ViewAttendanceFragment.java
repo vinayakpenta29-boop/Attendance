@@ -894,13 +894,13 @@ public class ViewAttendanceFragment extends Fragment {
         statusText.setTypeface(null, android.graphics.Typeface.BOLD);
         statusText.setBackgroundResource(R.drawable.total_dabba_bg);
 
-            TableRow.LayoutParams params =
+            TableRow.LayoutParams statusParams =
                     new TableRow.LayoutParams(
                             TableRow.LayoutParams.MATCH_PARENT,
                             TableRow.LayoutParams.WRAP_CONTENT
                     );
-            params.setMargins(6,6,6,6);
-            statusText.setLayoutParams(params);
+            statusParams.setMargins(6,6,6,6);
+            statusText.setLayoutParams(statusParams);
         
 
         statusRow.addView(statusText);
