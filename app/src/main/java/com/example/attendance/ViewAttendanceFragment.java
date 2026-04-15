@@ -747,6 +747,14 @@ public class ViewAttendanceFragment extends Fragment {
         }
     }
 
+    View divider3 = new View(getContext());
+    divider3.setLayoutParams(new TableRow.LayoutParams(
+    TableRow.LayoutParams.MATCH_PARENT, 2));
+    divider3.setBackgroundColor(0xFFDDDDDD);
+    divider3.setPadding(20,40,20,40);
+        
+        table.addView(divider2);
+
     // ✅ GET ATTENDANCE DATA
     SharedPreferences attendancePref =
             getActivity().getSharedPreferences("attendance", 0);
@@ -880,7 +888,7 @@ public class ViewAttendanceFragment extends Fragment {
         divider1.setLayoutParams(new TableRow.LayoutParams(
         TableRow.LayoutParams.MATCH_PARENT, 2));
         divider1.setBackgroundColor(0xFFDDDDDD);
-        divider1.setPadding(20,20,20,20);
+        divider1.setPadding(20,40,20,20);
 
         table.addView(divider1);
 
@@ -897,7 +905,7 @@ public class ViewAttendanceFragment extends Fragment {
             statusText.setTextColor(0xFFC62828); // Red
         }
 
-        statusText.setPadding(40,30,20,30);
+        statusText.setPadding(60,30,20,30);
         statusText.setGravity(Gravity.CENTER);
         statusText.setTextSize(18);
         statusText.setTypeface(null, android.graphics.Typeface.BOLD);
@@ -911,7 +919,7 @@ public class ViewAttendanceFragment extends Fragment {
         divider2.setLayoutParams(new TableRow.LayoutParams(
         TableRow.LayoutParams.MATCH_PARENT, 2));
         divider2.setBackgroundColor(0xFFDDDDDD);
-        divider2.setPadding(20,20,20,20);
+        divider2.setPadding(20,20,20,40);
         
         table.addView(divider2);
 
