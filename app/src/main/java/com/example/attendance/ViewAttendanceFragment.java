@@ -892,7 +892,7 @@ public class ViewAttendanceFragment extends Fragment {
         statusText.setGravity(Gravity.CENTER);
         statusText.setTextSize(18);
         statusText.setTypeface(null, android.graphics.Typeface.BOLD);
-        statusText.setBackgroundResource(R.drawable.total_dabba_bg);
+        
 
             TableRow.LayoutParams statusParams =
                     new TableRow.LayoutParams(
