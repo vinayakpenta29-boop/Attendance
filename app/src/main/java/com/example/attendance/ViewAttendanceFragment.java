@@ -680,11 +680,11 @@ public class ViewAttendanceFragment extends Fragment {
         tv.setTypeface(null, android.graphics.Typeface.BOLD);
         tv.setGravity(Gravity.CENTER);
 
-        TableRow.LayoutParams params =
+        TableRow.LayoutParams headerParams =
                 new TableRow.LayoutParams(0,
                         TableRow.LayoutParams.WRAP_CONTENT, 1f);
         params.setMargins(6,6,6,6);
-        tv.setLayoutParams(params);
+        tv.setLayoutParams(headerParams);
 
         header.addView(tv);
     }
@@ -733,11 +733,11 @@ public class ViewAttendanceFragment extends Fragment {
                 c.setTextSize(14);
                 c.setBackgroundResource(R.drawable.history_cell_bg);
 
-                TableRow.LayoutParams params =
+                TableRow.LayoutParams cellParams =
                         new TableRow.LayoutParams(0,
                                 TableRow.LayoutParams.WRAP_CONTENT,1f);
-                params.setMargins(6,6,6,6);
-                c.setLayoutParams(params);
+                cellParams.setMargins(6,6,6,6);
+                c.setLayoutParams(cellParams);
             }
 
             row.addView(dateCell);
@@ -821,11 +821,11 @@ public class ViewAttendanceFragment extends Fragment {
             c.setTextSize(16);
             c.setBackgroundResource(R.drawable.total_dabba_bg);
 
-            TableRow.LayoutParams params =
+            TableRow.LayoutParams totalParams =
                     new TableRow.LayoutParams(0,
                             TableRow.LayoutParams.WRAP_CONTENT,1f);
-            params.setMargins(6,6,6,6);
-            c.setLayoutParams(params);
+            totalParams.setMargins(6,6,6,6);
+            c.setLayoutParams(totalParams);
         }
 
         totalRow.addView(t1);
@@ -863,11 +863,11 @@ public class ViewAttendanceFragment extends Fragment {
             c.setTextSize(16);
             c.setBackgroundResource(R.drawable.total_dabba_bg);
 
-            TableRow.LayoutParams params =
+            TableRow.LayoutParams rowParams =
                     new TableRow.LayoutParams(0,
                             TableRow.LayoutParams.WRAP_CONTENT,1f);
-            params.setMargins(6,6,6,6);
-            c.setLayoutParams(params);
+            rowParams.setMargins(6,6,6,6);
+            c.setLayoutParams(rowParams);
         }
 
         commissionRow.addView(c1);
@@ -876,12 +876,12 @@ public class ViewAttendanceFragment extends Fragment {
         table.addView(commissionRow);
 
                 // ✅ ADD DIVIDER HERE
-        View divider = new View(getContext());
-        divider.setLayoutParams(new TableRow.LayoutParams(
+        View divider1 = new View(getContext());
+        divider1.setLayoutParams(new TableRow.LayoutParams(
         TableRow.LayoutParams.MATCH_PARENT, 2));
-        divider.setBackgroundColor(0xFFDDDDDD);
+        divider1.setBackgroundColor(0xFFDDDDDD);
 
-        table.addView(divider);
+        table.addView(divider1);
 
         /* ===== SCHEME STATUS ===== */
         TableRow statusRow = new TableRow(getContext());
@@ -901,27 +901,27 @@ public class ViewAttendanceFragment extends Fragment {
         statusText.setTextSize(18);
         statusText.setTypeface(null, android.graphics.Typeface.BOLD);
 
-        TableRow.LayoutParams params = new TableRow.LayoutParams(
+        TableRow.LayoutParams statusParams = new TableRow.LayoutParams(
                 0,
                 TableRow.LayoutParams.WRAP_CONTENT,
                 2f   // take both columns
         );
-        params.span = 2; // MUST for proper alignment
-        params.setMargins(6,6,6,6);
+        statusParams.span = 2; // MUST for proper alignment
+        statusParams.setMargins(6,6,6,6);
 
-        statusText.setLayoutParams(params);
+        statusText.setLayoutParams(statusParams);
         
         statusRow.addView(statusText);
 
         table.addView(statusRow);
 
         // ✅ ADD DIVIDER HERE
-        View divider = new View(getContext());
-        divider.setLayoutParams(new TableRow.LayoutParams(
+        View divider2 = new View(getContext());
+        divider2.setLayoutParams(new TableRow.LayoutParams(
         TableRow.LayoutParams.MATCH_PARENT, 2));
-        divider.setBackgroundColor(0xFFDDDDDD);
+        divider2.setBackgroundColor(0xFFDDDDDD);
 
-        table.addView(divider);
+        table.addView(divider2);
 
         if(isEligible){
 
@@ -949,11 +949,11 @@ public class ViewAttendanceFragment extends Fragment {
                 c.setTextSize(16);
                 c.setBackgroundResource(R.drawable.total_dabba_bg);
 
-                TableRow.LayoutParams params =
+                TableRow.LayoutParams rpParams =
                         new TableRow.LayoutParams(0,
                                 TableRow.LayoutParams.WRAP_CONTENT,1f);
-                params.setMargins(6,6,6,6);
-                c.setLayoutParams(params);
+                rpParams.setMargins(6,6,6,6);
+                c.setLayoutParams(rpParams);
             }
 
             schemeRow.addView(sc1);
@@ -987,11 +987,11 @@ public class ViewAttendanceFragment extends Fragment {
             c.setTextSize(16);
             c.setBackgroundResource(R.drawable.total_leaves_bg);
 
-            TableRow.LayoutParams params =
+            TableRow.LayoutParams finalParams =
                     new TableRow.LayoutParams(0,
                             TableRow.LayoutParams.WRAP_CONTENT,1f);
-            params.setMargins(6,6,6,6);
-            c.setLayoutParams(params);
+            finalParams.setMargins(6,6,6,6);
+            c.setLayoutParams(finalParams);
         }
 
         finalRow.addView(f1);
