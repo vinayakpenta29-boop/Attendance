@@ -683,7 +683,7 @@ public class ViewAttendanceFragment extends Fragment {
         TableRow.LayoutParams headerParams =
                 new TableRow.LayoutParams(0,
                         TableRow.LayoutParams.WRAP_CONTENT, 1f);
-        params.setMargins(6,6,6,6);
+        headerParams.setMargins(6,6,6,6);
         tv.setLayoutParams(headerParams);
 
         header.addView(tv);
