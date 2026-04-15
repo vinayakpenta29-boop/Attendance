@@ -880,6 +880,7 @@ public class ViewAttendanceFragment extends Fragment {
         divider1.setLayoutParams(new TableRow.LayoutParams(
         TableRow.LayoutParams.MATCH_PARENT, 2));
         divider1.setBackgroundColor(0xFFDDDDDD);
+        divider1.setPadding(20,20,20,20);
 
         table.addView(divider1);
 
@@ -896,7 +897,7 @@ public class ViewAttendanceFragment extends Fragment {
             statusText.setTextColor(0xFFC62828); // Red
         }
 
-        statusText.setPadding(20,30,20,30);
+        statusText.setPadding(40,30,20,30);
         statusText.setGravity(Gravity.CENTER);
         statusText.setTextSize(18);
         statusText.setTypeface(null, android.graphics.Typeface.BOLD);
@@ -910,7 +911,8 @@ public class ViewAttendanceFragment extends Fragment {
         divider2.setLayoutParams(new TableRow.LayoutParams(
         TableRow.LayoutParams.MATCH_PARENT, 2));
         divider2.setBackgroundColor(0xFFDDDDDD);
-
+        divider2.setPadding(20,20,20,20);
+        
         table.addView(divider2);
 
         if(isEligible){
