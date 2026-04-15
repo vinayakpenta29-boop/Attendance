@@ -875,6 +875,14 @@ public class ViewAttendanceFragment extends Fragment {
 
         table.addView(commissionRow);
 
+                // ✅ ADD DIVIDER HERE
+        View divider = new View(getContext());
+        divider.setLayoutParams(new TableRow.LayoutParams(
+        TableRow.LayoutParams.MATCH_PARENT, 2));
+        divider.setBackgroundColor(0xFFDDDDDD);
+
+        table.addView(divider);
+
         /* ===== SCHEME STATUS ===== */
         TableRow statusRow = new TableRow(getContext());
 
@@ -892,6 +900,16 @@ public class ViewAttendanceFragment extends Fragment {
         statusText.setGravity(Gravity.CENTER);
         statusText.setTextSize(18);
         statusText.setTypeface(null, android.graphics.Typeface.BOLD);
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(
+                0,
+                TableRow.LayoutParams.WRAP_CONTENT,
+                2f   // take both columns
+        );
+        params.span = 2; // MUST for proper alignment
+        params.setMargins(6,6,6,6);
+
+        statusText.setLayoutParams(params);
         
         statusRow.addView(statusText);
 
@@ -901,7 +919,7 @@ public class ViewAttendanceFragment extends Fragment {
         View divider = new View(getContext());
         divider.setLayoutParams(new TableRow.LayoutParams(
         TableRow.LayoutParams.MATCH_PARENT, 2));
-        divider.setBackgroundColor(0xFFEEEEEE);
+        divider.setBackgroundColor(0xFFDDDDDD);
 
         table.addView(divider);
 
