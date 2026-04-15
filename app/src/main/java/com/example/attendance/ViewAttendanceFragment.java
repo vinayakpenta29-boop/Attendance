@@ -888,13 +888,22 @@ public class ViewAttendanceFragment extends Fragment {
             statusText.setTextColor(0xFFC62828); // Red
         }
 
-        statusText.setPadding(20,20,20,20);
+        statusText.setPadding(20,30,20,30);
         statusText.setGravity(Gravity.CENTER);
         statusText.setTextSize(18);
         statusText.setTypeface(null, android.graphics.Typeface.BOLD);
+        
         statusRow.addView(statusText);
 
         table.addView(statusRow);
+
+        // ✅ ADD DIVIDER HERE
+        View divider = new View(getContext());
+        divider.setLayoutParams(new TableRow.LayoutParams(
+        TableRow.LayoutParams.MATCH_PARENT, 2));
+        divider.setBackgroundColor(0xFFEEEEEE);
+
+        table.addView(divider);
 
         if(isEligible){
 
