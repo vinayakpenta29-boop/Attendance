@@ -907,7 +907,7 @@ public class ViewAttendanceFragment extends Fragment {
                 2f   // take both columns
         );
         statusParams.span = 2; // MUST for proper alignment
-        statusParams.setMargins(6,6,6,6);
+        statusParams.setMargins(1,1,1,1);
 
         statusText.setLayoutParams(statusParams);
         
