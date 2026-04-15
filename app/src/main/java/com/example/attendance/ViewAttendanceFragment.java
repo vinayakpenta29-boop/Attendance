@@ -753,7 +753,7 @@ public class ViewAttendanceFragment extends Fragment {
     divider3.setBackgroundColor(0xFFDDDDDD);
     divider3.setPadding(20,40,20,40);
         
-        table.addView(divider2);
+        table.addView(divider3);
 
     // ✅ GET ATTENDANCE DATA
     SharedPreferences attendancePref =
