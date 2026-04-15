@@ -901,16 +901,6 @@ public class ViewAttendanceFragment extends Fragment {
         statusText.setTextSize(18);
         statusText.setTypeface(null, android.graphics.Typeface.BOLD);
 
-        TableRow.LayoutParams statusParams = new TableRow.LayoutParams(
-                0,
-                TableRow.LayoutParams.WRAP_CONTENT,
-                2f   // take both columns
-        );
-        statusParams.span = 2; // MUST for proper alignment
-        statusParams.setMargins(1,1,1,1);
-
-        statusText.setLayoutParams(statusParams);
-        
         statusRow.addView(statusText);
 
         table.addView(statusRow);
