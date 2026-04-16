@@ -697,6 +697,8 @@ public class ViewAttendanceFragment extends Fragment {
     boolean isEligible = false;
     double schemeAmount = 0;
 
+    boolean isSchemeForced = false; // 👈 ADD THIS
+
     /* ===== DATA ROWS ===== */
     for(int day = 1; day <= daysInMonth; day++){
 
@@ -972,7 +974,7 @@ public class ViewAttendanceFragment extends Fragment {
         TextView f1 = new TextView(getContext());
         TextView f2 = new TextView(getContext());
 
-        double finalAmount = commission + schemeAmount;
+        double finalAmount = commission + (isEligible ? schemeAmount : 0);
 
         f1.setText("Final Amount");
         f2.setText(formatRupees((int) finalAmount));
@@ -1002,6 +1004,119 @@ public class ViewAttendanceFragment extends Fragment {
         finalRow.addView(f2);
 
         table.addView(finalRow);
+
+        // ===============================
+// ✅ SCHEME ENABLE TOGGLE (ONLY WHEN NOT ELIGIBLE)
+// ===============================
+if(!isEligible){
+
+    TableRow toggleRow = new TableRow(getContext());
+
+    LinearLayout toggleLayout = new LinearLayout(getContext());
+    toggleLayout.setOrientation(LinearLayout.HORIZONTAL);
+    toggleLayout.setGravity(Gravity.CENTER);
+    toggleLayout.setPadding(20,30,20,30);
+
+    TextView toggleText = new TextView(getContext());
+    toggleText.setText("Enable Scheme");
+    toggleText.setTextSize(16);
+    toggleText.setTypeface(null, android.graphics.Typeface.BOLD);
+
+    Switch toggle = new Switch(getContext());
+
+    toggleLayout.addView(toggleText);
+    toggleLayout.addView(toggle);
+
+    toggleRow.addView(toggleLayout);
+    table.addView(toggleRow);
+
+    // 👉 When toggle changes
+    toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+        table.removeViews(
+                table.indexOfChild(toggleRow) + 1,
+                table.getChildCount() - (table.indexOfChild(toggleRow) + 1)
+        );
+
+        double forcedScheme = 0;
+
+        if(isChecked){
+            forcedScheme = commission / 2;
+
+            // 🔹 Scheme Row
+            TableRow schemeRow = new TableRow(getContext());
+
+            TextView sc1 = new TextView(getContext());
+            TextView sc2 = new TextView(getContext());
+
+            sc1.setText("Scheme");
+            sc2.setText(formatRupees((int) forcedScheme));
+
+            sc1.setTypeface(null, android.graphics.Typeface.BOLD);
+            sc2.setTypeface(null, android.graphics.Typeface.BOLD);
+
+            sc1.setTextColor(0xFF0D47A1);
+            sc2.setTextColor(0xFF0D47A1);
+
+            TextView[] cells = {sc1, sc2};
+
+            for(TextView c : cells){
+                c.setPadding(20,20,20,20);
+                c.setGravity(Gravity.CENTER);
+                c.setTextSize(16);
+                c.setBackgroundResource(R.drawable.total_dabba_bg);
+
+                TableRow.LayoutParams rp =
+                        new TableRow.LayoutParams(0,
+                                TableRow.LayoutParams.WRAP_CONTENT,1f);
+                rp.setMargins(6,6,6,6);
+                c.setLayoutParams(rp);
+            }
+
+            schemeRow.addView(sc1);
+            schemeRow.addView(sc2);
+
+            table.addView(schemeRow);
+        }
+
+        // 🔹 Final Row Update
+        TableRow newFinalRow = new TableRow(getContext());
+
+        TextView f1 = new TextView(getContext());
+        TextView f2 = new TextView(getContext());
+
+        double newFinal = commission + forcedScheme;
+
+        f1.setText("Final Amount");
+        f2.setText(formatRupees((int) newFinal));
+
+        f1.setTypeface(null, android.graphics.Typeface.BOLD);
+        f2.setTypeface(null, android.graphics.Typeface.BOLD);
+
+        f1.setTextColor(0xFF004D40);
+        f2.setTextColor(0xFF004D40);
+
+        TextView[] finalCells = {f1, f2};
+
+        for(TextView c : finalCells){
+            c.setPadding(20,20,20,20);
+            c.setGravity(Gravity.CENTER);
+            c.setTextSize(16);
+            c.setBackgroundResource(R.drawable.total_leaves_bg);
+
+            TableRow.LayoutParams fp =
+                    new TableRow.LayoutParams(0,
+                            TableRow.LayoutParams.WRAP_CONTENT,1f);
+            fp.setMargins(6,6,6,6);
+            c.setLayoutParams(fp);
+        }
+
+        newFinalRow.addView(f1);
+        newFinalRow.addView(f2);
+
+        table.addView(newFinalRow);
+    });
+}
 
     }
 
