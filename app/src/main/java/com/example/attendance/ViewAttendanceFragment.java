@@ -789,7 +789,11 @@ public class ViewAttendanceFragment extends Fragment {
         }
 
         // ✅ Sunday leave ONLY if Absent or Half Day
-        if(temp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY &&
+        
+        int dayOfWeek = temp.get(Calendar.DAY_OF_WEEK);
+
+        // ✅ Sunday OR Saturday leave
+        if((dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY) &&
                 (status.equals("Absent") || status.equals("Half Day"))){
             tookLeaveOnHoliday = true;
         }
