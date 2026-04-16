@@ -699,6 +699,14 @@ public class ViewAttendanceFragment extends Fragment {
 
     boolean isSchemeForced = false; // 👈 ADD THIS
 
+    TableRow schemeRow = new TableRow(getContext());
+    TextView sc1 = new TextView(getContext());
+    TextView sc2 = new TextView(getContext());
+
+    TableRow finalRow = new TableRow(getContext());
+    TextView f1 = new TextView(getContext());
+    TextView f2 = new TextView(getContext());
+
     /* ===== DATA ROWS ===== */
     for(int day = 1; day <= daysInMonth; day++){
 
@@ -929,60 +937,46 @@ public class ViewAttendanceFragment extends Fragment {
         
         table.addView(divider2);
 
-        if(isEligible){
+        // ===== SCHEME ROW (CREATE ONCE) =====
+        sc1.setText("Scheme");
 
-            schemeAmount = commission / 2;
+        sc1.setTypeface(null, android.graphics.Typeface.BOLD);
+        sc2.setTypeface(null, android.graphics.Typeface.BOLD);
 
-            TableRow schemeRow = new TableRow(getContext());
+        sc1.setTextColor(0xFF0D47A1);
+        sc2.setTextColor(0xFF0D47A1);
 
-            TextView sc1 = new TextView(getContext());
-            TextView sc2 = new TextView(getContext());
+        TextView[] schemeCells = {sc1, sc2};
 
-            sc1.setText("Scheme");
-            sc2.setText(formatRupees((int) schemeAmount));
+        for(TextView c : schemeCells){
+            c.setPadding(20,20,20,20);
+            c.setGravity(Gravity.CENTER);
+            c.setTextSize(16);
+            c.setBackgroundResource(R.drawable.total_dabba_bg);
 
-            sc1.setTypeface(null, android.graphics.Typeface.BOLD);
-            sc2.setTypeface(null, android.graphics.Typeface.BOLD);
-
-            sc1.setTextColor(0xFF0D47A1); // Blue
-            sc2.setTextColor(0xFF0D47A1);
-
-            TextView[] schemeCells = {sc1, sc2};
-
-            for(TextView c : schemeCells){
-                c.setPadding(20,20,20,20);
-                c.setGravity(Gravity.CENTER);
-                c.setTextSize(16);
-                c.setBackgroundResource(R.drawable.total_dabba_bg);
-
-                TableRow.LayoutParams rpParams =
-                        new TableRow.LayoutParams(0,
-                                TableRow.LayoutParams.WRAP_CONTENT,1f);
-                rpParams.setMargins(6,6,6,6);
-                c.setLayoutParams(rpParams);
-            }
-
-            schemeRow.addView(sc1);
-            schemeRow.addView(sc2);
-
-            table.addView(schemeRow);
+            TableRow.LayoutParams rp =
+                    new TableRow.LayoutParams(0,
+                            TableRow.LayoutParams.WRAP_CONTENT,1f);
+            rp.setMargins(6,6,6,6);
+            c.setLayoutParams(rp);
         }
 
-        /* ===== FINAL TOTAL ===== */
+        schemeRow.addView(sc1);
+        schemeRow.addView(sc2);
+
+
+        // ===== FINAL ROW (CREATE ONCE) =====
         TableRow finalRow = new TableRow(getContext());
 
         TextView f1 = new TextView(getContext());
         TextView f2 = new TextView(getContext());
 
-        double finalAmount = commission + (isEligible ? schemeAmount : 0);
-
         f1.setText("Final Amount");
-        f2.setText(formatRupees((int) finalAmount));
 
         f1.setTypeface(null, android.graphics.Typeface.BOLD);
         f2.setTypeface(null, android.graphics.Typeface.BOLD);
 
-        f1.setTextColor(0xFF004D40); // Dark Teal
+        f1.setTextColor(0xFF004D40);
         f2.setTextColor(0xFF004D40);
 
         TextView[] finalCells = {f1, f2};
@@ -993,16 +987,34 @@ public class ViewAttendanceFragment extends Fragment {
             c.setTextSize(16);
             c.setBackgroundResource(R.drawable.total_leaves_bg);
 
-            TableRow.LayoutParams finalParams =
+            TableRow.LayoutParams fp =
                     new TableRow.LayoutParams(0,
                             TableRow.LayoutParams.WRAP_CONTENT,1f);
-            finalParams.setMargins(6,6,6,6);
-            c.setLayoutParams(finalParams);
+            fp.setMargins(6,6,6,6);
+            c.setLayoutParams(fp);
         }
 
         finalRow.addView(f1);
         finalRow.addView(f2);
 
+
+        // ===== SET VALUES (ONLY ONCE) =====
+        if(isEligible){
+            schemeAmount = commission / 2;
+            sc2.setText(formatRupees((int) schemeAmount));
+        } else {
+            schemeAmount = 0;
+            sc2.setText("₹ 0");
+        }
+
+        double finalAmount = commission + schemeAmount;
+        f2.setText(formatRupees((int) finalAmount));
+
+
+        // ===== ADD ROWS (CORRECT ORDER) =====
+        if(isEligible){
+            table.addView(schemeRow);
+        }
         table.addView(finalRow);
 
         // ===============================
@@ -1033,91 +1045,22 @@ if(!isEligible){
     // 👉 When toggle changes
     toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-        table.removeViews(
-                table.indexOfChild(toggleRow) + 1,
-                table.getChildCount() - (table.indexOfChild(toggleRow) + 1)
-        );
+        double forcedScheme = isChecked ? commission / 2 : 0;
 
-        double forcedScheme = 0;
-
+        // ✅ Update Scheme Row
         if(isChecked){
-            forcedScheme = commission / 2;
-
-            // 🔹 Scheme Row
-            TableRow schemeRow = new TableRow(getContext());
-
-            TextView sc1 = new TextView(getContext());
-            TextView sc2 = new TextView(getContext());
-
-            sc1.setText("Scheme");
-            sc2.setText(formatRupees((int) forcedScheme));
-
-            sc1.setTypeface(null, android.graphics.Typeface.BOLD);
-            sc2.setTypeface(null, android.graphics.Typeface.BOLD);
-
-            sc1.setTextColor(0xFF0D47A1);
-            sc2.setTextColor(0xFF0D47A1);
-
-            TextView[] cells = {sc1, sc2};
-
-            for(TextView c : cells){
-                c.setPadding(20,20,20,20);
-                c.setGravity(Gravity.CENTER);
-                c.setTextSize(16);
-                c.setBackgroundResource(R.drawable.total_dabba_bg);
-
-                TableRow.LayoutParams rp =
-                        new TableRow.LayoutParams(0,
-                                TableRow.LayoutParams.WRAP_CONTENT,1f);
-                rp.setMargins(6,6,6,6);
-                c.setLayoutParams(rp);
+            if(table.indexOfChild(schemeRow) == -1){
+                table.addView(schemeRow, table.indexOfChild(finalRow));
             }
-
-            schemeRow.addView(sc1);
-            schemeRow.addView(sc2);
-
-            table.addView(schemeRow);
+            sc2.setText(formatRupees((int) forcedScheme));
+        } else {
+            table.removeView(schemeRow);
         }
 
-        // 🔹 Final Row Update
-        TableRow newFinalRow = new TableRow(getContext());
-
-        TextView f1 = new TextView(getContext());
-        TextView f2 = new TextView(getContext());
-
+        // ✅ Update Final Amount ONLY (NO NEW ROW)
         double newFinal = commission + forcedScheme;
-
-        f1.setText("Final Amount");
         f2.setText(formatRupees((int) newFinal));
-
-        f1.setTypeface(null, android.graphics.Typeface.BOLD);
-        f2.setTypeface(null, android.graphics.Typeface.BOLD);
-
-        f1.setTextColor(0xFF004D40);
-        f2.setTextColor(0xFF004D40);
-
-        TextView[] finalCells = {f1, f2};
-
-        for(TextView c : finalCells){
-            c.setPadding(20,20,20,20);
-            c.setGravity(Gravity.CENTER);
-            c.setTextSize(16);
-            c.setBackgroundResource(R.drawable.total_leaves_bg);
-
-            TableRow.LayoutParams fp =
-                    new TableRow.LayoutParams(0,
-                            TableRow.LayoutParams.WRAP_CONTENT,1f);
-            fp.setMargins(6,6,6,6);
-            c.setLayoutParams(fp);
-        }
-
-        newFinalRow.addView(f1);
-        newFinalRow.addView(f2);
-
-        table.addView(newFinalRow);
     });
-}
-
     }
 
     /* ===== DIALOG ===== */
