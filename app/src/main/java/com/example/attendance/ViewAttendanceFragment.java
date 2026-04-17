@@ -188,14 +188,12 @@ public class ViewAttendanceFragment extends Fragment {
             for(int i=0;i<7;i++){
 
                 LinearLayout cell = new LinearLayout(getContext());
+                
                 cell.setOrientation(LinearLayout.VERTICAL);
                 cell.setGravity(Gravity.CENTER);
                 cell.setPadding(16,16,16,16);
-                if(i == 0){
-                cell.setBackgroundResource(R.drawable.sunday_cell_bg);
-                } else {
                 cell.setBackgroundResource(R.drawable.calendar_cell_bg);
-                }
+                
 
                 TableRow.LayoutParams params =
                         new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT,1f);
@@ -244,6 +242,11 @@ public class ViewAttendanceFragment extends Fragment {
 
                 }
                 else if(dayCounter <= daysInMonth){
+
+                    // ✅ Apply Sunday background ONLY when date exists
+                    if(i == 0){
+                        cell.setBackgroundResource(R.drawable.sunday_cell_bg);
+                    }
 
                     dayNumber.setText(String.valueOf(dayCounter));
 
