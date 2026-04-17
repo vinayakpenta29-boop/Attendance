@@ -966,10 +966,7 @@ public class ViewAttendanceFragment extends Fragment {
 
 
         // ===== FINAL ROW (CREATE ONCE) =====
-        TableRow finalRow = new TableRow(getContext());
-
-        TextView f1 = new TextView(getContext());
-        TextView f2 = new TextView(getContext());
+        
 
         f1.setText("Final Amount");
 
