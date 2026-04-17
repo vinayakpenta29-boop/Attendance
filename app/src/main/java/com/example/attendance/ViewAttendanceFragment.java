@@ -1078,6 +1078,7 @@ if(!isEligible){
             .setPositiveButton("OK", null)
             .show();
 }
+}
 
     private String formatRupees(int amount){
     java.text.NumberFormat formatter =
