@@ -101,6 +101,10 @@ public class ViewAttendanceFragment extends Fragment {
             showSalesViewDialog(); // ✅ NEW
             return true;
         }
+        else if(item.getItemId() == R.id.menu_extra_dabba){
+            showExtraDabbaDialog();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -222,6 +226,12 @@ public class ViewAttendanceFragment extends Fragment {
                 dabbaText.setGravity(Gravity.CENTER);
                 dabbaText.setTypeface(null, android.graphics.Typeface.BOLD);
 
+                TextView extraDabbaText = new TextView(getContext());
+                extraDabbaText.setTextSize(14);
+                extraDabbaText.setTextColor(0xFF8E24AA); // Purple
+                extraDabbaText.setGravity(Gravity.CENTER);
+                extraDabbaText.setTypeface(null, android.graphics.Typeface.BOLD);
+
                 View divider = new View(getContext());
 
                 LinearLayout.LayoutParams dividerParams =
@@ -259,6 +269,8 @@ public class ViewAttendanceFragment extends Fragment {
                     String status = pref.getString(dateKey,"");
                     
                     String dabba = pref.getString(dateKey + "_dabba","");
+
+                    String extraDabba = pref.getString(dateKey + "_extra_dabba","");
 
                     String holidayName = holidayPref.getString(dateKey, null);
                     
@@ -320,6 +332,7 @@ public class ViewAttendanceFragment extends Fragment {
 
                     statusText.setText(letter);
                     dabbaText.setText(dabbaLetter);
+                    extraDabbaText.setText(extraDabba);
 
                     if(letter.equals("P")){
                         statusText.setTextColor(0xFF2E7D32);
@@ -405,6 +418,7 @@ public class ViewAttendanceFragment extends Fragment {
                 cell.addView(statusText);
                 cell.addView(divider);
                 cell.addView(dabbaText);
+                cell.addView(extraDabbaText);
 
                 row.addView(cell);
             }
@@ -1152,4 +1166,64 @@ if(!isEligible){
             java.text.NumberFormat.getInstance(new Locale("en", "IN"));
     return "₹ " + formatter.format(amount);
     }
+
+    private void showExtraDabbaDialog(){
+
+    Calendar cal = Calendar.getInstance();
+
+    DatePickerDialog picker = new DatePickerDialog(getContext(),
+            (view, year, month, day) -> {
+
+                Calendar selected = Calendar.getInstance();
+                selected.set(year, month, day);
+
+                String dateKey = keyFormat.format(selected.getTime());
+
+                // ✅ Spinner
+                Spinner spinner = new Spinner(getContext());
+
+                String[] options = {"Absent (A)", "Dabba (D)", "Late (L)", "Ghari (G)"};
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        getContext(),
+                        android.R.layout.simple_spinner_dropdown_item,
+                        options
+                );
+
+                spinner.setAdapter(adapter);
+
+                new android.app.AlertDialog.Builder(getContext())
+                        .setTitle("Select Extra Dabba")
+                        .setView(spinner)
+                        .setPositiveButton("Save", (d, w) -> {
+
+                            String selectedItem = spinner.getSelectedItem().toString();
+                            String value = "";
+
+                            if(selectedItem.contains("A")) value = "A";
+                            else if(selectedItem.contains("D")) value = "D";
+                            else if(selectedItem.contains("L")) value = "L";
+                            else if(selectedItem.contains("G")) value = "G";
+
+                            SharedPreferences pref =
+                                    getActivity().getSharedPreferences("attendance", 0);
+
+                            // ✅ SAVE EXTRA DABBA
+                            pref.edit()
+                                    .putString(dateKey + "_extra_dabba", value)
+                                    .apply();
+
+                            updateMonth(); // 🔥 refresh UI
+
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+
+            },
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH));
+
+    picker.show();
+}
 }
