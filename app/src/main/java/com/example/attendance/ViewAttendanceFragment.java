@@ -1014,6 +1014,8 @@ public class ViewAttendanceFragment extends Fragment {
         }
         table.addView(finalRow);
 
+        final double finalCommission = commission;
+
         // ===============================
 // ✅ SCHEME ENABLE TOGGLE (ONLY WHEN NOT ELIGIBLE)
 // ===============================
@@ -1042,7 +1044,7 @@ if(!isEligible){
     // 👉 When toggle changes
     toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-        double forcedScheme = isChecked ? commission / 2 : 0;
+        double forcedScheme = isChecked ? finalCommission / 2 : 0;
 
         // ✅ Update Scheme Row
         if(isChecked){
@@ -1055,7 +1057,7 @@ if(!isEligible){
         }
 
         // ✅ Update Final Amount ONLY (NO NEW ROW)
-        double newFinal = commission + forcedScheme;
+        double newFinal = finalCommission + forcedScheme;
         f2.setText(formatRupees((int) newFinal));
     });
     }
