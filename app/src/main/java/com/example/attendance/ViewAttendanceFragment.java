@@ -757,6 +757,71 @@ public class ViewAttendanceFragment extends Fragment {
             row.addView(amountCell);
 
             table.addView(row);
+
+            // ✅ LONG PRESS FOR EDIT / DELETE SALES
+            row.setOnLongClickListener(v -> {
+
+                    String[] options = {"Edit Sales", "Delete Sales"};
+
+                    new android.app.AlertDialog.Builder(getContext())
+                            .setTitle("Manage Sales")
+                            .setItems(options, (dialog, which) -> {
+
+                                if(which == 0){
+                                  // ✏️ EDIT SALES
+
+                                    EditText input = new EditText(getContext());
+                                    input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+                                    input.setText(String.valueOf(amount));
+
+                                    new android.app.AlertDialog.Builder(getContext())
+                                            .setTitle("Edit Sales Amount")
+                                            .setView(input)
+                                            .setPositiveButton("Update", (d, w) -> {
+
+                                                int newAmount = 0;
+                                                try{
+                                                    newAmount = Integer.parseInt(input.getText().toString());
+                                                    }catch(Exception e){
+                                                    newAmount = 0;
+                                                }
+
+                                                SharedPreferences.Editor editor = pref.edit();
+
+                                                if(newAmount > 0){
+                                                    editor.putInt(key, newAmount);
+                                                } else {
+                                                    editor.remove(key);
+                                                }
+
+                                                editor.apply();
+
+                                                showSalesViewDialog(); // 🔥 refresh dialog
+                                            })
+                                            .setNegativeButton("Cancel", null)
+                                            .show();
+
+                                 } else if(which == 1){
+                                    // 🗑 DELETE SALES
+
+                                    new android.app.AlertDialog.Builder(getContext())
+                                            .setTitle("Delete Sales")
+                                            .setMessage("Are you sure?")
+                                            .setPositiveButton("Delete", (d, w) -> {
+
+                                                pref.edit().remove(key).apply();
+
+                                                showSalesViewDialog(); // 🔥 refresh dialog
+                                            })
+                                            .setNegativeButton("Cancel", null)
+                                            .show();
+                                }
+
+                            })
+                            .show();
+ 
+                    return true;
+                });
         }
     }
 
