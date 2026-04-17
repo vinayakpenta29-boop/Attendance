@@ -10,4 +10,9 @@
         android:title="View Sales"
         android:showAsAction="never"/>
 
+    <item
+    android:id="@+id/menu_extra_dabba"
+    android:title="Extra Dabba"
+    android:showAsAction="never"/>
+    
 </menu>
