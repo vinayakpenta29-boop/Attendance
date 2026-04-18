@@ -11,8 +11,13 @@
         android:showAsAction="never"/>
 
     <item
-    android:id="@+id/menu_extra_dabba"
-    android:title="Extra Dabba"
-    android:showAsAction="never"/>
+        android:id="@+id/menu_extra_dabba"
+        android:title="Extra Dabba"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_amavasya"
+        android:title="Amavasya"
+        android:showAsAction="never"/>
     
 </menu>
