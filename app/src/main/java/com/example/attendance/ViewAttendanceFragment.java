@@ -377,6 +377,16 @@ public class ViewAttendanceFragment extends Fragment {
                         });
                     }
 
+                    if(amavasyaName != null){
+                        cell.setOnClickListener(v -> {
+                            new android.app.AlertDialog.Builder(getContext())
+                                    .setTitle("Amavasya")
+                                    .setMessage(amavasyaName)
+                                    .setPositiveButton("OK", null)
+                                    .show();
+                        });
+                    }
+
                     // ✅ LONG PRESS → Edit/Delete Holiday
                     if(holidayName != null){
                         cell.setOnLongClickListener(v -> {
