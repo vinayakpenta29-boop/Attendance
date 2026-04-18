@@ -105,6 +105,10 @@ public class ViewAttendanceFragment extends Fragment {
             showExtraDabbaDialog();
             return true;
         }
+        else if(item.getItemId() == R.id.menu_amavasya){
+            showAmavasyaDialog();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -135,6 +139,8 @@ public class ViewAttendanceFragment extends Fragment {
         SharedPreferences pref = getActivity().getSharedPreferences("attendance", 0);
         SharedPreferences holidayPref =
             getActivity().getSharedPreferences("holidays", 0);
+        SharedPreferences amavasyaPref =
+            getActivity().getSharedPreferences("amavasya", 0);
 
         absentCount = 0;
         halfCount = 0;
@@ -266,6 +272,8 @@ public class ViewAttendanceFragment extends Fragment {
                     String dateKey = keyFormat.format(tempCal.getTime());
                     String displayDate = displayFormat.format(tempCal.getTime());
 
+                    String amavasyaName = amavasyaPref.getString(dateKey, null);
+
                     String status = pref.getString(dateKey,"");
                     
                     String dabba = pref.getString(dateKey + "_dabba","");
@@ -279,6 +287,11 @@ public class ViewAttendanceFragment extends Fragment {
                         dayNumber.setTextColor(0xFFC62828); // same as Sunday
                         dayNumber.setTypeface(null, android.graphics.Typeface.BOLD);
                         dayNumber.setBackgroundResource(R.drawable.holiday_date_bg);
+                    }
+                    else if(amavasyaName != null){
+                        dayNumber.setTextColor(0xFFF2BD18); // same as Sunday
+                        dayNumber.setTypeface(null, android.graphics.Typeface.BOLD);
+                        dayNumber.setBackgroundResource(R.drawable.total_commission_bg);
                     }
 
                     String letter = "";
@@ -1215,6 +1228,48 @@ if(!isEligible){
 
                             updateMonth(); // 🔥 refresh UI
 
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+
+            },
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH));
+
+    picker.show();
+}
+
+    private void showAmavasyaDialog(){
+
+    Calendar cal = Calendar.getInstance();
+
+    DatePickerDialog picker = new DatePickerDialog(getContext(),
+            (view, year, month, day) -> {
+
+                Calendar selected = Calendar.getInstance();
+                selected.set(year, month, day);
+
+                String dateKey = keyFormat.format(selected.getTime());
+
+                EditText input = new EditText(getContext());
+                input.setHint("Enter Amavasya Name");
+
+                new android.app.AlertDialog.Builder(getContext())
+                        .setTitle("Amavasya Name")
+                        .setView(input)
+                        .setPositiveButton("Save", (d, w) -> {
+
+                            String name = input.getText().toString();
+
+                            SharedPreferences pref =
+                                    getActivity().getSharedPreferences("amavasya", 0);
+
+                            pref.edit()
+                                    .putString(dateKey, name)
+                                    .apply();
+
+                            updateMonth(); // 🔥 refresh UI
                         })
                         .setNegativeButton("Cancel", null)
                         .show();
