@@ -273,6 +273,8 @@ public class ViewAttendanceFragment extends Fragment {
                     String displayDate = displayFormat.format(tempCal.getTime());
 
                     String amavasyaName = amavasyaPref.getString(dateKey, null);
+                    long startMillis = amavasyaPref.getLong(dateKey + "_start", 0);
+                    long endMillis = amavasyaPref.getLong(dateKey + "_end", 0);
 
                     String status = pref.getString(dateKey,"");
                     
@@ -379,9 +381,18 @@ public class ViewAttendanceFragment extends Fragment {
 
                     if(amavasyaName != null){
                         cell.setOnClickListener(v -> {
+                            SimpleDateFormat fullFormat =
+                                    new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
+
+                            String startText = fullFormat.format(new java.util.Date(startMillis));
+                            String endText = fullFormat.format(new java.util.Date(endMillis));
+
+                            String message =
+                                    "Start: " + startText + "\n\n" +
+                                    "End: " + endText;
                             new android.app.AlertDialog.Builder(getContext())
-                                    .setTitle("Amavasya")
-                                    .setMessage(amavasyaName)
+                                    .setTitle(amavasyaName)
+                                    .setMessage(message)
                                     .setPositiveButton("OK", null)
                                     .show();
                         });
@@ -1254,41 +1265,88 @@ if(!isEligible){
 
     Calendar cal = Calendar.getInstance();
 
-    DatePickerDialog picker = new DatePickerDialog(getContext(),
-            (view, year, month, day) -> {
+    // STEP 1 → PICK START DATE
+    DatePickerDialog startDatePicker = new DatePickerDialog(getContext(),
+            (view, sYear, sMonth, sDay) -> {
 
-                Calendar selected = Calendar.getInstance();
-                selected.set(year, month, day);
+                Calendar startCal = Calendar.getInstance();
+                startCal.set(sYear, sMonth, sDay);
 
-                String dateKey = keyFormat.format(selected.getTime());
+                // STEP 2 → PICK START TIME
+                new android.app.TimePickerDialog(getContext(),
+                        (timeView, sHour, sMinute) -> {
 
-                EditText input = new EditText(getContext());
-                input.setHint("Enter Amavasya Name");
+                            startCal.set(Calendar.HOUR_OF_DAY, sHour);
+                            startCal.set(Calendar.MINUTE, sMinute);
 
-                new android.app.AlertDialog.Builder(getContext())
-                        .setTitle("Amavasya Name")
-                        .setView(input)
-                        .setPositiveButton("Save", (d, w) -> {
+                            // STEP 3 → PICK END DATE
+                            DatePickerDialog endDatePicker = new DatePickerDialog(getContext(),
+                                    (view2, eYear, eMonth, eDay) -> {
 
-                            String name = input.getText().toString();
+                                        Calendar endCal = Calendar.getInstance();
+                                        endCal.set(eYear, eMonth, eDay);
 
-                            SharedPreferences pref =
-                                    getActivity().getSharedPreferences("amavasya", 0);
+                                        // STEP 4 → PICK END TIME
+                                        new android.app.TimePickerDialog(getContext(),
+                                                (timeView2, eHour, eMinute) -> {
 
-                            pref.edit()
-                                    .putString(dateKey, name)
-                                    .apply();
+                                                    endCal.set(Calendar.HOUR_OF_DAY, eHour);
+                                                    endCal.set(Calendar.MINUTE, eMinute);
 
-                            updateMonth(); // 🔥 refresh UI
-                        })
-                        .setNegativeButton("Cancel", null)
-                        .show();
+                                                    // STEP 5 → ENTER NAME
+                                                    EditText input = new EditText(getContext());
+                                                    input.setHint("Enter Amavasya Name");
+
+                                                    new android.app.AlertDialog.Builder(getContext())
+                                                            .setTitle("Amavasya Name")
+                                                            .setView(input)
+                                                            .setPositiveButton("Save", (d, w) -> {
+
+                                                                String name = input.getText().toString();
+
+                                                                SharedPreferences pref =
+                                                                        getActivity().getSharedPreferences("amavasya", 0);
+
+                                                                String startKey = keyFormat.format(startCal.getTime());
+                                                                String endKey = keyFormat.format(endCal.getTime());
+
+                                                                // ✅ SAVE FULL DATA
+                                                                pref.edit()
+                                                                        .putString(startKey + "_name", name)
+                                                                        .putLong(startKey + "_start", startCal.getTimeInMillis())
+                                                                        .putLong(startKey + "_end", endCal.getTimeInMillis())
+                                                                        .apply();
+
+                                                                updateMonth(); // refresh UI
+
+                                                            })
+                                                            .setNegativeButton("Cancel", null)
+                                                            .show();
+
+                                                },
+                                                cal.get(Calendar.HOUR_OF_DAY),
+                                                cal.get(Calendar.MINUTE),
+                                                true).show();
+
+                                    },
+                                    cal.get(Calendar.YEAR),
+                                    cal.get(Calendar.MONTH),
+                                    cal.get(Calendar.DAY_OF_MONTH));
+
+                            endDatePicker.setTitle("Select Ending Date");
+                            endDatePicker.show();
+
+                        },
+                        cal.get(Calendar.HOUR_OF_DAY),
+                        cal.get(Calendar.MINUTE),
+                        true).show();
 
             },
             cal.get(Calendar.YEAR),
             cal.get(Calendar.MONTH),
             cal.get(Calendar.DAY_OF_MONTH));
 
-    picker.show();
+    startDatePicker.setTitle("Select Starting Date");
+    startDatePicker.show();
 }
 }
