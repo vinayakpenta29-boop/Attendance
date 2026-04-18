@@ -923,7 +923,7 @@ public class ViewAttendanceFragment extends Fragment {
             c.setPadding(20,20,20,20);
             c.setGravity(Gravity.CENTER);
             c.setTextSize(16);
-            c.setBackgroundResource(R.drawable.total_dabba_bg);
+            c.setBackgroundResource(R.drawable.total_commission_bg);
 
             TableRow.LayoutParams totalParams =
                     new TableRow.LayoutParams(0,
@@ -965,7 +965,7 @@ public class ViewAttendanceFragment extends Fragment {
             c.setPadding(20,20,20,20);
             c.setGravity(Gravity.CENTER);
             c.setTextSize(16);
-            c.setBackgroundResource(R.drawable.total_dabba_bg);
+            c.setBackgroundResource(R.drawable.total_commission_bg);
 
             TableRow.LayoutParams rowParams =
                     new TableRow.LayoutParams(0,
