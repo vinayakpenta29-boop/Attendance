@@ -434,6 +434,52 @@ public class ViewAttendanceFragment extends Fragment {
                         });
                     }
 
+                    if(amavasyaName != null){
+                        cell.setOnLongClickListener(v -> {
+
+                            String[] options = {"Edit Amavasya", "Delete Amavasya"};
+
+                            new android.app.AlertDialog.Builder(getContext())
+                                    .setTitle("Manage Amavasya")
+                                    .setItems(options, (dialog, which) -> {
+
+                                        if(which == 0){
+                                            // ✏️ EDIT
+                                            EditText input = new EditText(getContext());
+                                            input.setText(amavasyaName);
+
+                                            new android.app.AlertDialog.Builder(getContext())
+                                                    .setTitle("Edit Amavasya Name")
+                                                    .setView(input)
+                                                    .setPositiveButton("Update", (d, w) -> {
+
+                                                        String newName = input.getText().toString();
+
+                                                        amavasyaPref.edit()
+                                                                .putString(dateKey, newName)
+                                                                .apply();
+
+                                                        updateMonth(); // refresh UI
+                                                    })
+                                                    .setNegativeButton("Cancel", null)
+                                                    .show();
+
+                                        } else if(which == 1){
+                            
+                                            amavasyaPref.edit()
+                                                    .remove(dateKey)
+                                                    .apply();
+
+                                            updateMonth(); // refresh UI
+                                        }
+
+                                    })
+                                    .show();
+
+                            return true;
+                        });
+                    }
+
                     dayCounter++;
                 }
 
