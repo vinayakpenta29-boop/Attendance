@@ -1493,7 +1493,7 @@ picker.show();
             if(totalLeaves > 3){
                 valueCell.setTextColor(0xFFC62828); // red
             }
-            else if(totalLeaves < 3){
+            else if(totalLeaves <= 3){
                 valueCell.setTextColor(0xFF5FC40C); // green
             }
 
