@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ViewAttendanceFragment extends Fragment {
 
@@ -1563,7 +1564,7 @@ picker.show();
         
     new android.app.AlertDialog.Builder(getContext())
             .setCustomTitle(year)
-            .setView(scrollView)
+            .setView(root)
             .setPositiveButton("OK", null)
             .show();
 }
