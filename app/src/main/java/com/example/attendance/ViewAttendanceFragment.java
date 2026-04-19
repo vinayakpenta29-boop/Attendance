@@ -1355,7 +1355,35 @@ picker.show();
     // ===== YEAR SPINNER =====
     Spinner yearSpinner = new Spinner(getContext());
 
-    String[] years = {"2025", "2026"};
+    // ===== GET AVAILABLE YEARS FROM DATA =====
+    ArrayList<String> yearList = new ArrayList<>();
+
+    for(String key : pref.getAll().keySet()){
+
+        try{
+            // key format = yyyy-MM-dd
+            String year = key.substring(0,4);
+
+            if(!yearList.contains(year)){
+                yearList.add(year);
+            }
+
+        }catch(Exception e){
+            // ignore invalid keys
+        }
+    }
+
+    // 👉 If no data, show current year
+    if(yearList.isEmpty()){
+        Calendar cal = Calendar.getInstance();
+        yearList.add(String.valueOf(cal.get(Calendar.YEAR)));
+    }
+
+    // Optional: sort years
+    Collections.sort(yearList, Collections.reverseOrder());
+
+    // Convert to array
+    String[] years = yearList.toArray(new String[0]);
 
     ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(
             getContext(),
@@ -1461,8 +1489,11 @@ picker.show();
             }
 
             // Highlight if high leaves
-            if(totalLeaves > 5){
+            if(totalLeaves > 3){
                 valueCell.setTextColor(0xFFC62828); // red
+            }
+            else if(totalLeaves < 3){
+                valueCell.setTextColor(0xFF5FC40C); // green
             }
 
             row.addView(monthCell);
@@ -1492,7 +1523,7 @@ picker.show();
             c.setPadding(20,20,20,20);
             c.setGravity(Gravity.CENTER);
             c.setTextSize(16);
-            c.setBackgroundResource(R.drawable.total_leaves_bg);
+            c.setBackgroundResource(R.drawable.total_commission_bg);
 
             TableRow.LayoutParams params =
                     new TableRow.LayoutParams(0,
@@ -1522,9 +1553,17 @@ picker.show();
     });
 
     // ===== SHOW DIALOG =====
+    TextView year = new TextView(getContext());
+    year.setText("Monthly Sales Report");
+    year.setTextColor(0xFF990F4B); // your red shade
+    year.setTextSize(16);
+    year.setTypeface(null, android.graphics.Typeface.BOLD);
+    year.setPadding(30,30,30,10);
+    year.setGravity(Gravity.CENTER);
+        
     new android.app.AlertDialog.Builder(getContext())
-            .setTitle("Yearly Leaves Report")
-            .setView(root)
+            .setCustomTitle(year)
+            .setView(scrollView)
             .setPositiveButton("OK", null)
             .show();
 }
