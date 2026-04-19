@@ -109,6 +109,10 @@ public class ViewAttendanceFragment extends Fragment {
             showAmavasyaDialog();
             return true;
         }
+        else if(item.getItemId() == R.id.menu_view_leaves){
+            showLeavesDialog(); // ✅ NEW METHOD
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -1337,5 +1341,191 @@ DatePickerDialog picker = new DatePickerDialog(getContext(),
 
 picker.show();
 
+}
+
+    private void showLeavesDialog(){
+
+    SharedPreferences pref =
+            getActivity().getSharedPreferences("attendance", 0);
+
+    LinearLayout root = new LinearLayout(getContext());
+    root.setOrientation(LinearLayout.VERTICAL);
+    root.setPadding(30,30,30,30);
+
+    // ===== YEAR SPINNER =====
+    Spinner yearSpinner = new Spinner(getContext());
+
+    String[] years = {"2025", "2026"};
+
+    ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(
+            getContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            years
+    );
+
+    yearSpinner.setAdapter(yearAdapter);
+
+    root.addView(yearSpinner);
+
+    // ===== RESULT TABLE =====
+    TableLayout table = new TableLayout(getContext());
+    table.setStretchAllColumns(true);
+
+    root.addView(table);
+
+    // ===== FUNCTION TO LOAD DATA =====
+    Runnable loadData = () -> {
+
+        table.removeAllViews();
+
+        int selectedYear = Integer.parseInt(yearSpinner.getSelectedItem().toString());
+
+        String[] months = {
+                "January","February","March","April","May","June",
+                "July","August","September","October","November","December"
+        };
+
+        // HEADER
+        TableRow header = new TableRow(getContext());
+
+        String[] titles = {"Month", "Total Leaves"};
+
+        for(String t : titles){
+            TextView tv = new TextView(getContext());
+            tv.setText(t);
+            tv.setPadding(20,20,20,20);
+            tv.setGravity(Gravity.CENTER);
+            tv.setTypeface(null, android.graphics.Typeface.BOLD);
+            tv.setBackgroundColor(0xFF3F51B5);
+            tv.setTextColor(0xFFFFFFFF);
+
+            header.addView(tv);
+        }
+
+        table.addView(header);
+
+        double yearlyTotal = 0;
+
+        // ===== MONTH LOOP =====
+        for(int m = 0; m < 12; m++){
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(selectedYear, m, 1);
+
+            int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+            double totalLeaves = 0;
+
+            for(int d = 1; d <= days; d++){
+
+                Calendar temp = Calendar.getInstance();
+                temp.set(selectedYear, m, d);
+
+                String key = keyFormat.format(temp.getTime());
+
+                String status = pref.getString(key, "");
+
+                if(status.equals("Absent")){
+                    totalLeaves++;
+                }
+                else if(status.equals("Half Day")){
+                    totalLeaves += 0.5;
+                }
+                
+            }
+
+            yearlyTotal += totalLeaves;
+
+            // ROW
+            TableRow row = new TableRow(getContext());
+
+            TextView monthCell = new TextView(getContext());
+            TextView valueCell = new TextView(getContext());
+
+            monthCell.setText(months[m]);
+            valueCell.setText(String.valueOf(totalLeaves));
+
+            TextView[] cells = {monthCell, valueCell};
+
+            for(TextView c : cells){
+                c.setPadding(18,18,18,18);
+                c.setGravity(Gravity.CENTER);
+                c.setTextSize(14);
+                c.setBackgroundResource(R.drawable.history_cell_bg);
+
+                TableRow.LayoutParams params =
+                        new TableRow.LayoutParams(0,
+                                TableRow.LayoutParams.WRAP_CONTENT,1f);
+                params.setMargins(6,6,6,6);
+                c.setLayoutParams(params);
+            }
+
+            // Highlight if high leaves
+            if(totalLeaves > 5){
+                valueCell.setTextColor(0xFFC62828); // red
+            }
+
+            row.addView(monthCell);
+            row.addView(valueCell);
+
+            table.addView(row);
+        }
+    };
+
+    TableRow totalRow = new TableRow(getContext());
+
+        TextView t1 = new TextView(getContext());
+        TextView t2 = new TextView(getContext());
+
+        t1.setText("Total Yearly Leaves");
+        t2.setText(String.valueOf(yearlyTotal));
+
+        t1.setTypeface(null, android.graphics.Typeface.BOLD);
+        t2.setTypeface(null, android.graphics.Typeface.BOLD);
+
+        t1.setTextColor(0xFFB71C1C); // Dark Red
+        t2.setTextColor(0xFFB71C1C);
+
+        TextView[] totalCells = {t1, t2};
+
+        for(TextView c : totalCells){
+            c.setPadding(20,20,20,20);
+            c.setGravity(Gravity.CENTER);
+            c.setTextSize(16);
+            c.setBackgroundResource(R.drawable.total_leaves_bg);
+
+            TableRow.LayoutParams params =
+                    new TableRow.LayoutParams(0,
+                            TableRow.LayoutParams.WRAP_CONTENT,1f);
+            params.setMargins(6,6,6,6);
+            c.setLayoutParams(params);
+        }
+
+        totalRow.addView(t1);
+        totalRow.addView(t2);
+
+        table.addView(totalRow);
+    };
+
+    // INITIAL LOAD
+    loadData.run();
+
+    // ON YEAR CHANGE
+    yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            loadData.run();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    });
+
+    // ===== SHOW DIALOG =====
+    new android.app.AlertDialog.Builder(getContext())
+            .setTitle("Yearly Leaves Report")
+            .setView(root)
+            .setPositiveButton("OK", null)
+            .show();
 }
 }
