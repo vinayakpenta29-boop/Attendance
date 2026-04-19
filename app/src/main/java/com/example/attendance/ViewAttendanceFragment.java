@@ -1469,8 +1469,8 @@ picker.show();
             row.addView(valueCell);
 
             table.addView(row);
-        }
-    };
+        };
+    
 
     TableRow totalRow = new TableRow(getContext());
 
