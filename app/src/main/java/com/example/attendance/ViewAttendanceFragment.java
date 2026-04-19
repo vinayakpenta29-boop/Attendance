@@ -1353,9 +1353,6 @@ picker.show();
     root.setOrientation(LinearLayout.VERTICAL);
     root.setPadding(30,30,30,30);
 
-    // ===== YEAR SPINNER =====
-    Spinner yearSpinner = new Spinner(getContext());
-
     // ===== GET AVAILABLE YEARS FROM DATA =====
     ArrayList<String> yearList = new ArrayList<>();
 
@@ -1386,6 +1383,22 @@ picker.show();
     // Convert to array
     String[] years = yearList.toArray(new String[0]);
 
+    LinearLayout spinnerContainer = new LinearLayout(getContext());
+    spinnerContainer.setOrientation(LinearLayout.VERTICAL);
+    spinnerContainer.setPadding(20,20,20,20);
+    spinnerContainer.setBackgroundResource(R.drawable.history_cell_bg);
+
+    LinearLayout.LayoutParams containerParams =
+            new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+    containerParams.setMargins(0,0,0,20);
+    spinnerContainer.setLayoutParams(containerParams);
+
+    // ===== SPINNER =====
+    Spinner yearSpinner = new Spinner(getContext());
+
     ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(
             getContext(),
             android.R.layout.simple_spinner_dropdown_item,
@@ -1393,8 +1406,11 @@ picker.show();
     );
 
     yearSpinner.setAdapter(yearAdapter);
+    yearSpinner.setPadding(20,10,20,10);
 
-    root.addView(yearSpinner);
+    spinnerContainer.addView(yearSpinner);
+
+    root.addView(spinnerContainer);
 
     // ===== RESULT TABLE =====
     TableLayout table = new TableLayout(getContext());
