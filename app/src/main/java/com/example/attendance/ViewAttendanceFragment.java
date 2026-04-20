@@ -1138,7 +1138,7 @@ public class ViewAttendanceFragment extends Fragment {
             c.setPadding(20,20,20,20);
             c.setGravity(Gravity.CENTER);
             c.setTextSize(16);
-            c.setBackgroundResource(R.drawable.total_leaves_bg);
+            c.setBackgroundResource(R.drawable.final_amount_bg);
 
             TableRow.LayoutParams fp =
                     new TableRow.LayoutParams(0,
