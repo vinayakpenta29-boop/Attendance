@@ -1571,7 +1571,7 @@ picker.show();
 
     // ===== SHOW DIALOG =====
     TextView year = new TextView(getContext());
-    year.setText("Monthly Sales Report");
+    year.setText("Monthly Leaves Report");
     year.setTextColor(0xFF990F4B); // your red shade
     year.setTextSize(16);
     year.setTypeface(null, android.graphics.Typeface.BOLD);
