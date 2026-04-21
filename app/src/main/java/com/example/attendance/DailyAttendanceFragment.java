@@ -15,6 +15,7 @@ import java.util.Locale;
 
 public class DailyAttendanceFragment extends Fragment {
 
+    CheckBox enableCheck;
     EditText dateBox;
     Spinner spinner;
     Spinner dabbaSpinner;
@@ -36,11 +37,19 @@ public class DailyAttendanceFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_daily_attendance, container, false);
-
+        
+        enableCheck = view.findViewById(R.id.enableCheck);
         dateBox = view.findViewById(R.id.dateBox);
         spinner = view.findViewById(R.id.spinner);
         dabbaSpinner = view.findViewById(R.id.dabbaSpinner);
         addButton = view.findViewById(R.id.addAttendance);
+
+        addButton.setEnabled(false);
+        addButton.setAlpha(0.5f); // gray look
+
+        spinner.setEnabled(false);
+        dabbaSpinner.setEnabled(false);
+        dateBox.setEnabled(false);
 
         calendar = Calendar.getInstance();
 
@@ -107,6 +116,37 @@ public class DailyAttendanceFragment extends Fragment {
 
         });
 
+        enableCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+            if(isChecked){
+                // ✅ ENABLE EVERYTHING
+                addButton.setEnabled(true);
+                addButton.setAlpha(1f);
+  
+                spinner.setEnabled(true);
+                dateBox.setEnabled(true);
+
+                // dabba depends on spinner logic
+                String status = spinner.getSelectedItem().toString();
+
+                if(status.equals("Present")){
+                    dabbaSpinner.setEnabled(true);
+                    dabbaSpinner.setAlpha(1f);
+                }
+
+            } else {
+                // ❌ DISABLE EVERYTHING
+                addButton.setEnabled(false);
+                addButton.setAlpha(0.5f);
+
+                spinner.setEnabled(false);
+                dabbaSpinner.setEnabled(false);
+                dateBox.setEnabled(false);
+
+                dabbaSpinner.setAlpha(0.4f);
+            }
+        });
+
         /* DABBA STATUS SPINNER */
 
         String[] dabbaOptions = {"Select Dabba", "Dabba", "Ghari", "Late", "Absent"};
@@ -120,7 +160,15 @@ public class DailyAttendanceFragment extends Fragment {
         dabbaSpinner.setAdapter(dabbaAdapter);
         dabbaSpinner.setSelection(0);
 
-        addButton.setOnClickListener(v -> saveAttendance());
+        addButton.setOnClickListener(v -> {
+
+            if(!enableCheck.isChecked()){
+                Toast.makeText(getContext(), "Enable checkbox first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            saveAttendance();
+        });
 
         return view;
     }
