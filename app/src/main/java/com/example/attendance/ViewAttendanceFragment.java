@@ -1352,6 +1352,7 @@ picker.show();
     LinearLayout root = new LinearLayout(getContext());
     root.setOrientation(LinearLayout.VERTICAL);
     root.setPadding(30,30,30,30);
+    root.setBackgroundResource(R.drawable.salary_card_bg);
 
     // ===== GET AVAILABLE YEARS FROM DATA =====
     ArrayList<String> yearList = new ArrayList<>();
@@ -1578,7 +1579,7 @@ picker.show();
     year.setPadding(30,30,30,10);
     year.setGravity(Gravity.CENTER);
         
-    new android.app.AlertDialog.Builder(getContext(), R.drawable.salary_card_bg)
+    new android.app.AlertDialog.Builder(getContext())
             .setCustomTitle(year)
             .setView(root)
             .setPositiveButton("OK", null)
