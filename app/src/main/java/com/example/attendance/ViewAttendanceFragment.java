@@ -1352,8 +1352,7 @@ picker.show();
     LinearLayout root = new LinearLayout(getContext());
     root.setOrientation(LinearLayout.VERTICAL);
     root.setPadding(30,30,30,30);
-    root.setBackgroundResource(R.drawable.salary_card_bg);
-
+    
     // ===== GET AVAILABLE YEARS FROM DATA =====
     ArrayList<String> yearList = new ArrayList<>();
 
