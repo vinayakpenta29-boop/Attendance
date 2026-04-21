@@ -15,7 +15,8 @@
             android:id="@+id/enableCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enable Attendance Entry"
+            android:text=""
+            android:textColor="#1A237E"
             android:textSize="16sp"
             android:padding="10dp"/>
 
