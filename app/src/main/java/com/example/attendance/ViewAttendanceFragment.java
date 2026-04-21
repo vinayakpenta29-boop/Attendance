@@ -1578,7 +1578,7 @@ picker.show();
     year.setPadding(30,30,30,10);
     year.setGravity(Gravity.CENTER);
         
-    new android.app.AlertDialog.Builder(getContext(), R.drawable.calender_cell_bg)
+    new android.app.AlertDialog.Builder(getContext(), R.drawable.calendar_cell_bg)
             .setCustomTitle(year)
             .setView(root)
             .setPositiveButton("OK", null)
