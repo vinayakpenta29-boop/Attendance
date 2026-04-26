@@ -1335,6 +1335,10 @@ DatePickerDialog picker = new DatePickerDialog(getContext(),
 
                         String name = input.getText().toString();  
 
+                        name.setTextColor(0xFF990F4B); // your red shade
+                        name.setTextSize(16);
+                        name.setTypeface(null, android.graphics.Typeface.BOLD);
+
                         SharedPreferences pref =  
                                 getActivity().getSharedPreferences("amavasya", 0);  
 
