@@ -1315,6 +1315,10 @@ DatePickerDialog picker = new DatePickerDialog(getContext(),
 
             EditText input = new EditText(getContext());  
             input.setHint("Enter Amavasya Name");  
+            input.setTextColor(0xFF990F4B); // your red shade
+            input.setTextSize(12);
+            input.setTypeface(null, android.graphics.Typeface.BOLD);
+            
 
             TextView ama = new TextView(getContext());
             ama.setText("अमावास्या");
@@ -1326,7 +1330,7 @@ DatePickerDialog picker = new DatePickerDialog(getContext(),
 
             new android.app.AlertDialog.Builder(getContext())  
                     .setCustomTitle(ama)  
-                    .setView(root)  
+                    .setView(input)  
                     .setPositiveButton("Save", (d, w) -> {  
 
                         String name = input.getText().toString();  
