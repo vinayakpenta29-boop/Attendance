@@ -1313,31 +1313,26 @@ DatePickerDialog picker = new DatePickerDialog(getContext(),
 
             String dateKey = keyFormat.format(selected.getTime());  
 
+            TextView ama = new TextView(getContext());
+            ama.setText("Amavasya");
+            ama.setTextColor(0xFFC62828); // Red
+            ama.setTextSize(20);
+            ama.setTypeface(null, android.graphics.Typeface.BOLD);
+            ama.setGravity(Gravity.CENTER);
+            ama.setPadding(0, 20, 0, 20);
+
             EditText input = new EditText(getContext());  
             input.setHint("Enter Amavasya Name");  
             input.setTextColor(0xFF990F4B); // your red shade
             input.setTextSize(12);
             input.setTypeface(null, android.graphics.Typeface.BOLD);
             
-
-            TextView ama = new TextView(getContext());
-            ama.setText("अमावास्या");
-            ama.setTextColor(0xFF990F4B); // your red shade
-            ama.setTextSize(16);
-            ama.setTypeface(null, android.graphics.Typeface.BOLD);
-            ama.setPadding(30,30,30,10);
-            ama.setGravity(Gravity.CENTER);
-
             new android.app.AlertDialog.Builder(getContext())  
                     .setCustomTitle(ama)  
                     .setView(input)  
                     .setPositiveButton("Save", (d, w) -> {  
 
                         String name = input.getText().toString();  
-
-                        name.setTextColor(0xFF990F4B); // your red shade
-                        name.setTextSize(16);
-                        name.setTypeface(null, android.graphics.Typeface.BOLD);
 
                         SharedPreferences pref =  
                                 getActivity().getSharedPreferences("amavasya", 0);  
