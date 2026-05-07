@@ -212,7 +212,7 @@ public class DailyAttendanceFragment extends Fragment {
 
         EditText amountBox = new EditText(getContext());
         amountBox.setHint("Enter Sales Amount");
-        amountBox.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        amountBox.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
 
         layout.addView(dateText);
         layout.addView(pickDate);
@@ -247,7 +247,31 @@ public class DailyAttendanceFragment extends Fragment {
                         return;
                     }
 
-                    int newAmount = Integer.parseInt(input);
+                    int newAmount = 0;
+
+                    try {
+
+                        // Remove spaces
+                        input = input.replace(" ", "");
+
+                        // Split using +
+                        String[] parts = input.split("\\+");
+
+                        for(String part : parts){
+
+                            if(!part.isEmpty()){
+                               newAmount += Integer.parseInt(part.trim());
+                            }
+                        }
+
+                    } catch (Exception e){
+
+                        Toast.makeText(getContext(),
+                                "Invalid Amount Format",
+                                 Toast.LENGTH_SHORT).show();
+
+                        return;
+                    }
 
                     String key = storageFormat.format(selectedDate.getTime());
 
