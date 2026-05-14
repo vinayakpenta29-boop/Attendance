@@ -9,6 +9,9 @@ import android.view.*;
 import android.widget.*;
 import android.app.DatePickerDialog;
 
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -276,6 +279,37 @@ public class ViewAttendanceFragment extends Fragment {
 
                     String dateKey = keyFormat.format(tempCal.getTime());
                     String displayDate = displayFormat.format(tempCal.getTime());
+
+                    // ✅ TODAY BLINK EFFECT
+                    Calendar today = Calendar.getInstance();
+
+                    boolean isToday =
+                            tempCal.get(Calendar.YEAR) == today.get(Calendar.YEAR)
+                            &&
+                            tempCal.get(Calendar.MONTH) == today.get(Calendar.MONTH)
+                            &&
+                            tempCal.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH);
+
+                    // ✅ ONLY BLINK IN CURRENT MONTH VIEW
+                    if(isToday){
+
+                        // Highlight today cell
+                        cell.setBackgroundResource(R.drawable.today_blink_bg);
+
+                        // Create blink animation
+                        AlphaAnimation blinkAnim = new AlphaAnimation(1.0f, 0.3f);
+
+                        blinkAnim.setDuration(500);
+                        blinkAnim.setRepeatMode(Animation.REVERSE);
+                        blinkAnim.setRepeatCount(Animation.INFINITE);
+
+                        cell.startAnimation(blinkAnim);
+
+                        // Make date number bold
+                        dayNumber.setTypeface(null, android.graphics.Typeface.BOLD);
+                        dayNumber.setTextColor(0xFFFFFFFF);
+
+                    }
 
                     String amavasyaName = amavasyaPref.getString(dateKey, null);
                     
