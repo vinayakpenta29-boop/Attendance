@@ -307,7 +307,7 @@ public class ViewAttendanceFragment extends Fragment {
 
                         // Make date number bold
                         dayNumber.setTypeface(null, android.graphics.Typeface.BOLD);
-                        dayNumber.setTextColor(0xFFFFFFFF);
+                        dayNumber.setTextColor(0xFF355E3B);
 
                     }
 
